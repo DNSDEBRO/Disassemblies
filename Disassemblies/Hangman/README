@@ -1,0 +1,54 @@
+Hangman
+
+Copyright 1978 Atari, Inc.
+Designer: Alan Miller
+
+Analyzed, labeled, and commented by Dennis Debro
+
+*** 128 BYTES OF RAM USED 0 BYTES FREE
+***  11 BYTES OF ROM FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1978, ATARI, INC.                                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+Hangman.asm       reverse-engineered file
+makefile          Makefile to build code
+tia_constants.h   header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of DASM cross
+assembler.
+
+Build notes:
+ - All RAM utilized so no JSR/RTS used to preserve stack usage
+ - Auto game over if idle for ~4 minutes
+ - Words consist of no more than 6 letters (including NULL characters)
+ - Grade level vocabulary words take up two pages in ROM
+ - Dictionary changes for different regions
+   - Third grade
+     ===========
+     NTSC  COLOR
+     PAL50 COLOUR
+
+   - Sixth grade
+     ===========
+     NTSC  GLAMOR
+     PAL50 GLASS
+
+   - Ninth grade
+     ===========
+     NTSC  OMELET
+     PAL50 OBLIGE
+
+   - High School
+     ===========
+     NTSC  JALOPY
+     PAL50 JUMBLE
