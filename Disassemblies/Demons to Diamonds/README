@@ -1,0 +1,34 @@
+Demons to Diamonds
+
+Copyright 1982 Atari, Inc
+Designer: Nick Turner
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 128 BYTES OF RAM USED 0 BYTES FREE
+NTSC ROM usage stats
+-------------------------------------------
+ ***  97 BYTES OF ROM FREE
+
+PAL50 ROM usage stats
+-------------------------------------------
+ *** 100 BYTES OF ROM FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, ATARI, INC.                                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+demons_to_diamonds.asm  reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of the DASM cross
+assembler.
