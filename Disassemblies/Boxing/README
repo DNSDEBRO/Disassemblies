@@ -1,0 +1,31 @@
+Boxing
+
+Copyright 1980 Activision, Inc
+Designer: Bob Whitehead
+
+Analyzed, labeled and commented by Dennis Debro
+
+*** 114 BYTES OF RAM USED 14 BYTES FREE
+***   0 BYTES OF ROM FREE
+
+Though the assembler reports 14 bytes of RAM free, there are actually 16 more
+RAM bytes available because of how the RAM layout.
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1980, ACTIVISION                                   =
+=                                                                            =
+==============================================================================
+
+Structure:
+boxing            reverse-engineered file
+makefile          Makefile to build code
+tia_constants.h   header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of the DASM cross
+assembler.
