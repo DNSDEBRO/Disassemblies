@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1982, SIRIUS                                       =
+; = THE ASSEMBLED CODE IS Â© 1982, SIRIUS                                       =
 ; =                                                                            =
 ; ==============================================================================
 
@@ -1439,10 +1439,10 @@ DisplayKernel SUBROUTINE
    sta WSYNC
 ;--------------------------------------
    cpx #H_KERNEL              ; 2
-   beq DrawTurmoilLiteralKernel;2³
+   beq DrawTurmoilLiteralKernel;2Â³
 .waitForKernelDone
    dex                        ; 2
-   beq .doneDisplayKernel     ; 2³
+   beq .doneDisplayKernel     ; 2Â³
    jmp .displayKernel         ; 3
        
 .doneDisplayKernel
@@ -1458,10 +1458,10 @@ DrawTurmoilLiteralKernel
    sta REFP0                  ; 3 = @10
    sta REFP1                  ; 3 = @13
    lda gameState              ; 3         get current game state
-   bmi .jmpToDrawScoreKernel  ; 2³        branch if game in progress
+   bmi .jmpToDrawScoreKernel  ; 2Â³        branch if game in progress
    lda laneColor              ; 3
    cmp #ULTRAMARINE_BLUE + 8  ; 2
-   bcs .jmpToDrawScoreKernel  ; 2³
+   bcs .jmpToDrawScoreKernel  ; 2Â³
    sta HMCLR                  ; 3 = @28
    lda tmpTurmoilLiteralColor ; 3
    sta COLUP0                 ; 3 = @34
@@ -1471,7 +1471,7 @@ DrawTurmoilLiteralKernel
 ;--------------------------------------
 .skip4Scanlines
    dex                        ; 2
-   bne .skip4Scanlines        ; 2³
+   bne .skip4Scanlines        ; 2Â³
    SLEEP 2                    ; 2
    SLEEP 2                    ; 2
    SLEEP_7                    ; 7
@@ -1513,7 +1513,7 @@ DrawTurmoilLiteralKernel
    sty GRP1                   ; 3 = @51
    sta GRP0                   ; 3 = @54
    dec tmpTurmoilFontLoop     ; 5
-   bpl .drawTurmoilLiteral    ; 2³
+   bpl .drawTurmoilLiteral    ; 2Â³
    lda #0                     ; 2
    sta VDELP0                 ; 3 = @66
    sta VDELP1                 ; 3 = @69
@@ -1543,7 +1543,7 @@ DrawScoreKernel
    SLEEP_3                    ; 3
 .coarsePositionScoreDigits
    dex                        ; 2
-   bne .coarsePositionScoreDigits;2³
+   bne .coarsePositionScoreDigits;2Â³
    sta RESP0                  ; 3
    sta RESP1                  ; 3
    sta WSYNC
@@ -1558,10 +1558,10 @@ DrawScoreKernel
    lda #TWO_COPIES            ; 2
    sta NUSIZ1                 ; 3 = @23
    lda gameState              ; 3         get current game state
-   bmi .drawScore             ; 2³        branch if game in progress
+   bmi .drawScore             ; 2Â³        branch if game in progress
    lda laneColor              ; 3
    cmp #OLIVE_GREEN + 8       ; 2
-   bcc .drawScore             ; 2³
+   bcc .drawScore             ; 2Â³
    lda #BRICK_RED + 8         ; 2
    sta COLUP0                 ; 3
    sta COLUP1                 ; 3
@@ -1590,7 +1590,7 @@ DrawScoreKernel
    stx GRP1                   ; 3 = @48
    sta GRP0                   ; 3 = @51
    dec digitGraphicPtrs       ; 5
-   bpl .drawScore             ; 2³
+   bpl .drawScore             ; 2Â³
    bmi .doneTopStatusKernel   ; 3         unconditional branch
        
 .drawHighScore
@@ -1616,7 +1616,7 @@ DrawScoreKernel
    stx GRP1                   ; 3 = @48
    sta GRP0                   ; 3 = @51
    dec digitGraphicPtrs       ; 5
-   bpl .drawHighScore         ; 2³
+   bpl .drawHighScore         ; 2Â³
 .doneTopStatusKernel
    lda #ONE_COPY              ; 2
    sta NUSIZ1                 ; 3
@@ -1625,7 +1625,7 @@ DrawScoreKernel
    sta GRP0                   ; 3
    sta GRP1                   ; 3
    lda kernelStatus           ; 3         get kernel status
-   bne LevelTransitionKernel  ; 2³        branch to show level transition
+   bne LevelTransitionKernel  ; 2Â³        branch to show level transition
    jmp GamePlayKernel         ; 3
        
 LevelTransitionKernel
@@ -1685,18 +1685,18 @@ LevelTransitionKernel
    dey                        ; 2
    sty COLUBK                 ; 3 = @08
    cpx #H_LEVEL_TRANSITION_KERNEL - 84;2
-   bne .checkToDrawSecondKernelSection;2³
+   bne .checkToDrawSecondKernelSection;2Â³
    lda #0                     ; 2
    sta GRP1                   ; 3 = @17
    sta GRP0                   ; 3 = @20
    beq .nextLevelTransitionLine;3         unconditional branch
        
 .checkToDrawSecondKernelSection
-   bcc .nextLevelTransitionLine;2³
+   bcc .nextLevelTransitionLine;2Â³
    cpx #H_LEVEL_TRANSITION_KERNEL - 54;2
-   bcs .nextLevelTransitionLine;2³
+   bcs .nextLevelTransitionLine;2Â³
    cpx #H_LEVEL_TRANSITION_KERNEL - 64;2
-   bcc .checkToDrawPlayLevel  ; 2³
+   bcc .checkToDrawPlayLevel  ; 2Â³
    lda #$FF                   ; 2
    sta GRP1                   ; 3 = @28
    lda #0                     ; 2
@@ -1706,20 +1706,20 @@ LevelTransitionKernel
        
 .checkToDrawPlayLevel
    cpx #H_LEVEL_TRANSITION_KERNEL - 72;2
-   bcc .clearPlayLevelGraphics; 2³
+   bcc .clearPlayLevelGraphics; 2Â³
    sty tmpTransitionKernelBKColor;3
    ldy tmpPlayLevelIndex      ; 3
    lda (tmpPlayLevelGraphicPtrs),y;5
    sta GRP0                   ; 3 = @42
    dec tmpPlayLevelIndex      ; 5
    ldy tmpTransitionKernelBKColor;3
-   bne .nextLevelTransitionLine;2³
+   bne .nextLevelTransitionLine;2Â³
 .clearPlayLevelGraphics 
    lda #0                     ; 2
    sta GRP0                   ; 3
 .nextLevelTransitionLine
    dex                        ; 2
-   bne .levelTransitionKernel ; 2³ + 1
+   bne .levelTransitionKernel ; 2Â³ + 1
    sta WSYNC
 ;--------------------------------------
    stx COLUPF                 ; 3 = @03
@@ -1730,7 +1730,7 @@ LevelTransitionKernel
    sta WSYNC
 ;--------------------------------------
    dex                        ; 2
-   bne .wait4Scanlines        ; 2³
+   bne .wait4Scanlines        ; 2Â³
    jmp DrawStatusKernel       ; 3
        
 GamePlayKernel
@@ -1750,7 +1750,7 @@ GamePlayKernel
    SLEEP_3                    ; 3
 .coarsePositionPlayerShip
    dex                        ; 2
-   bne .coarsePositionPlayerShip;2³
+   bne .coarsePositionPlayerShip;2Â³
    sta RESP0                  ; 3
    sta WSYNC
 ;--------------------------------------
@@ -1772,7 +1772,7 @@ BeginLaneKernel
    sta COLUPF                 ; 3 = @16
 .coarsePositionPlayerShot
    dex                        ; 2
-   bne .coarsePositionPlayerShot;2³
+   bne .coarsePositionPlayerShot;2Â³
    sta RESM0                  ; 3
    sta WSYNC
 ;--------------------------------------
@@ -1795,12 +1795,12 @@ BeginLaneKernel
    SLEEP_3                    ; 3
 .coarsePositionObstacle
    dex                        ; 2
-   bne .coarsePositionObstacle; 2³
+   bne .coarsePositionObstacle; 2Â³
    sta RESP1                  ; 3
    sta WSYNC
 ;--------------------------------------
    lda playerShipShotHorizPos - 1,y;4
-   beq .playerShotDisabled    ; 2³
+   beq .playerShotDisabled    ; 2Â³
    lda #<PlayerShotEnabledGraphicValues;2
    sta playerShipShotPtr      ; 3
    lda #>PlayerShotEnabledGraphicValues;2
@@ -1816,11 +1816,11 @@ BeginLaneKernel
    lda obstacleList - 1,y     ; 4 = @23   get obstacle type
    tay                        ; 2         shift obstacle type to y register
    cpy #ID_ARROW              ; 2
-   beq .setObstacleColorLSBForArrow;2³
+   beq .setObstacleColorLSBForArrow;2Â³
    cpy #ID_GHOST_SHIP         ; 2
-   beq .setObstacleColorLSBForGhostShip;2³
+   beq .setObstacleColorLSBForGhostShip;2Â³
    cpy #ID_EXPLOSION          ; 2
-   bcc .setObstacleColorLSBValue;2³
+   bcc .setObstacleColorLSBValue;2Â³
    lda #<ExplosionColorValues ; 2
    sta obstacleColorPtrs      ; 3
    jmp .setObstacleGraphicLSBAndDirection;3 = @45
@@ -1840,7 +1840,7 @@ BeginLaneKernel
    ldy currentKernelLane      ; 3
    lda obstacleAttributes - 1,y;4
    and #OBSTACLE_DIR_MASK     ; 2
-   bne .obstacleFacingRight   ; 2³
+   bne .obstacleFacingRight   ; 2Â³
    lda #REFLECT               ; 2
    sta REFP1                  ; 3 = @69
    bpl .checkToDrawPlayerShip ; 3         unconditional branch
@@ -1850,7 +1850,7 @@ BeginLaneKernel
    sta REFP1                  ; 3
 .checkToDrawPlayerShip
    cpy playerShipAlley        ; 3
-   beq .setToDrawPlayerShip   ; 2³        branch if time to draw player ship
+   beq .setToDrawPlayerShip   ; 2Â³        branch if time to draw player ship
    lda #<BlankGraphic         ; 2
    sta tmpKernelShipGraphicPtr; 3         set player ship to BlankGraphic
    lda #>BlankGraphic         ; 2
@@ -1871,7 +1871,7 @@ BeginLaneKernel
    sta PF1                    ; 3 = @11
    sta PF2                    ; 3 = @14
    dec currentKernelLane      ; 5
-   bmi DrawStatusKernel       ; 2³
+   bmi DrawStatusKernel       ; 2Â³
    jmp DrawKernelLane         ; 3
        
 DrawStatusKernel
@@ -1879,7 +1879,7 @@ DrawStatusKernel
    sta REFP0                  ; 3 = @27
    sta REFP1                  ; 3 = @30
    lda gameState              ; 3         get current game state
-   bmi DrawReservedShipsKernel; 2³        branch if game in progress
+   bmi DrawReservedShipsKernel; 2Â³        branch if game in progress
    lda transitionKernelBKColor; 3         waste 3 cycles
    ldy gameLevel              ; 3         get current game level
    lda NumberLSBValues,y      ; 4
@@ -1901,13 +1901,13 @@ DrawStatusKernel
    SLEEP_3                    ; 3
 .coarsePositionPlayLevel
    dex                        ; 2
-   bne .coarsePositionPlayLevel;2³
+   bne .coarsePositionPlayLevel;2Â³
    sta RESP0                  ; 3
    sta WSYNC
 ;--------------------------------------
    lda laneColor              ; 3
    cmp #ULTRAMARINE_BLUE + 8  ; 2
-   bcc DrawSneakerKernel      ; 2³
+   bcc DrawSneakerKernel      ; 2Â³
    ldy #H_DIGITS              ; 2
 .drawDemoPlayLevelValue
    lda #WHITE                 ; 2
@@ -1917,7 +1917,7 @@ DrawStatusKernel
    lda (tmpPlayLevelGraphicPtrs),y;5
    sta GRP0                   ; 3 = @11
    dey                        ; 2
-   bpl .drawDemoPlayLevelValue; 2³
+   bpl .drawDemoPlayLevelValue; 2Â³
    lda #0                     ; 2
    sta GRP0                   ; 3 = @20
    sta WSYNC
@@ -1943,7 +1943,7 @@ DrawSneakerKernel
    lda (sneakerGraphicPtr),y  ; 5
    sta GRP0                   ; 3 = @15
    dey                        ; 2
-   bpl .drawSneakerKernel     ; 2³
+   bpl .drawSneakerKernel     ; 2Â³
    sta WSYNC
 ;--------------------------------------
    SLEEP 2                    ; 2
@@ -1980,7 +1980,7 @@ DrawReservedShipsKernel
    sta NUSIZ1                 ; 3 = @17
 .coarsePositionReservedShips
    dex                        ; 2
-   bne .coarsePositionReservedShips;2³
+   bne .coarsePositionReservedShips;2Â³
    sta RESP0                  ; 3
    SLEEP 2                    ; 2
    SLEEP 2                    ; 2
@@ -2003,7 +2003,7 @@ DrawReservedShipsKernel
    lda (tmpLivesGraphicPtrs_01),y;5
    sta GRP1                   ; 3 = @17
    dey                        ; 2
-   bpl .drawReservedShips     ; 2³
+   bpl .drawReservedShips     ; 2Â³
 .doneStatusKernel
    ldx #OVERSCAN_SCANLINES    ; 2
    jmp .waitForKernelDone     ; 3
@@ -2029,15 +2029,15 @@ DrawKernelLane
    stx COLUP1                 ; 3 = @22
    sta GRP0                   ; 3 = @25
    dey                        ; 2
-   bpl .drawKernelLane        ; 2³
+   bpl .drawKernelLane        ; 2Â³
    lda CXPPMM                 ; 3         read player collision values
-   bpl .checkPlayerObstacleCollision;2³   branch if players didn't collide
+   bpl .checkPlayerObstacleCollision;2Â³   branch if players didn't collide
    sta tmpPlayerShipCollisionValue;3
    bmi .jmpToBeginLaneKernel  ; 3         unconditional branch
        
 .checkPlayerObstacleCollision
    lda CXM0P                  ; 3         read player missile 0 collision value
-   bpl .jmpToBeginLaneKernel  ; 2³        branch if obstacle not shot
+   bpl .jmpToBeginLaneKernel  ; 2Â³        branch if obstacle not shot
    ldy currentKernelLane      ; 3
    lda obstacleShotCollisionValues;3
    ora LaneShotCollisionMaskValues,y;4
