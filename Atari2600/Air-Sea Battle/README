@@ -1,0 +1,27 @@
+Air-Sea Battle
+
+Copyright 1977 Atari, Inc
+Designer: Larry Kaplan
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 116 BYTES OF RAM USED 12 BYTES FREE
+ ***   1 BYTE OF ROM FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1977, ATARI, INC.                                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+air_sea_battle.asm      reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard VCS.H header files. This is not
+supplied. It can be found with the distribution of the DASM cross assembler.
