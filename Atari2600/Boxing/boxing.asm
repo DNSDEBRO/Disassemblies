@@ -19,7 +19,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1980, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS Â© 1980, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 
@@ -381,10 +381,10 @@ Start
    sty NUSIZ0                 ; 3 = @74   set left boxer NUSIZ value
 ;--------------------------------------
    sta HMOVE                  ; 3 = @01
-   beq .setRightBoxerKernelValues;2³
+   beq .setRightBoxerKernelValues;2Â³
    SLEEP 2                    ; 2
 .checkToDrawRightBoxer
-   bcs .skipRightBoxerDraw    ; 2³
+   bcs .skipRightBoxerDraw    ; 2Â³
    tay                        ; 2         move difference value to y register
    lda (rightBoxerGraphicPtr),y;5         get right boxer graphic data
    sta GRP1                   ; 3 = @17   draw right boxer
@@ -398,8 +398,8 @@ Start
    inx                        ; 2         increment scan line count
    sbc tmpLeftBoxerVertPos    ; 3         subtract left boxer vertical position
    cmp #H_KERNEL_SECTION      ; 2
-   bcc .drawLeftBoxer         ; 2³
-   bne .skipLeftBoxerDraw     ; 2³
+   bcc .drawLeftBoxer         ; 2Â³
+   bne .skipLeftBoxerDraw     ; 2Â³
    ldy boxerBodySectionValue  ; 3         get boxer body section value
    inc boxerBodySectionValue  ; 5         increment boxer body section value
    lda boxerKernelSectionVertPos + 1,y;4  get boxer section vertical position
@@ -412,7 +412,7 @@ Start
    cmp #H_KERNEL_SECTION      ; 2
 ;--------------------------------------
    sta HMOVE                  ; 3 = @02
-   bne .checkToDrawRightBoxer ; 2³
+   bne .checkToDrawRightBoxer ; 2Â³
 .setRightBoxerKernelValues
    pla                        ; 4         pull right boxer vertical position
    sta tmpRightBoxerVertPos   ; 3         set right boxer vertical position
@@ -443,7 +443,7 @@ StartBoxingRingKernel
    cpx #140                   ; 2
    sta GRP1                   ; 3 = @15
    sta.w PF2                  ; 4 = @19
-   bcc .setRightBoxerSizeValues;2³
+   bcc .setRightBoxerSizeValues;2Â³
    tax                        ; 2
    lda #69                    ; 2         horizontal position for GRP1
    ldy #44                    ; 2         horizontal position for GRP0
@@ -892,7 +892,7 @@ ScoreBoardKernel
    ldy #2                     ; 2
 .scoreBoardKernel
    dex                        ; 2
-   bmi .doneScoreBoardKernel  ; 2³
+   bmi .doneScoreBoardKernel  ; 2Â³
    jsr NewScanline            ; 6
 ;--------------------------------------
    lda scoreBoardValues,x     ; 4 = @13   get score board value
@@ -903,9 +903,9 @@ ScoreBoardKernel
    lsr                        ; 2
    lsr                        ; 2
    lsr                        ; 2
-   bne .setGraphicPointerTensValue;2³     branch if not suppressing tens value
+   bne .setGraphicPointerTensValue;2Â³     branch if not suppressing tens value
    cpx #<playerScores - clockMinutes;2
-   bcc .setGraphicPointerTensValue;2³     branch if drawing clock values
+   bcc .setGraphicPointerTensValue;2Â³     branch if drawing clock values
    lda #BLANK_IDX_VALUE       ; 2         set to suppress leading zero
 .setGraphicPointerTensValue
    sta graphicPointers + 4,y  ; 5 
@@ -913,7 +913,7 @@ ScoreBoardKernel
 ;--------------------------------------
    dey                        ; 2 = @11
    dey                        ; 2
-   bpl .scoreBoardKernel      ; 2³
+   bpl .scoreBoardKernel      ; 2Â³
    jsr CharacterFontDisplayKernel;6
 ;--------------------------------------
    ldy #HMOVE_R6              ; 2 = @13
@@ -982,7 +982,7 @@ CharacterFontDisplayKernel
    sta COLUP1                 ; 3 = @59
    ldx tmpXRegister           ; 3
    tya                        ; 2
-   bne .characterFontDisplayKernel;2³
+   bne .characterFontDisplayKernel;2Â³
    sta GRP0                   ; 3 = @69
    sta GRP1                   ; 3 = @72
 SetPlayersToTwoCopies
@@ -1556,7 +1556,7 @@ PositionObjectHorizontally
    clc                        ; 2
    adc tmpHorizPosDiv16       ; 3         increment by div16 remainder
    cmp #15                    ; 2
-   bcc .skipSubtractions      ; 2³
+   bcc .skipSubtractions      ; 2Â³
    sbc #15                    ; 2
    iny                        ; 2         increment coarse value
 .skipSubtractions
@@ -1572,7 +1572,7 @@ PositionObjectHorizontally
    asl                        ; 2 = @15
 .coarsePositionPlayer
    dey                        ; 2  
-   bpl .coarsePositionPlayer  ; 2³
+   bpl .coarsePositionPlayer  ; 2Â³
    sta RESP0,x                ; 4
    sta HMP0,x                 ; 4
 NewScanline
@@ -1597,7 +1597,7 @@ DrawOuterBoxingRingPosts
    sta graphicPointers - 2,x  ; 4
    dex                        ; 2
    dex                        ; 2
-   bne .drawBoxingRingPosts   ; 2³
+   bne .drawBoxingRingPosts   ; 2Â³
    rts                        ; 6
 
 BoxerHorizOffsetValues
