@@ -22,7 +22,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1982, ATARI, INC.                                  =
+; = THE ASSEMBLED CODE IS Â© 1982, ATARI, INC.                                  =
 ; =                                                                            =
 ; ==============================================================================
 
@@ -641,7 +641,7 @@ DrawTopScoreKernel
    ldx #5                     ; 2
 .coarsePositionScoreObjects
    dex                        ; 2
-   bpl .coarsePositionScoreObjects;2³
+   bpl .coarsePositionScoreObjects;2Â³
    sta RESP0                  ; 3 = @44
    sta RESP1                  ; 3 = @47
    lda #HMOVE_L7              ; 2
@@ -693,7 +693,7 @@ DrawTopScoreKernel
    sta WSYNC
 ;--------------------------------------
    dey                        ; 2
-   bpl .drawPlayer2ScoreKernel; 2³
+   bpl .drawPlayer2ScoreKernel; 2Â³
    lda #0                     ; 2         not needed...accumulator already 0
    sta GRP0                   ; 3 = @09
    sta GRP1                   ; 3 = @12
@@ -710,14 +710,14 @@ DrawTopScoreKernel
    inc scanlineCount          ; 5         increment scan line count
    lda gameState              ; 3         get current game state
    and #NUM_PLAYERS_MASK      ; 2         keep NUM_PLAYERS value
-   beq DrawTopLaserBaseKernel ; 2³        branch if TWO_PLAYERS game
+   beq DrawTopLaserBaseKernel ; 2Â³        branch if TWO_PLAYERS game
    ldx #1                     ; 2
 .skip_02ScanLines
    sta WSYNC
 ;--------------------------------------
    inc scanlineCount          ; 5         increment scan line count
    dex                        ; 2
-   bpl .skip_02ScanLines      ; 2³
+   bpl .skip_02ScanLines      ; 2Â³
    sta WSYNC
 ;--------------------------------------
    sta wait03Cycles           ; 3         not needed...waste 3 cycles
@@ -733,7 +733,7 @@ DrawTopScoreKernel
    sta WSYNC
 ;--------------------------------------
    dex                        ; 2
-   bpl .skip_04ScanLines      ; 2³
+   bpl .skip_04ScanLines      ; 2Â³
    lda colorEOR               ; 3         get color value
    and #$F7                   ; 2         hue mask for background color
    sta COLUBK                 ; 3 = @12
@@ -743,7 +743,7 @@ DrawTopScoreKernel
    sta WSYNC
 ;--------------------------------------
    dex                        ; 2
-   bpl .skip_07ScanLines      ; 2³
+   bpl .skip_07ScanLines      ; 2Â³
    jmp DrawKernelZone         ; 3
     
 DrawTopLaserBaseKernel
@@ -758,7 +758,7 @@ DrawTopLaserBaseKernel
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionTopLaserBase_00
    dey                        ; 2
-   bpl .coarsePositionTopLaserBase_00;2³
+   bpl .coarsePositionTopLaserBase_00;2Â³
    sta RESP0                  ; 3
    sta HMP0                   ; 3
    sta WSYNC
@@ -770,7 +770,7 @@ DrawTopLaserBaseKernel
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionTopLaserBase_01
    dey                        ; 2
-   bpl .coarsePositionTopLaserBase_01;2³
+   bpl .coarsePositionTopLaserBase_01;2Â³
    sta RESP1                  ; 3
    sta HMP1                   ; 3
    sta WSYNC
@@ -802,7 +802,7 @@ DrawTopLaserBaseKernel
    lda TopLaserBase_01,y      ; 4
    sta GRP1                   ; 3 = @10
    dex                        ; 2
-   bne .drawFirstHalfTopLaserBase;2³ + 1  crosses page boundary
+   bne .drawFirstHalfTopLaserBase;2Â³ + 1  crosses page boundary
    lda colorEOR               ; 3
    and #$F7                   ; 2
    sta COLUBK                 ; 3 = @22
@@ -817,7 +817,7 @@ DrawTopLaserBaseKernel
    lda TopLaserBase_01,y      ; 4
    sta GRP1                   ; 3 = @10
    dex                        ; 2
-   bne .drawSecondHalfTopLaserBase;2³
+   bne .drawSecondHalfTopLaserBase;2Â³
    inc scanlineCount          ; 5         increment scan line count
    sta WSYNC
 ;--------------------------------------
@@ -834,12 +834,12 @@ DrawKernelZone
    sta COLUBK                 ; 3 = @14
 .drawKernelZone
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue_00;2³        branch if capacitor not charged
+   bmi .readRightPaddleValue_00;2Â³        branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue_00
    lda INPT1                  ; 3         read right paddle controller
-   bmi .positionKernelZoneObjects;2³      branch if capacitor not charged
+   bmi .positionKernelZoneObjects;2Â³      branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
 .positionKernelZoneObjects
@@ -858,7 +858,7 @@ DrawKernelZone
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionObject_0
    dey                        ; 2
-   bpl .coarsePositionObject_0; 2³
+   bpl .coarsePositionObject_0; 2Â³
    sta RESP0                  ; 3
    sta HMP0                   ; 3         set object 0 fine motion adjustment
    sta WSYNC
@@ -870,7 +870,7 @@ DrawKernelZone
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionObject_1
    dey                        ; 2
-   bpl .coarsePositionObject_1; 2³
+   bpl .coarsePositionObject_1; 2Â³
    sta RESP1                  ; 3
    sta HMP1                   ; 3         set object 1 fine motion adjustment
    sta WSYNC
@@ -906,20 +906,20 @@ DrawKernelZone
    lda (obj1GraphicPtrs),y    ; 5         get object 1 graphic value
    sta GRP1                   ; 3 = @16   set object 1 graphic data
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue_01;2³        branch if capacitor not charged
+   bmi .readRightPaddleValue_01;2Â³        branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue_01
    lda INPT1                  ; 3         read right paddle controller
-   bmi .drawLaser             ; 2³        branch if capacitor not charged
+   bmi .drawLaser             ; 2Â³        branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
 .drawLaser
    lda scanlineCount          ; 3         get current scan line count
    cmp drawMissileLowerBound  ; 3
-   bcc .nextKernelZoneScanline; 2³
+   bcc .nextKernelZoneScanline; 2Â³
    cmp drawMissileUpperBound  ; 3
-   bcs .disableBall           ; 2³
+   bcs .disableBall           ; 2Â³
    lda ballGraphicValue       ; 3
    sta ENABL                  ; 3 = @57
    bpl .nextKernelZoneScanline; 3         unconditional branch
@@ -930,7 +930,7 @@ DrawKernelZone
 .nextKernelZoneScanline
    inc scanlineCount          ; 5         increment scan line count
    dey                        ; 2
-   bpl .drawKernelZoneObjects ; 2³
+   bpl .drawKernelZoneObjects ; 2Â³
    lda KernelZoneBackgroundColors,x;4     get kernel zone background color
    sta WSYNC
 ;--------------------------------------
@@ -955,7 +955,7 @@ DrawKernelZone
    ENDIF
    
    dex                        ; 2
-   bmi .doneDrawKernelZone    ; 2³
+   bmi .doneDrawKernelZone    ; 2Â³
    jmp .drawKernelZone        ; 3
     
 .doneDrawKernelZone
@@ -963,12 +963,12 @@ DrawKernelZone
    IF COMPILE_REGION != PAL50
    
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue_02;2³        branch if capacitor not charged
+   bmi .readRightPaddleValue_02;2Â³        branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue_02
    lda INPT1                  ; 3         read right paddle controller
-   bmi DrawBottomLaserBaseKernel;2³ + 1   branch if capacitor not charged
+   bmi DrawBottomLaserBaseKernel;2Â³ + 1   branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
    
@@ -987,7 +987,7 @@ DrawBottomLaserBaseKernel SUBROUTINE
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionBottomLaserBase_00
    dey                        ; 2
-   bpl .coarsePositionBottomLaserBase_00;2³
+   bpl .coarsePositionBottomLaserBase_00;2Â³
    sta RESP0                  ; 3
    sta HMP0                   ; 3
    sta WSYNC
@@ -999,7 +999,7 @@ DrawBottomLaserBaseKernel SUBROUTINE
    inc scanlineCount          ; 5         increment scan line count
 .coarsePositionBottomLaserBase_01
    dey                        ; 2
-   bpl .coarsePositionBottomLaserBase_01;2³
+   bpl .coarsePositionBottomLaserBase_01;2Â³
    sta RESP1                  ; 3
    sta HMP1                   ; 3
    sta WSYNC
@@ -1023,12 +1023,12 @@ DrawBottomLaserBaseKernel SUBROUTINE
    IF COMPILE_REGION != PAL50
    
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue  ;2³         branch if capacitor not charged    
+   bmi .readRightPaddleValue  ;2Â³         branch if capacitor not charged    
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue
    lda INPT1                  ; 3         read right paddle controller
-   bmi .nextDrawBottomLaserBaseLine;2³    branch if capacitor not charged    
+   bmi .nextDrawBottomLaserBaseLine;2Â³    branch if capacitor not charged    
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
    
@@ -1043,7 +1043,7 @@ DrawBottomLaserBaseKernel SUBROUTINE
    lda BottomLaserBase_01,y   ; 4
    sta GRP1                   ; 3 = @10
    dex                        ; 2
-   bne .drawFirstHalfBottomLaserBase;2³
+   bne .drawFirstHalfBottomLaserBase;2Â³
    lda #BLACK + 4             ; 2
    eor colorEOR               ; 3         flip color bits if COLOR_CYCLE_ON
    and #$F7                   ; 2
@@ -1055,12 +1055,12 @@ DrawBottomLaserBaseKernel SUBROUTINE
    IF COMPILE_REGION != PAL50
    
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue_01;2³        branch if capacitor not charged     
+   bmi .readRightPaddleValue_01;2Â³        branch if capacitor not charged     
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue_01
    lda INPT1                  ; 3         read right paddle controller
-   bmi .nextDrawSecondHalfLaserBase;2³    branch if capacitor not charged    
+   bmi .nextDrawSecondHalfLaserBase;2Â³    branch if capacitor not charged    
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
    
@@ -1075,14 +1075,14 @@ DrawBottomLaserBaseKernel SUBROUTINE
    lda BottomLaserBase_01,y   ; 4
    sta GRP1                   ; 3 = @10
    dex                        ; 2
-   bne .drawSecondHalfBottomLaserBase;2³
+   bne .drawSecondHalfBottomLaserBase;2Â³
    sta WSYNC
 ;--------------------------------------
    stx GRP0                   ; 3 = @03
    stx GRP1                   ; 3 = @06
    lda gameState              ; 3         get current game state
    and #COPYRIGHT_MASK        ; 2         keep COPYRIGHT_MASK value
-   beq DrawBottomScoreKernel  ; 2³ + 1    branch if COPYRIGHT_OFF
+   beq DrawBottomScoreKernel  ; 2Â³ + 1    branch if COPYRIGHT_OFF
    
    IF COMPILE_REGION = PAL50
    
@@ -1090,12 +1090,12 @@ DrawBottomLaserBaseKernel SUBROUTINE
    
 ReadPaddleControllers SUBROUTINE
    lda INPT0                  ; 3         read left paddle controller
-   bmi .readRightPaddleValue  ; 2³        branch if capacitor not charged
+   bmi .readRightPaddleValue  ; 2Â³        branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta leftPaddleDischargeValue;3
 .readRightPaddleValue
    lda INPT1                  ; 3         read right paddle controller
-   bmi .doneReadPaddleControllers;2³      branch if capacitor not charged
+   bmi .doneReadPaddleControllers;2Â³      branch if capacitor not charged
    lda scanlineCount          ; 3         get current scan line count
    sta rightPaddleDischargeValue;3
 .doneReadPaddleControllers
@@ -1138,7 +1138,7 @@ DrawCopyrightKernel
    ldy #2                     ; 2
 .wait09Cycles
    dey                        ; 2
-   bne .wait09Cycles          ; 2³
+   bne .wait09Cycles          ; 2Â³
    sta wait03Cycles           ; 3         waste 3 cycles
    lda Copyright_0 - 1,x      ; 4
    sta GRP0                   ; 3 = @21
@@ -1154,7 +1154,7 @@ DrawCopyrightKernel
    sta GRP0                   ; 3 = @55
    ldx tmpCopyrightIndex      ; 3
    dex                        ; 2
-   bne .drawCopyrightKernel   ; 2³
+   bne .drawCopyrightKernel   ; 2Â³
    stx GRP0                   ; 3 = @65   clear GRP0 graphics (i.e. x = 0)
    stx GRP1                   ; 3 = @68   clear GRP1 graphics (i.e. x = 0)
    sta WSYNC
@@ -1175,7 +1175,7 @@ DrawBottomScoreKernel SUBROUTINE
    ldx #4                     ; 2
 .coarsePositionScoreObjects
    dex                        ; 2
-   bpl .coarsePositionScoreObjects;2³
+   bpl .coarsePositionScoreObjects;2Â³
    sta RESP0                  ; 3 = @44
    sta RESP1                  ; 3 = @47
    lda #HMOVE_L7              ; 2
@@ -1219,7 +1219,7 @@ DrawBottomScoreKernel SUBROUTINE
    sta WSYNC
 ;--------------------------------------
    dey                        ; 2
-   bpl .drawBottomScoreKernel ; 2³
+   bpl .drawBottomScoreKernel ; 2Â³
    lda #0                     ; 2         not needed...accumulator already 0
    sta GRP0                   ; 3 = @09
    sta GRP1                   ; 3 = @12
