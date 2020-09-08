@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1981, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS Â© 1981, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -446,7 +446,7 @@ DisplayKernel
    lda (player2OnesDigitGraphicPtrs),y;5
    sta GRP1                   ; 3 = @50
    dey                        ; 2
-   bpl .drawDigits            ; 2³
+   bpl .drawDigits            ; 2Â³
    sta WSYNC
 ;--------------------------------------
    lda #REFLECT               ; 2
@@ -470,7 +470,7 @@ DisplayKernel
    sta GRP1                   ; 3 = @10
    lda screenSaverColorEOR    ; 3
    cpy #H_FISHERMAN_HEAD - 3  ; 2
-   bcs .colorFishermanHeads   ; 2³        branch if coloring hats
+   bcs .colorFishermanHeads   ; 2Â³        branch if coloring hats
    eor #COLOR_FISHERMAN_FACE  ; 2         color fisherman face
 .colorFishermanHeads
    and hueMask                ; 3
@@ -480,7 +480,7 @@ DisplayKernel
    sta WSYNC
 ;--------------------------------------
    dey                        ; 2
-   bpl .drawFishermanHeads    ; 2³
+   bpl .drawFishermanHeads    ; 2Â³
    stx GRP0                   ; 3 = @07
    lda leftFishermanColor     ; 3         get color for left fisherman body
    sta COLUP0                 ; 3 = @13   set color for left fisherman body
@@ -523,12 +523,12 @@ DisplayKernel
    adc fishingLineSlopeFractionValues,x;4 increment by slope fraction value
    sta fishingLineSlopeIntegerValue,x;4   set fishing line slope integer value
    sta HMCLR                  ; 3 = @42
-   bcc .nextFishermanBodyScanline;2³      branch if no overflow
+   bcc .nextFishermanBodyScanline;2Â³      branch if no overflow
    lda fishingLineHMOVEValues,x;4         get fishing line HMOVE value
    sta HMM1,x                 ; 4 = @52   set to adjust fishing line position
 .nextFishermanBodyScanline
    dey                        ; 2
-   bpl .drawFishermanBody     ; 2³ + 1    crosses a page boundary
+   bpl .drawFishermanBody     ; 2Â³ + 1    crosses a page boundary
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -558,7 +558,7 @@ DisplayKernel
 ;--------------------------------------
 .coarsePostionHookedFish
    dey                        ; 2
-   bpl .coarsePostionHookedFish;2³
+   bpl .coarsePostionHookedFish;2Â³
    sta.w RESP1                ; 4
    sta WSYNC
 ;--------------------------------------
@@ -575,7 +575,7 @@ DisplayKernel
    eor colorEOR               ; 3         flip color bits
    sta COLUBK                 ; 3 = @11   set color for water shimmer
    cpy #(H_WATER_SHIMMER / 2) - 1;2
-   bcs .determineFishingLineRunValue;2³
+   bcs .determineFishingLineRunValue;2Â³
    eor #6                     ; 2
    sta COLUPF                 ; 3 = @20   color platform
    sta COLUP1                 ; 3 = @23   color player 1 fishing line
@@ -588,7 +588,7 @@ DisplayKernel
    adc fishingLineSlopeFractionValues,x;4 increment by slope fraction value
    sta fishingLineSlopeIntegerValue,x;4   set fishing line slope integer value
    sta HMCLR                  ; 3 = @46
-   bcc .nextWaterShimmerScanline;2³
+   bcc .nextWaterShimmerScanline;2Â³
    lda fishingLineHMOVEValues,x;4         get fishing line HMOVE value
    sta HMM1,x                 ; 4 = @56   set to adjust fishing line position
 .nextWaterShimmerScanline
@@ -597,7 +597,7 @@ DisplayKernel
    rol                        ; 2         multiply by 2 with carry in D0
    sta randomSeed             ; 3         a = 2a + (a > 127)
    dey                        ; 2
-   bpl .colorWaterShimmer     ; 2³
+   bpl .colorWaterShimmer     ; 2Â³
    sta WSYNC
 ;--------------------------------------
    lda seaColor               ; 3
@@ -637,7 +637,7 @@ DisplayKernel
 ;--------------------------------------
 .coarsePostionFloatingFish
    dey                        ; 2
-   bpl .coarsePostionFloatingFish;2³
+   bpl .coarsePostionFloatingFish;2Â³
    sta.w RESP0                ; 4
    ldy #H_FISH - 3            ; 2
 .drawFishKernelSection
@@ -654,7 +654,7 @@ DisplayKernel
    sta HMCLR                  ; 3 = @28
    sta HMP0                   ; 3 = @31
    dec rightFishingHookKernelValue;5
-   bpl .determineRightFishingLineRunValue;2³
+   bpl .determineRightFishingLineRunValue;2Â³
    lda #DISABLE_BM            ; 2
    sta ENABL                  ; 3 = @43   disable right fishing line
 .determineRightFishingLineRunValue
@@ -662,7 +662,7 @@ DisplayKernel
    lda rightFishingLineSlopeIntegerValue;3
    adc rightFishingLineSlopeFractionValue;3
    sta rightFishingLineSlopeIntegerValue;3
-   bcc .leftFishingLineKernel ; 2³
+   bcc .leftFishingLineKernel ; 2Â³
    lda rightFishingLineHMOVEValue;3
    sta HMBL                   ; 3 = @62
 .leftFishingLineKernel
@@ -680,7 +680,7 @@ DisplayKernel
    sta HMCLR                  ; 3 = @28
    sta HMP0                   ; 3 = @31
    dec leftFishingHookKernelValue;5
-   bpl .determineLeftFishingLineRunValue;2³
+   bpl .determineLeftFishingLineRunValue;2Â³
    lda #DISABLE_BM            ; 2
    sta ENAM1                  ; 3         disable left fishing line
 .determineLeftFishingLineRunValue
@@ -688,14 +688,14 @@ DisplayKernel
    lda leftFishingLineSlopeIntegerValue;3
    adc leftFishingLineSlopeFractionValue;3
    sta leftFishingLineSlopeIntegerValue;3
-   bcc .nextDrawFishKernelSection;2³
+   bcc .nextDrawFishKernelSection;2Â³
    lda leftFishingLineHMOVEValue;3
    sta HMM1                   ; 3 = @63
 .nextDrawFishKernelSection
    dey                        ; 2
-   bpl .drawFishKernelSection ; 2³
+   bpl .drawFishKernelSection ; 2Â³
    dex                        ; 2
-   bmi CopyrightKernel        ; 2³
+   bmi CopyrightKernel        ; 2Â³
    jmp .fishKernelSection     ; 3
        
 CopyrightKernel
@@ -731,7 +731,7 @@ CopyrightKernel
    sty GRP1                   ; 3 = @35
    sta HMCLR                  ; 3 = @38
    dex                        ; 2
-   bpl .drawActivisionLogo    ; 2³
+   bpl .drawActivisionLogo    ; 2Â³
 Overscan
 
    IF COMPILE_REGION = PAL50
