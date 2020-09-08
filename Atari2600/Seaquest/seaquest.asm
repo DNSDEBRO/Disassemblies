@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1983, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS Â© 1983, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -562,7 +562,7 @@ DisplayKernel
    sta GRP0                   ; 3 = @54
    ldy tmpSixDigitLoopCount   ; 3
    dey                        ; 2
-   bpl .drawSixDigitDisplay   ; 2³
+   bpl .drawSixDigitDisplay   ; 2Â³
    iny                        ; 2         y = 0
    ldx #4                     ; 2         skip 5 scanlines after score
 .skipScanlinesAfterScoreDisplay
@@ -574,7 +574,7 @@ DisplayKernel
    sty GRP0                   ; 3 = @12
    sty GRP1                   ; 3 = @15
    dex                        ; 2
-   bpl .skipScanlinesAfterScoreDisplay;2³
+   bpl .skipScanlinesAfterScoreDisplay;2Â³
    ldy reserveSubs            ; 3         get number of reserve submarines
    lda IndicatorNUSIZValueTable,y;4
    sta NUSIZ1                 ; 3 = @29
@@ -587,15 +587,15 @@ DisplayKernel
 ;--------------------------------------
    sta HMOVE                  ; 3
    cpy #0                     ; 2
-   beq .drawRemainingReservedSubs;2³ + 1  branch if no reserve subs left
+   beq .drawRemainingReservedSubs;2Â³ + 1  branch if no reserve subs left
    sta GRP0                   ; 3 = @10
 .drawRemainingReservedSubs
    cpy #2                     ; 2
-   bcc .nextReservedSubLine   ; 2³
+   bcc .nextReservedSubLine   ; 2Â³
    sta GRP1                   ; 3 = @17
 .nextReservedSubLine
    dex                        ; 2
-   bpl .drawReservedSubs      ; 2³ + 1    crosses page boundary
+   bpl .drawReservedSubs      ; 2Â³ + 1    crosses page boundary
    lda seaquestSubHMOVEValue  ; 3
    and #$0F                   ; 2         keep coarse movement value
    sta tmpSeaquestSubCoarseValue;3
@@ -608,7 +608,7 @@ DisplayKernel
    lda enemyPatrolSubHMOVEValue;3
    and #$0F                   ; 2         keep coarse movement value
    tax                        ; 2
-   bne .coarsePositionEnemyPatrolSub;2³
+   bne .coarsePositionEnemyPatrolSub;2Â³
    lda #HMOVE_L6              ; 2
    SLEEP 2                    ; 2
    sta RESP1                  ; 3 = @25
@@ -617,7 +617,7 @@ DisplayKernel
    
 .coarsePositionEnemyPatrolSub
    dex                        ; 2
-   bne .coarsePositionEnemyPatrolSub;2³
+   bne .coarsePositionEnemyPatrolSub;2Â³
    SLEEP 2                    ; 2
    sta RESP1                  ; 3
 .positionSeaquestSub
@@ -630,7 +630,7 @@ DisplayKernel
    sty tmpSeaquestSubCoarseValue;3        waste 3 cycles
 .coarsePositionSeaquestSub
    dey                        ; 2
-   bpl .coarsePositionSeaquestSub;2³
+   bpl .coarsePositionSeaquestSub;2Â³
    sta.w RESP0                ; 4
    stx HMP0                   ; 3
    sta HMP1                   ; 3
@@ -663,13 +663,13 @@ DisplayKernel
    sta NUSIZ0                 ; 3 = @06   set torpedo and submarine sizes
    ldy seaquestSubVertPos     ; 3         get Seaquest Sub vertical position
    ldx seaquestSubDeathAnimIdx; 3         get death animation value
-   beq .setEnemyPatrolSubValues;2³
+   beq .setEnemyPatrolSubValues;2Â³
    lda SeaquestSubDeathColorValues - 1,x;4
    sta COLUP0                 ; 3         set Seaquest Sub death color
    cpx #15                    ; 2
-   bcs .setEnemyPatrolSubValues;2³
+   bcs .setEnemyPatrolSubValues;2Â³
    cpx #10                    ; 2
-   bcs .setSeaquestSubDeathGraphicValue;2³
+   bcs .setSeaquestSubDeathGraphicValue;2Â³
    ldx #10                    ; 2
 .setSeaquestSubDeathGraphicValue
    lda SeaquestSubDeathGraphicValues - 10,x;4
@@ -689,7 +689,7 @@ DisplayKernel
    sta HMOVE                  ; 3
    sta COLUBK                 ; 3 = @06
    dex                        ; 2
-   bpl .colorHorizon          ; 2³
+   bpl .colorHorizon          ; 2Â³
    inx                        ; 2         x = 0
    stx NUSIZ1                 ; 3 = @15   set to ONE_COPY
    lda randomSeed             ; 3         get current random number
@@ -710,7 +710,7 @@ DisplayKernel
    eor seaColor               ; 3         flip D1 for sea surface color cycles
    sta tmpSeaSurfaceColor     ; 3
    cpx #2                     ; 2
-   bcc .skipSeaSurfaceSeaquestDraw;2³
+   bcc .skipSeaSurfaceSeaquestDraw;2Â³
    txa                        ; 2
    tay                        ; 2
    lda tmpSeaSurfaceColor     ; 3
@@ -722,13 +722,13 @@ DisplayKernel
    sta GRP1                   ; 3 = @14
    ldy tmpSeaquestGraphicIdx  ; 3
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .nextSeaSurfaceScanline; 2³
+   bcs .nextSeaSurfaceScanline; 2Â³
    lda (seaquestSubGraphicPtrs),y;5
 .drawSeaSurfaceSeaquestSub
    sta GRP0                   ; 3
 .nextSeaSurfaceScanline
    dex                        ; 2
-   bpl .drawSeaSurfaceKernel  ; 2³
+   bpl .drawSeaSurfaceKernel  ; 2Â³
    bmi .doneDrawSeaSurfaceKernel;3        unconditional branch
        
 .skipSeaSurfaceSeaquestDraw
@@ -753,7 +753,7 @@ DisplayKernel
 .resetKernelCollectionValues
    sta collisionValues,x      ; 4
    dex                        ; 2
-   bpl .resetKernelCollectionValues;2³
+   bpl .resetKernelCollectionValues;2Â³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -769,7 +769,7 @@ KernelLoop
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .prepareToPositionObstacle;2³
+   bcs .prepareToPositionObstacle;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    sta GRP0                   ; 3 = @13
    lda TorpedoEnablingValues,y; 4
@@ -777,13 +777,13 @@ KernelLoop
 .prepareToPositionObstacle
    sty tmpSeaquestGraphicIdx  ; 3
    lda obstacleNUSIZIndexes,x ; 4
-   beq .setObstacleHMOVEValues; 2³
+   beq .setObstacleHMOVEValues; 2Â³
    tay                        ; 2
    lda ObstacleHorizOffsetTable,y;4
    clc                        ; 2
    adc obstacleHorizPos,x     ; 4
    cmp #XMAX                  ; 2
-   bcc .setObstacleHMOVEValues; 2³        branch if less than XMAX
+   bcc .setObstacleHMOVEValues; 2Â³        branch if less than XMAX
    sbc #(XMAX / 2) + 16       ; 2
 .setObstacleHMOVEValues
    tax                        ; 2
@@ -795,7 +795,7 @@ KernelLoop
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .setupThirdKernelLoopScanline;2³
+   bcs .setupThirdKernelLoopScanline;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    sta GRP0                   ; 3 = @13
    lda TorpedoEnablingValues,y; 4
@@ -805,7 +805,7 @@ KernelLoop
    tax                        ; 2
    dey                        ; 2
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .thirdKernelLoopScanline;2³
+   bcs .thirdKernelLoopScanline;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    ldx TorpedoEnablingValues,y; 4
 .thirdKernelLoopScanline
@@ -817,7 +817,7 @@ KernelLoop
    lda obstacleHMOVEValues    ; 3         get obstacle HMOVE value
    and #$0F                   ; 2         keep coarse position value
    tax                        ; 2
-   bne .coarsePositionObstacle; 2²
+   bne .coarsePositionObstacle; 2Â²
    lda #HMOVE_L6              ; 2
    SLEEP 2                    ; 2
    sta RESP1                  ; 3 = @25
@@ -826,7 +826,7 @@ KernelLoop
        
 .coarsePositionObstacle
    dex                        ; 2
-   bne .coarsePositionObstacle; 2³
+   bne .coarsePositionObstacle; 2Â³
    SLEEP 2                    ; 2
    sta RESP1                  ; 3
 .fourthKernelLoopScanline
@@ -835,7 +835,7 @@ KernelLoop
    sta HMOVE                  ; 3
    dey                        ; 2
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .prepareToPositionBallObject;2³
+   bcs .prepareToPositionBallObject;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    sta GRP0                   ; 3 = @17
    lda TorpedoEnablingValues,y; 4
@@ -844,7 +844,7 @@ KernelLoop
    ldx kernelSection          ; 3
    lda enemySubTorpedoOrDiverHorizPos,x;4 get horizontal position
    cmp #XMAX                  ; 2
-   bcc .setBallHMOVEValues    ; 2³
+   bcc .setBallHMOVEValues    ; 2Â³
    lda #XMIN                  ; 2
 .setBallHMOVEValues
    tax                        ; 2
@@ -855,7 +855,7 @@ KernelLoop
    tax                        ; 2
    dey                        ; 2
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .fifthKernelLoopScanline;2³
+   bcs .fifthKernelLoopScanline;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    ldx TorpedoEnablingValues,y; 4
 .fifthKernelLoopScanline
@@ -867,16 +867,16 @@ KernelLoop
    lda enemyTorpedoOrDiverHMOVEValues;3
    and #$0F                   ; 2         keep coarse movement value
    tax                        ; 2
-   bne .coarsePositionBall    ; 2³
+   bne .coarsePositionBall    ; 2Â³
    lda #HMOVE_L6              ; 2
    SLEEP 2                    ; 2
    sta RESBL                  ; 3
    sta HMBL                   ; 3
-   bne .sixthKernelLoopScanline;2³
+   bne .sixthKernelLoopScanline;2Â³
        
 .coarsePositionBall
    dex                        ; 2
-   bne .coarsePositionBall    ; 2³
+   bne .coarsePositionBall    ; 2Â³
    SLEEP 2                    ; 2
    sta RESBL                  ; 3
 .sixthKernelLoopScanline
@@ -885,7 +885,7 @@ KernelLoop
    sta HMOVE                  ; 3
    dey                        ; 2
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .setObstacleNUSIZForKernel;2³
+   bcs .setObstacleNUSIZForKernel;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    sta GRP0                   ; 3 = @17
    lda TorpedoEnablingValues,y; 4
@@ -910,7 +910,7 @@ KernelLoop
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .setupForObstacleGraphicPointers;2³
+   bcs .setupForObstacleGraphicPointers;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    sta GRP0                   ; 3 = @13
    lda TorpedoEnablingValues,y; 4
@@ -918,7 +918,7 @@ KernelLoop
 .setupForObstacleGraphicPointers
    lda ObstacleGraphicLSBValues,x;4
    cpx #4                     ; 2
-   bcs .setObstacleGraphicLSBValue;2³     branch if obstacle is an Enemy Sub
+   bcs .setObstacleGraphicLSBValue;2Â³     branch if obstacle is an Enemy Sub
    adc killerSharkFloatingValue;3         increment to show Shark floating
 .setObstacleGraphicLSBValue
    sta obstacleGraphicPtrs    ; 3
@@ -938,7 +938,7 @@ KernelLoop
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .setBallGraphicPointerValues;2³
+   bcs .setBallGraphicPointerValues;2Â³
    sta GRP0                   ; 3 = @08
    lda TorpedoEnablingValues,y; 4
    sta ENAM0                  ; 3 = @15
@@ -966,14 +966,14 @@ KernelLoop
    sta HMOVE                  ; 3
    sta ENABL                  ; 3 = @06
    sta CTRLPF                 ; 3 = @09
-   bcs .skipSeaquestDraw      ; 2³
+   bcs .skipSeaquestDraw      ; 2Â³
    stx ENAM0                  ; 3 = @14
    lda (seaquestSubGraphicPtrs),y;5
 .nextKernelSectionScanline
    sta GRP0                   ; 3
    ldx tmpObstacleGraphicIdx  ; 3
    dex                        ; 2
-   bpl .kernelSectionLoop     ; 2³
+   bpl .kernelSectionLoop     ; 2Â³
    bmi .doneKernelSectionLoop ; 3         unconditional branch
        
 .skipSeaquestDraw
@@ -986,7 +986,7 @@ KernelLoop
    sta VDELP1                 ; 3
    dey                        ; 2
    cpy #H_SEAQUEST_SUB - 2    ; 2
-   bcs .setKernelCollisionValues;2³
+   bcs .setKernelCollisionValues;2Â³
    lda (seaquestSubGraphicPtrs),y;5
    ldx TorpedoEnablingValues,y; 4
 .setKernelCollisionValues
@@ -998,23 +998,23 @@ KernelLoop
    ldx kernelSection          ; 3
    txa                        ; 2
    bit CXP0FB                 ; 3
-   bvc .checkSeaquestSubTorpedoCollision;2³ branch if not hit by enemy torpedo
+   bvc .checkSeaquestSubTorpedoCollision;2Â³ branch if not hit by enemy torpedo
    stx seaquestBallCollisionValue;3       set value to any non-negative number
 .checkSeaquestSubTorpedoCollision
    bit CXM0P                  ; 3
-   bpl .checkForBallCollision ; 2³        branch if didn't shot obstacle
+   bpl .checkForBallCollision ; 2Â³        branch if didn't shot obstacle
    stx seaquestTorpedoCollisionValue;3    set section for torpedo collision
 .checkForBallCollision
    bit CXP1FB                 ; 3
-   bvc .checkSeaquestSubObstacleCollision;2³
+   bvc .checkSeaquestSubObstacleCollision;2Â³
    sta collisionValues,x      ; 4         store kernel section for collision
 .checkSeaquestSubObstacleCollision
    bit CXPPMM                 ; 3         check player collision values
-   bpl .nextKernelLoop        ; 2³
+   bpl .nextKernelLoop        ; 2Â³
    stx seaquestObstacleCollisionValue;3   store kernel section for collision
 .nextKernelLoop
    dex                        ; 2
-   bmi SeaFloorKernel         ; 2³
+   bmi SeaFloorKernel         ; 2Â³
    jmp KernelLoop             ; 3
        
 SeaWeedColorValues
@@ -1032,7 +1032,7 @@ SeaFloorKernel
    sta HMOVE                  ; 3
    sta COLUBK                 ; 3 = @06
    dex                        ; 2
-   bpl .colorSeaWeedSection   ; 2³
+   bpl .colorSeaWeedSection   ; 2Â³
    lda seaFloorColor          ; 3
    sta COLUPF                 ; 3 = @16
    ldy #4                     ; 2
@@ -1047,7 +1047,7 @@ SeaFloorKernel
    sta PF1                    ; 3 = @09
    sta PF2                    ; 3 = @12
    dey                        ; 2
-   bne .drawSeaFloorReef      ; 2³
+   bne .drawSeaFloorReef      ; 2Â³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -1065,7 +1065,7 @@ SeaFloorKernel
    iny                        ; 2         y = 1
    sty NUSIZ0                 ; 3 = @40   set to TWO_COPIES
    lda oxygenValue            ; 3         get oxygen value
-   beq .determineOxygenHMOVEValues;2³
+   beq .determineOxygenHMOVEValues;2Â³
    clc                        ; 2
    adc #46                    ; 2
 .determineOxygenHMOVEValues
@@ -1084,7 +1084,7 @@ SeaFloorKernel
    SLEEP 2                    ; 2
 .coarsePositionOxygenBar
    dex                        ; 2
-   bpl .coarsePositionOxygenBar;2³
+   bpl .coarsePositionOxygenBar;2Â³
    sta RESBL                  ; 3
    sta HMP1                   ; 3
    sty HMBL                   ; 3
@@ -1111,17 +1111,17 @@ SeaFloorKernel
    ldx oxygenBarColor         ; 3         get oxygen bar color value
    lda seaquestSubVertPos     ; 3         get Seaquest Sub vertical position
    cmp #SEAQUEST_YMIN         ; 2
-   beq .setKernelOxygenBarColor;2³        branch if Seaquest Sub at top
+   beq .setKernelOxygenBarColor;2Â³        branch if Seaquest Sub at top
    lda oxygenValue            ; 3         get current oxygen value
-   beq .setKernelOxygenBarColor;2³        branch if no oxygen left
+   beq .setKernelOxygenBarColor;2Â³        branch if no oxygen left
    lda seaquestSubDeathAnimIdx; 3
-   bne .setKernelOxygenBarColor;2³
+   bne .setKernelOxygenBarColor;2Â³
    lda #16                    ; 2
    cmp oxygenValue            ; 3
-   bcc .setKernelOxygenBarColor;2³
+   bcc .setKernelOxygenBarColor;2Â³
    ldy #15                    ; 2
    and frameCount             ; 3
-   bne .setKernelOxygenBarColor;2³
+   bne .setKernelOxygenBarColor;2Â³
    ldx oxygenLiteralColor     ; 3         get oxygen literal color
 .setKernelOxygenBarColor
    stx tmpOxygenBarColor      ; 3
@@ -1156,7 +1156,7 @@ SeaFloorKernel
    SLEEP 2                    ; 2
    sta COLUPF                 ; 3 = @60
    dex                        ; 2
-   bpl .drawOxygenKernel      ; 2³
+   bpl .drawOxygenKernel      ; 2Â³
    ldy retrievedDivers        ; 3         get number of retrieved divers
    sta WSYNC
 ;--------------------------------------
@@ -1189,13 +1189,13 @@ SeaFloorKernel
    ldx #COLOR_RETRIEVED_DIVERS; 2
    lda retrievedDivers        ; 3         get number of retrieved divers
    cmp #MAX_RETRIEVED_DIVERS  ; 2
-   bne .colorRetrievedDivers  ; 2³
+   bne .colorRetrievedDivers  ; 2Â³
    lda seaquestSubVertPos     ; 3
    cmp #SEAQUEST_YMIN         ; 2
-   beq .colorRetrievedDivers  ; 2³
+   beq .colorRetrievedDivers  ; 2Â³
    lda frameCount             ; 3
    and #8                     ; 2
-   bne .colorRetrievedDivers  ; 2³
+   bne .colorRetrievedDivers  ; 2Â³
    ldx #BLACK + 6             ; 2
 .colorRetrievedDivers
    txa                        ; 2
@@ -1214,15 +1214,15 @@ SeaFloorKernel
    sta GRP1                   ; 3 = @09
    lda #0                     ; 2
    cpy #2                     ; 2
-   bcs .checkForNoDiversLeft  ; 2³
+   bcs .checkForNoDiversLeft  ; 2Â³
    sta GRP1                   ; 3 = @18   clear GRP1 if retrieved divers < 2
 .checkForNoDiversLeft
    cpy #0                     ; 2
-   bne .nextDiversKernelScanline;2³
+   bne .nextDiversKernelScanline;2Â³
    sta GRP0                   ; 3 = @25   clear GRP0 if retrieved divers = 0
 .nextDiversKernelScanline
    dex                        ; 2
-   bne .drawRetrievedDiversKernel;2³
+   bne .drawRetrievedDiversKernel;2Â³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -1258,10 +1258,10 @@ SeaFloorKernel
    lsr                        ; 2
    lsr                        ; 2
    cmp #20                    ; 2
-   bcs CopyrightKernel        ; 2³        branch if scroll rate >= 160
+   bcs CopyrightKernel        ; 2Â³        branch if scroll rate >= 160
    ldy #H_COPYRIGHT - 1       ; 2
    cmp #12                    ; 2
-   bcc CopyrightKernel        ; 2³        branch if scroll rate < 96
+   bcc CopyrightKernel        ; 2Â³        branch if scroll rate < 96
    sbc #4                     ; 2         subtract value by 4 for line pointer
    tay                        ; 2
 CopyrightKernel
@@ -1290,7 +1290,7 @@ CopyrightKernel
    sty GRP1                   ; 3 = @51
    sta GRP0                   ; 3 = @54
    dec tmpCopyrightLoopCount  ; 5
-   bpl .copyrightLogoLoop     ; 2³
+   bpl .copyrightLogoLoop     ; 2Â³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
