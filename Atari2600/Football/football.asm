@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 1979, ATARI                                        =
+; = THE ASSEMBLED CODE IS Â© 1979, ATARI                                        =
 ; =                                                                            =
 ; ==============================================================================
 
@@ -491,7 +491,7 @@ DisplayKernel
 ;--------------------------------------
 .coarseMoveFootball
    dey                        ; 2
-   bpl .coarseMoveFootball    ; 2³
+   bpl .coarseMoveFootball    ; 2Â³
    sta RESBL,x                ; 4
    sta HMBL                   ; 3
    sta WSYNC
@@ -527,7 +527,7 @@ DisplayKernel
    lda scoreBoardValues,x     ; 4 = @26
    and #$0F                   ; 2
    jsr BCD2Digits             ; 6
-   bpl .setGraphicPointersForScoreBoard;2³
+   bpl .setGraphicPointersForScoreBoard;2Â³
    ldy #H_FONT                ; 2 = @70
    sty VBLANK                 ; 3 = @73   enable TIA (i.e. D1 = 0)
    lda #HMOVE_R4 | THREE_MED_COPIES;2
@@ -587,10 +587,10 @@ ScoreBoardKernel
    lda (player2ScoreGraphicPtrs + 2),y;5  get ones graphic data for score
    sta GRP0                   ; 3 = @53   draw player 2 score ones value
    stx COLUP0                 ; 3 = @56
-   bcs ScoreBoardKernel       ; 2³
+   bcs ScoreBoardKernel       ; 2Â³
    sec                        ; 2
    dey                        ; 2
-   bne .scoreBoardKernelLoop  ; 2³
+   bne .scoreBoardKernelLoop  ; 2Â³
    sty GRP0                   ; 3 = @67
    sty VDELP1                 ; 3 = @70
    stx COLUP1                 ; 3 = @73
@@ -621,7 +621,7 @@ ScoreBoardKernel
    sta GRP0                   ; 3 = @54   draw player program play indicator
    dey                        ; 2
    dey                        ; 2
-   bne .drawPlayIndicators    ; 2³
+   bne .drawPlayIndicators    ; 2Â³
    sty GRP0                   ; 3 = @63
    sec                        ; 2
    ldx #2                     ; 2
@@ -636,10 +636,10 @@ ScoreBoardKernel
    sbc #3                     ; 2
 .coarsePositionFootballPlayer
    sbc #1                     ; 2
-   bne .coarsePositionFootballPlayer;2³
+   bne .coarsePositionFootballPlayer;2Â³
    dex                        ; 2
    sta RESP0,x                ; 4
-   bne .setFootballPlayerValues;2³
+   bne .setFootballPlayerValues;2Â³
    sta WSYNC
 ;--------------------------------------
    ldx player1TeamColor       ; 3
@@ -653,7 +653,7 @@ ScoreBoardKernel
    lda #MSBL_SIZE2 | PF_PRIORITY | PF_REFLECT;2
    sta CTRLPF                 ; 3 = @27
    lda ballSnapTimer          ; 3         get ball snap timer value
-   bne .setPlayerNUSIZValues  ; 2³        branch if ball not snapped
+   bne .setPlayerNUSIZValues  ; 2Â³        branch if ball not snapped
    tay                        ; 2
    tax                        ; 2
 .setPlayerNUSIZValues
@@ -703,15 +703,15 @@ FootballFieldKernel
    txa                        ; 2         move scan line count to accumulator
 .footballFieldKernel
    bit yardMarkingHeight      ; 3
-   beq .alternateFieldColors  ; 2³
+   beq .alternateFieldColors  ; 2Â³
    sbc footballVertPos        ; 3         subtract football vertical position
    and #~(H_FOOTBALL - 1)     ; 2         and with 2's complement of H_FOOTBALL
-   bne .skipDrawFootball      ; 2³        branch to disable football
+   bne .skipDrawFootball      ; 2Â³        branch to disable football
    ldy #ENABLE_BM             ; 2
    sty ENABL                  ; 3 = @24
    SLEEP 2                    ; 2
    cpx #H_KERNEL + 1          ; 2
-   bcc .checkToDrawPlayer1Sprite;2³
+   bcc .checkToDrawPlayer1Sprite;2Â³
    bcs Overscan               ; 3         unconditional branch
    
 .skipDrawFootball
@@ -738,7 +738,7 @@ FootballFieldKernel
    txa                        ; 2         move scan line count to accumulator
    sbc player1VertPos         ; 3         subtract player 1 vertical position
    cmp #H_PLAYER + 1          ; 2
-   bcs .skipDrawPlayer1       ; 2³ + 1
+   bcs .skipDrawPlayer1       ; 2Â³ + 1
    tay                        ; 2
    lda FootballPlayerSprite,y ; 4
    sta.w GRP0                 ; 4 = @52
@@ -746,28 +746,28 @@ FootballFieldKernel
    txa                        ; 2         move scan line count to accumulator
    sbc player2VertPos         ; 3         subtract player 2 vertical position
    cmp #H_PLAYER + 1          ; 2
-   bcs .skipDrawPlayer2       ; 2³ + 1
+   bcs .skipDrawPlayer2       ; 2Â³ + 1
    tay                        ; 2
    lda FootballPlayerSprite,y ; 4
    sta GRP1                   ; 3 = @70
 .checkToDrawFirstDownMarker
    cpx firstDownMarkerVertPos ; 3
-   bne FootballFieldKernel    ; 2³
+   bne FootballFieldKernel    ; 2Â³
 ;--------------------------------------
    ldy #$FF                   ; 2 = @01
    sty.w PF2                  ; 4 = @05   draw first down marker
    txa                        ; 2         move scan line count to accumulator
    bit yardMarkingHeight      ; 3
-   beq .alternateFieldColors  ; 2³
+   beq .alternateFieldColors  ; 2Â³
    sbc footballVertPos        ; 3         subtract football vertical position
    and #~(H_FOOTBALL - 1)     ; 2         and with 2's complement of H_FOOTBALL
-   bne .skipDrawFootball      ; 2³        branch to disable football
+   bne .skipDrawFootball      ; 2Â³        branch to disable football
    ldy #ENABLE_BM             ; 2
    sty ENABL                  ; 3 = @24
    SLEEP 2                    ; 2
 .checkDoneFootballFieldKernel
    cpx #H_KERNEL + 1          ; 2
-   bcc .checkToDrawPlayer1Sprite;2³
+   bcc .checkToDrawPlayer1Sprite;2Â³
 Overscan SUBROUTINE
    ldx #0
    stx GRP0
