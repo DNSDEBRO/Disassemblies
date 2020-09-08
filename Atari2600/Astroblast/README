@@ -1,0 +1,35 @@
+Astroblast
+
+Copyright 1982 Mattel, Inc
+Designer: Hal Finney
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 115 BYTES OF RAM USED 13 BYTES FREE
+ 
+ NTSC & PAL60 ROM usage stats
+ -------------------------------------------
+*** 77 BYTES OF ROM FREE
+
+PAL50 ROM usage stats
+-------------------------------------------
+*** 80 BYTES OF ROM FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, MATTEL CANADA, INC.                          =
+=                                                                            =
+==============================================================================
+
+Structure:
+astroblast.asm          reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of the DASM cross
+assembler.
