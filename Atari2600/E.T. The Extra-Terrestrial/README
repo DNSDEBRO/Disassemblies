@@ -1,0 +1,41 @@
+E.T. The Extra-Terrestrial
+
+Copyright 1982 Atari, Inc
+Designer: Howard Scott Warshaw
+Artist:   Jerome Domurat
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 115 BYTES OF RAM USED 13 BYTES FREE
+ 
+ NTSC ROM usage stats
+ -------------------------------------------
+ *** 25 BYTES OF ROM FREE IN BANK0
+ *** 24 BYTES OF ROM FREE IN BANK1
+ ===========================================
+ *** 49 TOTAL BYTES FREE
+
+ PAL50 ROM usage stats
+ -------------------------------------------
+ *** 23 BYTES OF ROM FREE IN BANK0
+ *** 24 BYTES OF ROM FREE IN BANK1
+ ===========================================
+ *** 47 TOTAL BYTES FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, ATARI, INC.                                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+ET.asm                  reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard VCS.H header files. This is not
+supplied. It can be found with the distribution of the DASM cross assembler.
