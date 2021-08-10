@@ -1,0 +1,24 @@
+Turmoil
+
+Copyright 1982 Sirius
+Designer: Mark Turmell
+Programmer: Tom Williams
+
+Analyzed, labeled, and commented by Dennis Debro
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, SIRIUS                                       =
+=                                                                            =
+==============================================================================
+
+Structure:
+Turmoil.asm       reverse-engineered file
+makefile          Makefile to build code
+
+The reverse-engineered file uses the standard 400/800/5200 EQUATES.INC header
+file. This is not supplied.
