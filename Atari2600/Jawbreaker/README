@@ -1,0 +1,28 @@
+Jawbreaker
+
+Copyright 1982 Tiger Electronic Toys, Inc.
+Designer: John Harris
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 123 BYTES OF RAM USED 5 BYTES FREE
+ ***   0 BYTES OF ROM FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, TIGER ELECTRONIC TOYS, INC.                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+jawbreaker.asm          reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of the DASM cross
+assembler.
