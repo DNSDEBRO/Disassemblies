@@ -1,0 +1,41 @@
+Smurf Rescue in Gargamel's Castle
+
+Copyright 1982 Coleco, Inc.
+Designer: Henry Will, IV
+
+Analyzed, labeled, and commented by Dennis Debro
+
+***  88 BYTES OF RAM USED 40 BYTES FREE
+
+NTSC ROM usage stats
+-------------------------------------------
+***   5 BYTES OF ROM FREE IN BANK0
+*** 168 BYTES OF ROM FREE IN BANK1
+===========================================
+*** 173 TOTAL BYTES FREE
+
+PAL50 ROM usage stats
+-------------------------------------------
+***  12 BYTES OF BANK0 FREE
+*** 166 BYTES OF BANK1 FREE
+===========================================
+*** 178 TOTAL BYTES FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1982, COLECO, INC.                                 =
+=                                                                            =
+==============================================================================
+
+Structure:
+smurf_rescue_in_gargamels_castle.asm    reverse-engineered file
+makefile                                Makefile to build code
+tia_constants.h                         header file containing constants for the TIA
+
+The reverse-engineered file uses standard MACRO.H and VCS.H header files. These
+are not supplied. They can be found with the distribution of the DASM cross
+assembler.
