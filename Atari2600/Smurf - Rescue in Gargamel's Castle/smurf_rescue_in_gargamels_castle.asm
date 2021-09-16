@@ -842,7 +842,7 @@ InitialGameState
    stx soundEffectsAudioIndex
    dex                              ; x = -1
    stx stationaryObstacleMask       ; set to show stationary object
-   ldx #<SmurfThemeSongAudioValues - BackgroundMusicAudioValues
+   ldx #<[SmurfThemeSongAudioValues - BackgroundMusicAudioValues]
    jsr SetGameAudioValues           ; set to play Smurf theme song
    lda #MUSHROOM_HOUSE_RULE_IDX
    sta currentRoomRuleIndex
@@ -852,7 +852,7 @@ InitialGameState
    jmp DisplayGameSelection
 
 SmurfDamageCollision
-   ldx #<SmurfFallingAudioValues - SoundEffectsAudioValues
+   ldx #<[SmurfFallingAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; set to play Smurf falling sound effect
    inc gameState                    ; increment to GS_FALLING_FROM_COLLISION
 SmurfFallingFromCollision
@@ -890,7 +890,7 @@ GameProcessing
 .checkToPlayGameBackgroundMusic
    ldx currentlyPlayingAudio
    bne .checkSmurfEnergyLevel       ; branch if currently playing audio
-   ldx #<GameBackgroundMusicAudioValues - BackgroundMusicAudioValues
+   ldx #<[GameBackgroundMusicAudioValues - BackgroundMusicAudioValues]
    jsr SetGameAudioValues           ; set to recycle game background music
 .checkSmurfEnergyLevel
    lda smurfEnergyBarGraphics + 1   ; get Smurf energy value
@@ -946,14 +946,14 @@ GameProcessing
    jmp .setSmurfToStationaryAnimation
 
 .smurfJumping
-   ldx #<SmurfJumpingAudioValues - SoundEffectsAudioValues
+   ldx #<[SmurfJumpingAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; set to play Smurf jumping sound effect
    lda smurfSuperJumpTimer          ; get Smurf super jump timer
    bne .performSuperJump            ; branch if doing super jump
    lda smurfAttributes              ; get Smurf attribute values
    and #SMURF_HORIZ_MOTION_MASK     ; keep SMURF_HORIZ_MOTION value
    bne .performStationaryJump       ; branch if SMURF_NO_HORIZ_DIR
-   lda #<RunningJumpPositionChangeValues - JumpingPositionChangeValues
+   lda #<[RunningJumpPositionChangeValues - JumpingPositionChangeValues]
    sta jumpingPositionChangeIndex
    lda smurfAttributes              ; get Smurf attribute values
    and #SMURF_HORIZ_DIR_MASK        ; keep SMURF_HORIZ_DIR value
@@ -965,7 +965,7 @@ GameProcessing
    bne .checkSmurfTransitioningFromRoom;unconditional branch
 
 .performStationaryJump
-   lda #<HorizontalStationaryJumpPositionChangeValues - JumpingPositionChangeValues + 1
+   lda #<[HorizontalStationaryJumpPositionChangeValues - JumpingPositionChangeValues + 1]
    sta jumpingPositionChangeIndex
    lda smurfAttributes              ; get Smurf attribute values
    and #SMURF_HORIZ_DIR_MASK        ; keep SMURF_HORIZ_DIR value
@@ -973,7 +973,7 @@ GameProcessing
    bne .setSmurfAnimationToJumping  ; unconditional branch
 
 .performSuperJump
-   lda #<SuperJumpPositionChangeValues - JumpingPositionChangeValues
+   lda #<[SuperJumpPositionChangeValues - JumpingPositionChangeValues]
    sta jumpingPositionChangeIndex
    lda smurfAttributes              ; get Smurf attribute values
    and #<~(SMURF_SUPER_JUMPING | 1)
@@ -1020,11 +1020,11 @@ GameProcessing
    lda smurfAnimationIndex          ; get Smurf walking animation index
    cmp #ID_SMURF_DUCKING
    bne CheckSmurfTransitioningFromRoom;branch if not done with walking sequence
-   ldx #<SmurfFootstepsAudioValues_00 - SoundEffectsAudioValues
+   ldx #<[SmurfFootstepsAudioValues_00 - SoundEffectsAudioValues]
    lda roomObstacleAttributes
    and #$40
    bne .setSmurfFootstepsAudioValue
-   ldx #<SmurfFootstepsAudioValues_01 - SoundEffectsAudioValues
+   ldx #<[SmurfFootstepsAudioValues_01 - SoundEffectsAudioValues]
 .setSmurfFootstepsAudioValue
    jsr SetSoundEffectAudioValues
    lda roomObstacleAttributes
@@ -1158,7 +1158,7 @@ SetSmurfDeathSoundsAndAnimation
    cmp #STREAM_BANK_HORIZ_POSITION_EAST
    bcs .setToPlaySmurfDeathSounds   ; branch if east of stream
    ldy #ID_SMURF_DROWNING
-   ldx #<SmurfDrowningAudioValues - SoundEffectsAudioValues
+   ldx #<[SmurfDrowningAudioValues - SoundEffectsAudioValues]
    bne .setTimerToHaltUserActivity  ; unconditional branch
 
 .checkForSmurfCapturedBySpider
@@ -1169,14 +1169,14 @@ SetSmurfDeathSoundsAndAnimation
    bcc .setToPlaySmurfDeathSounds   ; branch if Smurf left of Spider
    cmp #INIT_HORIZ_CAVERN_SPIDER + 11
    bcs .setToPlaySmurfDeathSounds   ; branch if Smurf right of Spider
-   ldx #<SmurfCapturedBySpiderAudioValues - SoundEffectsAudioValues
+   ldx #<[SmurfCapturedBySpiderAudioValues - SoundEffectsAudioValues]
 .setTimerToHaltUserActivity
    lda #60
    bne .setSmurfDeathAnimationIndex ; unconditional branch
 
 .setToPlaySmurfDeathSounds
    lda #30
-   ldx #<SmurfDeathAudioValues - SoundEffectsAudioValues
+   ldx #<[SmurfDeathAudioValues - SoundEffectsAudioValues]
 .setSmurfDeathAnimationIndex
    sty smurfAnimationIndex
    sta haltUserActivityTimer
@@ -1194,7 +1194,7 @@ AdvanceGameStateAfterTimerExpired
 
 AdvanceLevelForRescuingSmurfette
    jsr SetCurrentRoomToMushroomHouse
-   lda #<SmurfetteSprites - SmurfetteSprites + H_SMURFETTE
+   lda #<[SmurfetteSprites - SmurfetteSprites + H_SMURFETTE]
    sta smurfetteGraphicIndex
    sta screenTransitionTimer
    lda #0
@@ -1216,7 +1216,7 @@ CheckToAlternatePlayers
    bne AlternatePlayerVariables     ; branch if reserved lives remaining
    lda currentRemainingLives        ; get current remaining lives
    bne .setInitRoomVariables        ; branch if lives remaining
-   ldx #<SmurfThemeSongAudioValues - BackgroundMusicAudioValues
+   ldx #<[SmurfThemeSongAudioValues - BackgroundMusicAudioValues]
    jsr SetGameAudioValues
    lda #GS_GAME_OVER
    jmp .setCurrentGameState         ; set game state to GS_GAME_OVER
@@ -1271,11 +1271,11 @@ DisplayPlayerUpLiterals
    dex
    bpl .savePlayerScoreFromPlayerUp
    ldy #ONE_IDX_VALUE << 4 | PLAYER_UP_LITERAL_IDX_VALUE
-   ldx #<PlayerOneUpAudioValues - SoundEffectsAudioValues
+   ldx #<[PlayerOneUpAudioValues - SoundEffectsAudioValues]
    lda currentGameSelection         ; get current game selection
    bpl .setPlayerUpLiteral          ; branch if PLAYER_ONE_ACTIVE
    ldy #TWO_IDX_VALUE << 4 | PLAYER_UP_LITERAL_IDX_VALUE
-   ldx #<PlayerTwoUpAudioValues - SoundEffectsAudioValues
+   ldx #<[PlayerTwoUpAudioValues - SoundEffectsAudioValues]
 .setPlayerUpLiteral
    sty currentPlayerScore + 1
    jsr SetSoundEffectAudioValues
@@ -1285,7 +1285,7 @@ DisplayPlayerUpLiterals
    jmp AdvanceCurrentGameState
 
 SmurfRescuedSmurfette
-   ldx #<SmurfetteRescuedAudioValues - BackgroundMusicAudioValues
+   ldx #<[SmurfetteRescuedAudioValues - BackgroundMusicAudioValues]
    jsr SetGameAudioValues
    lda #[SCORE_RESCUE_SMURFETTE / 100] - 1
    jsr IncrementScore               ; increment score for saving Smurfette
@@ -1295,7 +1295,7 @@ SmurfRescuedSmurfette
    sta smurfHorizPosition           ; set rescuing Smurfette horizontal position
    lda #ID_SMURF_KISSING
    sta smurfAnimationIndex
-   lda #<RescuedSmurfetteSprite - SmurfetteSprites + H_SMURFETTE
+   lda #<[RescuedSmurfetteSprite - SmurfetteSprites + H_SMURFETTE]
    sta smurfetteGraphicIndex
    bne .advanceCurrentGameState     ; unconditional branch
 
@@ -1307,7 +1307,7 @@ AdvanceGameStateToGameProcessing
 
 DisplayGameSelection
    lda currentGameSelection         ; get current game selection
-   and #SELECTED_SKILL_MASK         ; kep SELECTED_SKILL value
+   and #SELECTED_SKILL_MASK         ; keep SELECTED_SKILL value
    clc
    adc #SKILL_LITERAL_IDX_VALUE_02 << 4 | ONE_IDX_VALUE
    sta currentPlayerScore + 1
@@ -1330,7 +1330,7 @@ DisplayGameSelection
    dec selectDebounceTimer
    bpl .doneDisplayGameSelection
 .incrementGameSelection
-   ldx #<GameSelectionAudioValues - SoundEffectsAudioValues
+   ldx #<[GameSelectionAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; set to play game selection sound effect
    lda #25
    sta selectDebounceTimer
@@ -1361,7 +1361,7 @@ InitializeGame
    sta currentPlayerSkillLevel
    sta reservedPlayerSkillLevel
    tay                              ; move SELECTED_SKILL value to y register
-   lda #<SmurfetteSprites - SmurfetteSprites + H_SMURFETTE
+   lda #<[SmurfetteSprites - SmurfetteSprites + H_SMURFETTE]
    sta smurfetteGraphicIndex
    iny                              ; increment SELECTED_SKILL value
    sty roomCycleCount               ; set room cycle count value
@@ -1606,7 +1606,7 @@ IncrementScore
    cmp #MAX_REMAINING_LIVES
    beq .incrementThousandsValue     ; branch if reached maximum remaining lives
    inc currentRemainingLives        ; increment remaining lives
-   ldx #<ExtraLifeAudioValues - BackgroundMusicAudioValues
+   ldx #<[ExtraLifeAudioValues - BackgroundMusicAudioValues]
    jsr SetGameAudioValues
 .incrementThousandsValue
    lda currentPlayerScore           ; get score thousands value
@@ -1627,12 +1627,12 @@ SetRiverAnimationHeight
 DecrementRiverAnimationIndex
    dex
    bpl .doneSetRiverAnimationHeight
-   ldx #<riverHeightSection_00 - riverSectionHeightValues
+   ldx #<[riverHeightSection_00 - riverSectionHeightValues]
 .doneSetRiverAnimationHeight
    rts
 
 PositionGRP0Horizontally_BANK0
-   ldy #<RESP0 - RESP0        ; 2
+   ldy #<[RESP0 - RESP0]      ; 2
 PositionObjectHorizontally_BANK0
    sta WSYNC
 ;--------------------------------------
@@ -2218,7 +2218,7 @@ MoveFlyingObject
    lda frameCount                   ; get current frame count
    and #$0F
    bne .moveFlyingObject
-   ldx #<FlyingObjectFlappingAudioValues - SoundEffectsAudioValues
+   ldx #<[FlyingObjectFlappingAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; play flying object flapping sounds
 .moveFlyingObject
    ldx currentPlayerSkillLevel      ; get current skill level
@@ -2300,7 +2300,7 @@ MoveSnake
    lda frameCount                   ; get current frame count
    and #$1F
    bne .moveSnake
-   ldx #<SnakeHissingAudioValues - SoundEffectsAudioValues
+   ldx #<[SnakeHissingAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; set to play Snake sound effect
 .moveSnake
    ldx currentPlayerSkillLevel      ; get current skill level
@@ -2343,7 +2343,7 @@ MoveSpider
    bpl .moveSpider
    lda #23
    sta spiderSoundTimer             ; reset timer when timer expires
-   ldx #<SpiderAudioValues - SoundEffectsAudioValues
+   ldx #<[SpiderAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues    ; set to play Spider sound effect
 .moveSpider
    ldx currentPlayerSkillLevel      ; get current skill level
@@ -2577,7 +2577,7 @@ SetupForSixDigitDisplay
    bne DisplayKernel                ; bird squaks ~ every second
    lda stationaryObstacleMask
    bne DisplayKernel                ; branch if showing stationary object
-   ldx #<BirdSquakAudioValues - SoundEffectsAudioValues
+   ldx #<[BirdSquakAudioValues - SoundEffectsAudioValues]
    jsr SetSoundEffectAudioValues
 DisplayKernel SUBROUTINE
 .waitTime
@@ -5102,7 +5102,7 @@ CloudGraphic_01
    .byte $F0 ; |XXXX....|
 
 PositionGRP0Horizontally_BANK1 SUBROUTINE
-   ldy #<RESP0 - RESP0        ; 2
+   ldy #<[RESP0 - RESP0]      ; 2
 PositionObjectHorizontally_BANK1
    sta WSYNC
 ;--------------------------------------
@@ -6238,7 +6238,7 @@ GargamelLabDisplayKernel
    lda roomObjectHorizPosition; 3         get Smurfette horizontal position
    clc                        ; 2
    adc #7                     ; 2         increment by 7 for hairbun position
-   ldy #<RESBL - RESP0        ; 2
+   ldy #<[RESBL - RESP0]      ; 2
    jsr PositionObjectHorizontally_BANK1;6
    lda #COLOR_SMURFETTE_HAIR  ; 2
    sta COLUPF                 ; 3
@@ -6463,7 +6463,7 @@ DrawGargamelLabFloor
    inx                        ; 2         x = 0
    stx COLUBK                 ; 3 = @08
    lda #7                     ; 2
-   ldx #<ENABL - GRP0         ; 2
+   ldx #<[ENABL - GRP0]       ; 2
 .setPlayerGraphicValuesForFloor
    sta GRP0,x                 ; 4
    dex                        ; 2
@@ -6493,7 +6493,7 @@ DrawGargamelLabFloor
 
    ENDIF
 
-   ldy #<ENABL - GRP0         ; 2
+   ldy #<[ENABL - GRP0]       ; 2
 .clearPlayerGraphicRegisters
    stx GRP0,y                 ; 4
    dey                        ; 2
