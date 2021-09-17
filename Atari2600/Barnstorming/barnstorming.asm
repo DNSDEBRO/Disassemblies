@@ -30,9 +30,9 @@
 
    processor 6502
 
-   include macro.h
-   include tia_constants.h
-   include vcs.h
+   include "vcs.h"
+   include "macro.h"
+   include "tia_constants.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -494,20 +494,20 @@ ClearRAM
    jmp JumpIntoConsoleSwitchCheck
 
 MainLoop
-   ldx #<mountainColor - gameColors
+   ldx #<[mountainColor - gameColors]
 .setGameColors
    lda GameColorTable,x
    eor colorEOR                     ; flip color bits for attract mode
    and colorBWMask                  ; mask color values for COLOR / B&W mode
    sta gameColors,x
-   cpx #<copyrightBackgroundColor - gameColors
+   cpx #<[copyrightBackgroundColor - gameColors]
    bcs .nextColorIndex
    sta COLUBK,x
 .nextColorIndex
    dex
    bpl .setGameColors
    lda #33
-   ldx #<HMP0 - HMP0
+   ldx #<[HMP0 - HMP0]
    jsr PositionObjectHorizontally   ; position GRP0
    lda #40
    inx                              ; x = 1
@@ -2006,13 +2006,13 @@ CheckGeeseCollision
 .nextGooseCollision
    dex
    bne .checkGeeseCollision
-   ldx #<pilotSpeed - speedValues
+   ldx #<[pilotSpeed - speedValues]
    lda groundObstacleCollisionTimer ; get ground collision timer value
    beq .determineMotionDelayValues  ; branch if reached 0
-   ldx #<obstacleSpeed - speedValues
+   ldx #<[obstacleSpeed - speedValues]
 .determineMotionDelayValues
    lda speedValues,x                ; get speed values
-   cpx #<pilotSpeed - speedValues
+   cpx #<[pilotSpeed - speedValues]
    bne .determineMotionDelayValue   ; branch if doing obstacle speed
    lda playerJoystickValue          ; get joystick values
    and #([~P0_VERT_MOVE] >> 4) & $0F; keep vertical movement values
@@ -2198,7 +2198,7 @@ SetBarnGraphics
    adc #7                           ; add 7 for scrolling barn mask value
    tax
 ScrollBarn
-   ldy #<barnSideGraphics - barnGraphics
+   ldy #<[barnSideGraphics - barnGraphics]
 .scrollBarn
    lda barnGraphics,y
    and ScrollingBarnGraphicsMaskValues,x
@@ -2496,7 +2496,7 @@ InitializeGameVariables
    sta geeseNUSIZIndexes
    sta geeseNUSIZIndexes + 1
    sta geeseNUSIZIndexes + 2
-   ldx #<groundObstacleMask - flyingGeeseGraphicLSB
+   ldx #<[groundObstacleMask - flyingGeeseGraphicLSB]
 .initValues
    lda #0
    sta flyingGeeseGraphicLSB,x
