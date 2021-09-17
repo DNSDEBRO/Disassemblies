@@ -32,9 +32,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -550,7 +550,7 @@ DisplayKernel
    jsr SetPFGraphicRegisters  ; 6
    asl                        ; 2 = @65
    sta PF1                    ; 3 = @68
-   ldx #<ENAM1 - 2            ; 2
+   ldx #<[ENAM1 - 2]          ; 2
    txs                        ; 2
    sty kernelPlayer1PaddleValue;3
 ;--------------------------------------
@@ -1008,7 +1008,7 @@ DetermineToDropMissile
    
 CheckForMissileHittingShip
    inc numMissileBricksHit,x
-   ldx #<seaShip5Attributes - seaShipAttributes
+   ldx #<[seaShip5Attributes - seaShipAttributes]
 .spawnNewShipLoop
    lda seaShipAttributes,x          ; get sea ship attributes
    bne .checkToStartNextNewShip     ; branch if ship exists in this area
@@ -1223,12 +1223,12 @@ CheckForMissileHittingBricks
    jmp ReinstateBricks
    
 MoveObjects
-   ldx #<seaShip1Attributes - objectVariables + 1
+   ldx #<[seaShip1Attributes - objectVariables + 1]
    ldy #3
    lda gameVariation                ; get game variation
    bpl .setNumberOfPlayerKernelSections; branch if CANYON_BOMBER
    ldy #2
-   ldx #<seaShip6Attributes - objectVariables + 1
+   ldx #<[seaShip6Attributes - objectVariables + 1]
 .setNumberOfPlayerKernelSections
    sty numPlayerKernelSections
 .moveObjectLoop
@@ -1510,7 +1510,7 @@ InitializeGame
 .setInitMissileMissCount
    sty player1MissCount
    sty player2MissCount
-   ldx #<seaShip7ObjectVariables - objectVariables
+   ldx #<[seaShip7ObjectVariables - objectVariables]
 .initObjectVariables
    lda #0
    sta objectHorizPos,x
