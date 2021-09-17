@@ -61,9 +61,9 @@
 ;
 TIA_BASE_READ_ADDRESS = $30
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -355,7 +355,7 @@ VerticalSync
    bne .vsyncWaitTime
    lda colorCyclingMode             ; cycle colors when value goes negative
    bpl .skipColorCycling
-   ldx #<spaceJockeyGraphics - spaceJockeyColors - 1
+   ldx #<[spaceJockeyGraphics - spaceJockeyColors - 1]
 .cycleGameColors
    inc spaceJockeyColors,x
    dex
@@ -381,7 +381,7 @@ VerticalBlank
 .consoleSwitchDown
    sty colorCyclingMode             ; reset color cycling mode
    sty colorCyclingModeTimer        ; zero out
-   ldx #<livesColor - spaceJockeyColors
+   ldx #<[livesColor - spaceJockeyColors]
    jsr InitLoop                     ; reset color values
 .checkForGameReset
    lda SWCHB                        ; read the console switches
@@ -392,7 +392,7 @@ VerticalBlank
 .setToClearGameRAM
    dec clearGameRAM                 ; show to clear RAM
 ClearGameRAM
-   ldx #<colorCyclingMode - (PF1 + 64)
+   ldx #<[colorCyclingMode - (PF1 + 64)]
    lda #0
 .clearRAM
    sta PF1 + 64,x                   ; clear RAM from PF2 to colorCyclingMode
@@ -645,7 +645,7 @@ RollingMountainAnimation
    sty gameState                    ; show that game is over (y = 0)
 .skipGameOver
    sty spaceJockeyHit               ; show Space Jockey not hit (D1 = 0)
-   ldx #<spaceJockeyHorzPos - spaceJockeyColors
+   ldx #<[spaceJockeyHorzPos - spaceJockeyColors]
    jsr InitLoop
    sty AUDC1                        ; clear audio channel (y = 0)
    bmi .moveEnemies                 ; unconditional branch
@@ -732,7 +732,7 @@ MoveEnemies
    dec enemyHorizPos,x
    bne .checkForEnemyShot
 .removeEnemy
-   lda #<JetPlane - 1               ; point to any 0 byte on $F7 page
+   lda #<[JetPlane - 1]             ; point to any 0 byte on $F7 page
    sta enemyLSB,x                   ; store it to erase sprite
    lda enemyAttributes,x
    and #~(ENEMY_DESTROYED | ENEMY_ACTIVE)
@@ -929,7 +929,7 @@ BCD2DigitPtrs
    ldy #0
    lda showHighScore
    bpl .bcd2DigitLoop
-   ldy #<highScore - playerScore    ; set y to have offset to the high score
+   ldy #<[highScore - playerScore]  ; set y to have offset to the high score
 .bcd2DigitLoop
    lda playerScore,y                ; get the value to display
    and #$F0                         ; mask the lower nybbles
@@ -1314,7 +1314,7 @@ SixCharacterDisplay
    rts                        ; 6
 
 InitializeGame
-   ldx #<numberOfLives - spaceJockeyColors
+   ldx #<[numberOfLives - spaceJockeyColors]
 InitLoop
    lda InitTable,x
    sta spaceJockeyColors,x
