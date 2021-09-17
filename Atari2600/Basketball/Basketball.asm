@@ -23,7 +23,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS Â© 1977, ATARI, INC.                                  =
+; = THE ASSEMBLED CODE IS © 1977, ATARI, INC.                                  =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -40,9 +40,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
-   include macro.h
-   include tia_constants.h
-   include vcs.h
+   include "vcs.h"
+   include "macro.h"
+   include "tia_constants.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -388,7 +388,7 @@ spriteRAMPointer        ds 2
 tmpPlayerWithBall       = spriteRAMPointer
 floorColor              ds 1
 
-   echo "***",(*-$80 - 6)d, "BYTES OF RAM USED", ($100 - * + 6)d, "BYTES FREE"
+   echo "***",(* - $80 - 6)d, "BYTES OF RAM USED", ($100 - * + 6)d, "BYTES FREE"
 
 ;===============================================================================
 ; R O M - C O D E (BANK 0)
@@ -401,7 +401,7 @@ SetupFontKernelGraphics
    stx spriteRAMPointer + 1         ; x = 0
    lda #>NumberFonts                ; get the MSB of the number fonts
    sta numberSpritePointer + 1      ; set MSB of number sprite
-   ldx #<player2Score - gameClock   ; prepare to draw score board digits
+   ldx #<[player2Score - gameClock] ; prepare to draw score board digits
 .setupFontKernelGraphicsData
    stx tmpFontIndex
    lda scoreBoardValues,x           ; get the score board value
@@ -520,7 +520,7 @@ DisplayKernel SUBROUTINE
    sta timerMinutesHorizPos
    lda #XPOS_SECONDS
    sta timerSecondsHorizPos
-   ldx #<RESBL - RESP0 + 1
+   ldx #<[RESBL - RESP0 + 1]
    stx REFP0                        ; set players to NO_REFLECT (i.e. D3 = 0)
    stx REFP1
    stx NUSIZ0                       ; set players to DOUBLE_SIZE (i.e. x = 5)
@@ -588,13 +588,13 @@ ScoreKernel
    sta PF1                    ; 3 = @48   draw player 2 score
    lda player2ScoreColor      ; 3         get color for player 2
    sta COLUP1                 ; 3 = @54   color GRP1 (i.e. CTRLPF in score mode)
-   bcc ScoreKernel            ; 2Â³        branch if scan line less than loopCount
+   bcc ScoreKernel            ; 2³        branch if scan line less than loopCount
    inx                        ; 2 = @58   increment score sprite index
    tya                        ; 2         move scan line count to accumulator
    clc                        ; 2
    adc #3                     ; 2         increment by 3 for new loop count
    sta loopCount              ; 3 = @67
-   bmi ScoreKernel            ; 2Â³        continue kernel until value wraps
+   bmi ScoreKernel            ; 2³        continue kernel until value wraps
    ldx player1ScoreColor      ; 3 = @72
    stx COLUP0                 ; 3 = @75
 ;--------------------------------------
@@ -603,7 +603,7 @@ ScoreKernel
    sta PF1                    ; 3 = @08
    sta GRP0                   ; 3 = @11
    sta GRP1                   ; 3 = @14
-   ldx #<RESP1 - RESP0 + 1    ; 2         set x to position player1
+   ldx #<[RESP1 - RESP0 + 1]  ; 2         set x to position player1
    lda player2HorizPos        ; 3         get player2's horizontal position
    sta tmpPlayer2HorizPos     ; 3         save here for horizontal pos routine
    lda player1HorizPos        ; 3 = @25   get player1's horizontal position
@@ -638,7 +638,7 @@ ScoreKernel
    lda ballScanline           ; 3         get the ball's scan line
    sbc scanline               ; 3         subtract current scan line
    and #~(H_BALL - 1)         ; 2 = @18   and with 2's complement of H_BALL
-   beq .setBallEnableState    ; 2Â³        enable if difference between 0 and 7
+   beq .setBallEnableState    ; 2³        enable if difference between 0 and 7
    ldy #DISABLE_BM            ; 2 = @22
 .setBallEnableState
    sty ENABL                  ; 3 = @25
@@ -659,7 +659,7 @@ ScoreKernel
    lsr                        ; 2         divide value by 2
    tax                        ; 2         set index for player graphics
    and #~(H_PLAYER - 1)       ; 2 = @67   and with 2's complement of H_PLAYER
-   beq .loadPlayer0Graphics   ; 2Â³        draw player if between 0 and 14
+   beq .loadPlayer0Graphics   ; 2³        draw player if between 0 and 14
    lda #0                     ; 2 = @71
    beq .drawPlayer0           ; 3         unconditional branch
    
@@ -673,7 +673,7 @@ ScoreKernel
    sty PF1                    ; 3 = @09   draw basketball goal graphics
    lda scanline               ; 3         get the current scan line
    cmp #YMIN                  ; 2 = @14
-   bcc .determinePlayer1Draw  ; 2Â³
+   bcc .determinePlayer1Draw  ; 2³
    ldx kernelFloorColor       ; 3 = @19   get the color for the floor
    stx COLUBK                 ; 3 = @22   color background for floor illusion
    stx ENAM0                  ; 3 = @25
@@ -685,7 +685,7 @@ ScoreKernel
    lsr                        ; 2         divide value by 2
    tax                        ; 2         set index for player graphics
    and #~(H_PLAYER - 1)       ; 2         and with 2's complement of H_PLAYER
-   beq .loadPlayer1Graphics   ; 2Â³        draw player if between 0 and 14
+   beq .loadPlayer1Graphics   ; 2³        draw player if between 0 and 14
    ldy #0                     ; 2
    beq .determineKernelDone   ; 3         unconditional branch
    
@@ -694,9 +694,9 @@ ScoreKernel
 .determineKernelDone
    lda scanline               ; 3         get the current scan line
    cmp #YMAX                  ; 2
-   bcs Overscan               ; 2Â³        branch if done with kernel
+   bcs Overscan               ; 2³        branch if done with kernel
    and #3                     ; 2         see if scan line is divisible by 4
-   bne .kernelLoop            ; 2Â³        if not then continue with kernel
+   bne .kernelLoop            ; 2³        if not then continue with kernel
    ldx #HMOVE_L1              ; 2         if divisible by 4 then move missiles
    stx HMM0                   ; 3         (i.e. boundary lines) to show
    ldx #HMOVE_R1              ; 2         diagonal line
@@ -709,7 +709,7 @@ Overscan SUBROUTINE
 .overscanLoop
    sta WSYNC
    sta COLUBK
-   ldx #<ENABL - GRP0 + 1
+   ldx #<[ENABL - GRP0 + 1]
 .clearPlayerGraphicRegs
    sta GRP0 - 1,x
    dex
@@ -744,14 +744,14 @@ Start
    ldx #BLANK_LSB_VALUE << 4 | ONE_LSB_VALUE
    stx player1Score                 ; set player 1 score to One sprite
 ClearGameTIARegisters
-   ldx #<CXCLR - RSYNC + 1
+   ldx #<[CXCLR - RSYNC + 1]
    stx ballBounceHeight
    ldy #0
 .clearTIALoop
    sty NUSIZ0 + 63,x
    dex
    bne .clearTIALoop
-   ldx #<soundVolumeControl - colorEOR   
+   ldx #<[soundVolumeControl - colorEOR]
 .clearGameVariables
    sty colorEOR - 1,x
    dex
@@ -760,7 +760,7 @@ ClearGameTIARegisters
    lda #START_GAME_MINUTES | COLON_LSB_VALUE
    sta gameClock
    lda #Y_MID_COURT
-   ldx #<cpuPlayerShootingDelay - soundVolumeControl
+   ldx #<[cpuPlayerShootingDelay - soundVolumeControl]
    stx shootingBallLift
 .initGameVariables
    sta soundVolumeControl - 1,x
