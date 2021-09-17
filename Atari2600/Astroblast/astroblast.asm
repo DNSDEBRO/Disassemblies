@@ -40,9 +40,9 @@ TIA_BASE_READ_ADDRESS = $00         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -167,7 +167,7 @@ LASERBASE_INIT_VERT_POS = 14
 MISSILE_INIT_VERT_POS   = LASERBASE_INIT_VERT_POS + 5
 SPINNERS_INIT_VERT_POS  = H_KERNEL - 1
 
-SPINNER_ANIMATION_BYTES = <SpinnerAnimation3_0 + 23 - SpinnerSprites_0
+SPINNER_ANIMATION_BYTES = <[SpinnerAnimation3_0 + 23 - SpinnerSprites_0]
 
 MAX_ANIMATION_FRAMES    = 4
 
@@ -1154,7 +1154,7 @@ CheckToSpawnNewObject
    lda tempMod127
    and #1                           ; keep D0 value
    beq .spawnNewRock
-   lda #<SmallRock_0 + H_SMALL_ROCK - SPINNERS_INIT_VERT_POS - (BigRock_0 + H_BIG_ROCK - SPINNERS_INIT_VERT_POS)
+   lda #<[SmallRock_0 + H_SMALL_ROCK - SPINNERS_INIT_VERT_POS - (BigRock_0 + H_BIG_ROCK - SPINNERS_INIT_VERT_POS)]
 .spawnNewRock
    clc
    adc #<(BigRock_0 + H_BIG_ROCK - SPINNERS_INIT_VERT_POS)
@@ -1192,7 +1192,7 @@ CheckToSpawnNewObject
    jsr NextRandom                   ; get new random number
    and PulsarSpawnFrequency,y
    bne .doneSpawnSpinnerOrPulsar
-   lda #<Pulsar_0 + H_PULSAR - SPINNERS_INIT_VERT_POS
+   lda #<(Pulsar_0 + H_PULSAR - SPINNERS_INIT_VERT_POS)
    sta playerGraphicLSBValues,x     ; set pulsar graphic LSB value
    lda #WHITE - 1
    sta playerColorValues,x          ; set pulsar color
@@ -1687,7 +1687,7 @@ CheckToFireMissile
    sta objectVelocity,x             ; set missile vertical velocity
    lda #WHITE - 6
    sta playerColorValues,x          ; set missile color
-   lda #<MissileSprite_0 + H_MISSILE - MISSILE_INIT_VERT_POS
+   lda #<(MissileSprite_0 + H_MISSILE - MISSILE_INIT_VERT_POS)
    sta playerGraphicLSBValues,x     ; set missile graphic LSB value
    jmp SetMissileLaunchSoundIndicators
    
@@ -2275,7 +2275,7 @@ DetermineToLaunchUFO
    sta playerHorizValues,x          ; set UFO bomb horizontal position value
    lda objectHorizPositions         ; get UFO horizontal position value
    sta objectHorizPositions,x       ; set UFO bomb horizontal position
-   lda #<UFOBombSprite_0 + H_UFO_BOMB - UFO_BOMB_INIT_VERT_POS
+   lda #<(UFOBombSprite_0 + H_UFO_BOMB - UFO_BOMB_INIT_VERT_POS)
    sta playerGraphicLSBValues,x     ; set UFO bomb graphic LSB value
    lda #WHITE | 1
    sta playerColorValues,x          ; color UFO bomb
