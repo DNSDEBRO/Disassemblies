@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS Â© 1981, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS © 1981, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -28,9 +28,9 @@
 
    processor 6502
 
-   include tia_constants.h
-   include vcs.h
-   include macro.h
+   include "tia_constants.h"
+   include "vcs.h"
+   include "macro.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -386,13 +386,13 @@ RestartGame
    jmp SetGameSelection
        
 MainLoop
-   ldx #<fishColors - objectColors
+   ldx #<[fishColors - objectColors]
 .setObjectColors
    lda GameColors,x                 ; read game color table
    eor screenSaverColorEOR          ; flip color bits based on color cycling
    and hueMask                      ; mask color values for COLOR / B&W mode
    sta objectColors,x
-   cpx #<colorEOR - objectColors
+   cpx #<[colorEOR - objectColors]
    bcs .nextObjectColor
    sta COLUP0,x
 .nextObjectColor
@@ -403,7 +403,7 @@ MainLoop
    lda rightFishingHookVertPos      ; get right fishing hook vertical position
    sta rightFishingHookKernelValue  ; value decremented in kernel
    lda rightFishingLineHorizPos     ; get right fishing line position
-   ldx #<HMBL - HMP0
+   ldx #<[HMBL - HMP0]
    jsr PositionObjectHorizontally   ; position player 2 fishing line
    lda leftFishingLineHorizPos      ; get left fishing line position
    dex                              ; x = 3 (i.e. HMM1)
@@ -413,7 +413,7 @@ MainLoop
    lda rightFishingLineSlopeFractionValue
    sta rightFishingLineSlopeIntegerValue
    lda #40
-   ldx #<HMP0 - HMP0
+   ldx #<[HMP0 - HMP0]
    stx REFP0
    jsr PositionObjectHorizontally   ; horizontally position score tens digit
    lda #48
@@ -446,7 +446,7 @@ DisplayKernel
    lda (player2OnesDigitGraphicPtrs),y;5
    sta GRP1                   ; 3 = @50
    dey                        ; 2
-   bpl .drawDigits            ; 2Â³
+   bpl .drawDigits            ; 2³
    sta WSYNC
 ;--------------------------------------
    lda #REFLECT               ; 2
@@ -470,7 +470,7 @@ DisplayKernel
    sta GRP1                   ; 3 = @10
    lda screenSaverColorEOR    ; 3
    cpy #H_FISHERMAN_HEAD - 3  ; 2
-   bcs .colorFishermanHeads   ; 2Â³        branch if coloring hats
+   bcs .colorFishermanHeads   ; 2³        branch if coloring hats
    eor #COLOR_FISHERMAN_FACE  ; 2         color fisherman face
 .colorFishermanHeads
    and hueMask                ; 3
@@ -480,7 +480,7 @@ DisplayKernel
    sta WSYNC
 ;--------------------------------------
    dey                        ; 2
-   bpl .drawFishermanHeads    ; 2Â³
+   bpl .drawFishermanHeads    ; 2³
    stx GRP0                   ; 3 = @07
    lda leftFishermanColor     ; 3         get color for left fisherman body
    sta COLUP0                 ; 3 = @13   set color for left fisherman body
@@ -523,12 +523,12 @@ DisplayKernel
    adc fishingLineSlopeFractionValues,x;4 increment by slope fraction value
    sta fishingLineSlopeIntegerValue,x;4   set fishing line slope integer value
    sta HMCLR                  ; 3 = @42
-   bcc .nextFishermanBodyScanline;2Â³      branch if no overflow
+   bcc .nextFishermanBodyScanline;2³      branch if no overflow
    lda fishingLineHMOVEValues,x;4         get fishing line HMOVE value
    sta HMM1,x                 ; 4 = @52   set to adjust fishing line position
 .nextFishermanBodyScanline
    dey                        ; 2
-   bpl .drawFishermanBody     ; 2Â³ + 1    crosses a page boundary
+   bpl .drawFishermanBody     ; 2³ + 1    crosses a page boundary
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -558,7 +558,7 @@ DisplayKernel
 ;--------------------------------------
 .coarsePostionHookedFish
    dey                        ; 2
-   bpl .coarsePostionHookedFish;2Â³
+   bpl .coarsePostionHookedFish;2³
    sta.w RESP1                ; 4
    sta WSYNC
 ;--------------------------------------
@@ -575,7 +575,7 @@ DisplayKernel
    eor colorEOR               ; 3         flip color bits
    sta COLUBK                 ; 3 = @11   set color for water shimmer
    cpy #(H_WATER_SHIMMER / 2) - 1;2
-   bcs .determineFishingLineRunValue;2Â³
+   bcs .determineFishingLineRunValue;2³
    eor #6                     ; 2
    sta COLUPF                 ; 3 = @20   color platform
    sta COLUP1                 ; 3 = @23   color player 1 fishing line
@@ -588,7 +588,7 @@ DisplayKernel
    adc fishingLineSlopeFractionValues,x;4 increment by slope fraction value
    sta fishingLineSlopeIntegerValue,x;4   set fishing line slope integer value
    sta HMCLR                  ; 3 = @46
-   bcc .nextWaterShimmerScanline;2Â³
+   bcc .nextWaterShimmerScanline;2³
    lda fishingLineHMOVEValues,x;4         get fishing line HMOVE value
    sta HMM1,x                 ; 4 = @56   set to adjust fishing line position
 .nextWaterShimmerScanline
@@ -597,7 +597,7 @@ DisplayKernel
    rol                        ; 2         multiply by 2 with carry in D0
    sta randomSeed             ; 3         a = 2a + (a > 127)
    dey                        ; 2
-   bpl .colorWaterShimmer     ; 2Â³
+   bpl .colorWaterShimmer     ; 2³
    sta WSYNC
 ;--------------------------------------
    lda seaColor               ; 3
@@ -637,7 +637,7 @@ DisplayKernel
 ;--------------------------------------
 .coarsePostionFloatingFish
    dey                        ; 2
-   bpl .coarsePostionFloatingFish;2Â³
+   bpl .coarsePostionFloatingFish;2³
    sta.w RESP0                ; 4
    ldy #H_FISH - 3            ; 2
 .drawFishKernelSection
@@ -654,7 +654,7 @@ DisplayKernel
    sta HMCLR                  ; 3 = @28
    sta HMP0                   ; 3 = @31
    dec rightFishingHookKernelValue;5
-   bpl .determineRightFishingLineRunValue;2Â³
+   bpl .determineRightFishingLineRunValue;2³
    lda #DISABLE_BM            ; 2
    sta ENABL                  ; 3 = @43   disable right fishing line
 .determineRightFishingLineRunValue
@@ -662,7 +662,7 @@ DisplayKernel
    lda rightFishingLineSlopeIntegerValue;3
    adc rightFishingLineSlopeFractionValue;3
    sta rightFishingLineSlopeIntegerValue;3
-   bcc .leftFishingLineKernel ; 2Â³
+   bcc .leftFishingLineKernel ; 2³
    lda rightFishingLineHMOVEValue;3
    sta HMBL                   ; 3 = @62
 .leftFishingLineKernel
@@ -680,7 +680,7 @@ DisplayKernel
    sta HMCLR                  ; 3 = @28
    sta HMP0                   ; 3 = @31
    dec leftFishingHookKernelValue;5
-   bpl .determineLeftFishingLineRunValue;2Â³
+   bpl .determineLeftFishingLineRunValue;2³
    lda #DISABLE_BM            ; 2
    sta ENAM1                  ; 3         disable left fishing line
 .determineLeftFishingLineRunValue
@@ -688,14 +688,14 @@ DisplayKernel
    lda leftFishingLineSlopeIntegerValue;3
    adc leftFishingLineSlopeFractionValue;3
    sta leftFishingLineSlopeIntegerValue;3
-   bcc .nextDrawFishKernelSection;2Â³
+   bcc .nextDrawFishKernelSection;2³
    lda leftFishingLineHMOVEValue;3
    sta HMM1                   ; 3 = @63
 .nextDrawFishKernelSection
    dey                        ; 2
-   bpl .drawFishKernelSection ; 2Â³
+   bpl .drawFishKernelSection ; 2³
    dex                        ; 2
-   bmi CopyrightKernel        ; 2Â³
+   bmi CopyrightKernel        ; 2³
    jmp .fishKernelSection     ; 3
        
 CopyrightKernel
@@ -731,7 +731,7 @@ CopyrightKernel
    sty GRP1                   ; 3 = @35
    sta HMCLR                  ; 3 = @38
    dex                        ; 2
-   bpl .drawActivisionLogo    ; 2Â³
+   bpl .drawActivisionLogo    ; 2³
 Overscan
 
    IF COMPILE_REGION = PAL50
@@ -763,11 +763,11 @@ Overscan
    inc floatingFishHorizPos,x
 .moveFishLeft
    dec floatingFishHorizPos,x
-   ldy #<FishSprite_01 - H_FISH
+   ldy #<[FishSprite_01 - H_FISH]
    lda floatingFishHorizPos,x       ; get floating fish horizontal position
    and #2                           ; keep D1 value
    bne .setFloatingFishLSBOffset
-   ldy #<FishSprite_02 - H_FISH
+   ldy #<[FishSprite_02 - H_FISH]
 .setFloatingFishLSBOffset
    sty tmpFloatingFishLSBOffset
    lda hookedFishVertPos            ; get hooked fish vertical position
@@ -782,7 +782,7 @@ Overscan
    sta hookedFishLSBOffset
    lda floatingFishStatus,x         ; get floating fish status value
    sta hookedFishStatus
-   lda #<Blank - H_FISH
+   lda #<[Blank - H_FISH]
    sta tmpFloatingFishLSBOffset
 .animateFishSprite
    lda tmpFloatingFishLSBOffset
@@ -790,7 +790,7 @@ Overscan
    adc #H_FISH
    ldy floatingFishStatus,x         ; get floating fish status value
    bpl .setFloatingFishLSBValue     ; branch if not ID_SHARK
-   adc #<SharkSprite_01 - Blank - H_FISH
+   adc #<[SharkSprite_01 - Blank - H_FISH]
 .setFloatingFishLSBValue
    sta floatingFishLSBValues,x
    ldy #FISH_DIRECTION_RIGHT
@@ -893,7 +893,7 @@ DetermineFishingLineHorizPos
    asl
    clc                              ; not needed...carry cleared from asl
    adc #16
-   cpx #<rightFishingPoleValues - leftFishingPoleValues
+   cpx #<[rightFishingPoleValues - leftFishingPoleValues]
    bne .setFishingLineHorizPos      ; branch if determing left player line
    sta tmpPlayer2FishingLineOffset
    lda #XMAX
@@ -1303,7 +1303,7 @@ SetFloatingFishHorizValues SUBROUTINE
    jsr CalculateObjectHorizPosition ; determine fish fine / coarse value
    sta floatingFishFineMotion,x     ; set fish fine motion value
    sty floatingFishCoarsePosition,x ; set fish coarse position value
-   ldy #<rightHookedFishIndex - leftHookedFishIndex
+   ldy #<[rightHookedFishIndex - leftHookedFishIndex]
 .determineHookedFish
    lda hookedFishIndex,y            ; get index of hooked fish
    ora gameState                    ; combine with current game state
