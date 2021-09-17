@@ -31,9 +31,9 @@
 
    processor 6502
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -487,7 +487,7 @@ MainLoop
    sbc #(XMAX / 2) + 16
 .setTmpJunkFoodHorizPosition
    sta tmpJunkFoodHorizPos
-   ldx #<upperToothDecayAnimationIdx - toothDecayAnimationIndexes
+   ldx #<[upperToothDecayAnimationIdx - toothDecayAnimationIndexes]
 .determineToothDecayColor
    ldy #YELLOW + 14                 ; assume tooth decay
    lda toothDecayAnimationIndexes,x ; get tooth decay animation index
@@ -1961,7 +1961,7 @@ MoveJunkFoodUp
    sec
    sbc JunkFoodHeightValues,x
    bne .moveTravelingUpJunkFoodHoriz
-   ldy #<upperToothDecayAnimationIdx - toothDecayAnimationIndexes
+   ldy #<[upperToothDecayAnimationIdx - toothDecayAnimationIndexes]
    lda junkFoodHorizPos + 5         ; get top Junk Food horizontal position
    sta tmpBoundaryJunkFoodHorizPos
    lda junkFoodPatternIndex + 7     ; get top Junk Food pattern value
