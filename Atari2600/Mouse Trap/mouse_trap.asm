@@ -33,8 +33,8 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
 ; NOTE: You must compile this with vcs.h version 105 or greater.
 ;
 
-   include "macro.h"
    include "vcs.h"
+   include "macro.h"
    include "tia_constants.h"
 
 ;
@@ -462,7 +462,7 @@ Start
    txs                              ; set stack to beginning
 StartNewGame
    jsr InitializeGame
-   ldx #<RESBL - RESP0
+   ldx #<[RESBL - RESP0]
    lda #83
    jsr PositionObjectHorizontally   ; horizontally position BALL (maze center)
    sta WSYNC                        ; wait for next scan line
@@ -505,9 +505,9 @@ SetPlayerSprite
    beq .resetPlayerToMouse          ; branch it reset player to MOUSE_ID
 .setPlayerToDogSprite
    lda mouseLSBPointers,x
-   cmp #<MOUSE_SPRITE_OFFSET + H_KERNEL_SECTION
+   cmp #<[MOUSE_SPRITE_OFFSET + H_KERNEL_SECTION]
    bcs .setNextSectionToDog
-   adc #<DOG_SPRITE_OFFSET - MOUSE_SPRITE_OFFSET
+   adc #<[DOG_SPRITE_OFFSET - MOUSE_SPRITE_OFFSET]
    sta mouseLSBPointers,x
 .setNextSectionToDog
    dex
@@ -516,9 +516,9 @@ SetPlayerSprite
    
 .resetPlayerToMouse
    lda mouseLSBPointers,x
-   cmp #<MOUSE_SPRITE_OFFSET + H_KERNEL_SECTION + 3
+   cmp #<[MOUSE_SPRITE_OFFSET + H_KERNEL_SECTION + 3]
    bcc .setNextSectionToMouse
-   sbc #<DOG_SPRITE_OFFSET - MOUSE_SPRITE_OFFSET
+   sbc #<[DOG_SPRITE_OFFSET - MOUSE_SPRITE_OFFSET]
    sta mouseLSBPointers,x
 .setNextSectionToMouse
    dex
@@ -582,7 +582,7 @@ CheckForActionButtonPressed
    lda gameBoardStatus              ; get game board status value
    eor #TRAPDOOR_MASK               ; flip Trapdoor value
    sta gameBoardStatus
-   ldx #<TrapdoorAudioValues - AudioValues
+   ldx #<[TrapdoorAudioValues - AudioValues]
    jsr SetGameAudioValues
    lda #46
    bne .setActionButtonDebounce     ; unconditional branch
@@ -600,7 +600,7 @@ CheckForActionButtonPressed
    bne .clearActionButtonDebounce   ; branch if in Mouse collision routine
    lda #INIT_DOG_TIMER_VALUE
    sta dogTimer
-   ldx #<DogAudioValues - AudioValues
+   ldx #<[DogAudioValues - AudioValues]
    jsr SetGameAudioValues
    dec remainingBones               ; decrement remaining Bones
 .clearActionButtonDebounce
@@ -1357,7 +1357,7 @@ CheckPlayerCollisions
    bne .incrementCollisionTimer     ; branch if in Mouse collision routine
    lda CXPPMM                       ; check player collision values
    bpl NewFrame                     ; branch if no player collision
-   ldx #<PlayerCollisionAudioValues - AudioValues
+   ldx #<[PlayerCollisionAudioValues - AudioValues]
    jsr SetGameAudioValues
 .incrementCollisionTimer
    inc mouseCollisionTimer
@@ -2611,7 +2611,7 @@ CheckForMouseEatingCheese
 .mouseEatingCheese
    lda #POINTS_EAT_CHEESE
    jsr IncrementScore
-   ldx #<EatingCheeseAudioValues - AudioValues
+   ldx #<[EatingCheeseAudioValues - AudioValues]
    jsr SetGameAudioValues
    inc gameBoardStatus              ; increment Cheese eaten
    lda gameBoardStatus              ; get current game board status
@@ -2631,7 +2631,7 @@ CheckForMouseEatingCheese
    cmp #8 << 4 | 0
    bne .mouseEatingCheese
 .incrementNumberOfBonesCollected
-   ldx #<EatingBoneAudioValues - AudioValues
+   ldx #<[EatingBoneAudioValues - AudioValues]
    jsr SetGameAudioValues
    inc remainingBones
    ldy playerMazeCoordinates        ; get player maze coordinate value
