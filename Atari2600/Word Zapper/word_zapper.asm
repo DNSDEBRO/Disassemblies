@@ -748,7 +748,7 @@ DisplayKernel
    jsr PositionGRP0Horizontally;6         position Word Zapper horizontally
 ;--------------------------------------
    lda wordZapperMissileHorizPos;3 = @18
-   ldy #<RESM0 - RESP0        ; 2
+   ldy #<[RESM0 - RESP0]      ; 2
    jsr PositionObjectHorizontally;6       position Word Zapper missile
    sta WSYNC
 ;--------------------------------------
@@ -1236,11 +1236,11 @@ SetupForNewRound
    jmp StepToNextGameState
        
 .setMatchForEnglishWords
-   lda #<SixCharacterWords - EnglishWordLibrary
+   lda #<[SixCharacterWords - EnglishWordLibrary]
    ldx #5                           ; assume 6 character word
    ldy currentRound                 ; get current round number
    beq .determineEnglishWordOffset  ; branch if last round
-   lda #<FiveCharacterWords - EnglishWordLibrary
+   lda #<[FiveCharacterWords - EnglishWordLibrary]
    dex
    dey                              ; decrement current round
    beq .determineEnglishWordOffset  ; branch if second round
@@ -3280,7 +3280,7 @@ SetupMessageAreaForDisplay
    rts                        ; 6
 
 PositionGRP0Horizontally
-   ldy #<RESP0 - RESP0        ; 2
+   ldy #<[RESP0 - RESP0]      ; 2
 PositionObjectHorizontally
    sec                        ; 2
    sta WSYNC
