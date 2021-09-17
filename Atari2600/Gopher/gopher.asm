@@ -541,7 +541,7 @@ CheckToPlayDuckQuacking
    lda frameCount                   ; get current frame count
    and #$1F
    bne MoveDuckHorizontally   
-   ldx #<DuckQuackingAudioValues - AudioValues
+   ldx #<[DuckQuackingAudioValues - AudioValues]
    jsr SetGameAudioValues
 MoveDuckHorizontally
    lda duckAttributes               ; get Duck attribute values
@@ -651,16 +651,16 @@ CheckForGopherDiggingTunnel
    ldx gopherVertPos                ; get Gopher vertical position
    bne .checkGopherDiggingFirstGardenRow;branch if not crawling underground
    clc
-   adc #<_4thGardenDirtValues - gardenDirtValues
+   adc #<[_4thGardenDirtValues - gardenDirtValues]
    bne .gopherDigging               ; unconditional branch
        
 .checkGopherDiggingFirstGardenRow
    cpx #VERT_POS_GOPHER_UNDERGROUND + 14
    bcs .gopherDigging               ; branch if Gopher in first garden row
-   adc #<_2ndGardenDirtValues - gardenDirtValues
+   adc #<[_2ndGardenDirtValues - gardenDirtValues]
    cpx #VERT_POS_GOPHER_UNDERGROUND + 7
    bcs .gopherDigging               ; branch if Gopher in second garden row
-   adc #<_3rdGardenDirtValues - _2ndGardenDirtValues
+   adc #<[_3rdGardenDirtValues - _2ndGardenDirtValues]
 .gopherDigging
    tax
    lda DirtMaskingBits,y
@@ -670,7 +670,7 @@ CheckForGopherDiggingTunnel
    ora DirtMaskingBits,y            ; set bit for Gopher digging
    sta gardenDirtValues,x
    stx tmpGardenDirtIndex
-   ldx #<DigTunnelAudioValues - AudioValues
+   ldx #<[DigTunnelAudioValues - AudioValues]
    jsr SetGameAudioValues
    ldx tmpGardenDirtIndex
    lda gopherVertPos                ; get Gopher vertical position
@@ -814,7 +814,7 @@ DetermineToFillTunnel
    clc
    adc #6
    tax
-   cmp #<duckGraphicPtrs - gardenDirtValues
+   cmp #<[duckGraphicPtrs - gardenDirtValues]
    bcc .determineTunnelFillIndexValue
 .foundTunnelFillIndexValue
    txa                              ; move dirt floor RAM index to accumulator
@@ -823,7 +823,7 @@ DetermineToFillTunnel
    bmi .doneVerticalBlank
    tax                              ; move dirt floor RAM index to x register
    jsr FillInTunnel
-   cpx #<_4thGardenDirtValues - gardenDirtValues
+   cpx #<[_4thGardenDirtValues - gardenDirtValues]
    bcc .checkToFillAdjacentValue    ; branch if not filling bottom dirt row
    dey                              ; decrement for left PF bit
    jsr FillInTunnel                 ; fill left PF bit
@@ -838,12 +838,12 @@ DetermineToFillTunnel
 .fillInHole
    iny
    jsr FillInTunnel
-   cpx #<_4thGardenDirtValues - gardenDirtValues
+   cpx #<[_4thGardenDirtValues - gardenDirtValues]
    bcc .incrementScoreForTunnelFill ; branch if not filling bottom dirt row
    iny
    jsr FillInTunnel
 .incrementScoreForTunnelFill
-   ldx #<FillTunnelAudioValues - AudioValues
+   ldx #<[FillTunnelAudioValues - AudioValues]
    jsr SetGameAudioValues
    lda #POINTS_FILL_TUNNEL
    jsr IncrementScore
@@ -952,10 +952,10 @@ DisplayKernel
    sta HMCLR                  ; 3 = @03
    lda duckAttributes         ; 3         get Duck attribute values
    bmi .displayTravelLeftDuck ; 2³        branch if DUCK_TRAVEL_LEFT
-   ldx #<RESP1 - RESP0        ; 2
+   ldx #<[RESP1 - RESP0]      ; 2
    lda duckHorizPos           ; 3         get Duck horizontal position
    jsr PositionObjectHorizontally;6
-   ldx #<RESP0 - RESP0        ; 2
+   ldx #<[RESP0 - RESP0]      ; 2
    lda duckHorizPos           ; 3         get Duck horizontal position
    sec                        ; 2
    sbc #8                     ; 2
@@ -969,10 +969,10 @@ DisplayKernel
    lda #REFLECT               ; 2
    sta REFP0                  ; 3 = @14
    sta REFP1                  ; 3 = @17
-   ldx #<RESP0 - RESP0        ; 2
+   ldx #<[RESP0 - RESP0]      ; 2
    lda duckHorizPos           ; 3         get Duck horizontal position
    jsr PositionObjectHorizontally;6
-   ldx #<RESP1 - RESP0        ; 2
+   ldx #<[RESP1 - RESP0]      ; 2
    lda duckHorizPos           ; 3         get Duck horizontal position
    sec                        ; 2
    sbc #8                     ; 2
@@ -1009,10 +1009,10 @@ DrawDuckKernel
    sta REFP0                  ; 3 = @11
    lda #REFLECT               ; 2
    sta REFP1                  ; 3 = @16
-   ldx #<RESP1 - RESP0        ; 2
+   ldx #<[RESP1 - RESP0]      ; 2
    lda farmerHorizPos         ; 3         get Farmer horizontal position
    jsr PositionObjectHorizontally;6
-   ldx #<RESP0 - RESP0        ; 2
+   ldx #<[RESP0 - RESP0]      ; 2
    lda farmerHorizPos         ; 3         get Farmer horizontal position
    sec                        ; 2
    sbc #7                     ; 2
@@ -1431,9 +1431,9 @@ DisplayGameSelection
    sta selectDebounce               ; clear select debounce value
    lda INPT4                        ; read left player action button
    bmi .doneDisplayGameSelection    ; branch if action button not pressed
-   ldx #<StartingThemeAudioValues_00 - AudioValues
+   ldx #<[StartingThemeAudioValues_00 - AudioValues]
    jsr SetGameAudioValues
-   ldx #<StartingThemeAudioValues_01 - AudioValues
+   ldx #<[StartingThemeAudioValues_01 - AudioValues]
    jsr SetGameAudioValues
    lda #WAIT_TIME_GAME_START
    sta frameCount
@@ -1452,7 +1452,7 @@ DisplayPlayerNumberInformation
    lda gameSelection                ; get current game selection
    and #ACTIVE_PLAYER_MASK          ; keep ACTIVE_PLAYER
    tax
-   lda #<one - NumberFonts
+   lda #<[one - NumberFonts]
    cpx #PLAYER_TWO_ACTIVE
    bne .setPlayerDigitLSBValue
    clc
@@ -1686,7 +1686,7 @@ CheckForFarmerBonkingGopher SUBROUTINE
 .checkFarmerBonkingGopher
    cmp #6
    bcs .checkToTauntFarmer
-   ldx #<BonkGopherAudioValues - AudioValues
+   ldx #<[BonkGopherAudioValues - AudioValues]
    jsr SetGameAudioValues
    lda #POINTS_BONK_GOPHER
    jsr IncrementScore
@@ -1707,7 +1707,7 @@ CheckForFarmerBonkingGopher SUBROUTINE
    bne .setZone01GopherGraphicValues
    lda gopherTauntTimer             ; get Gopher taunt timer value
    bne .decrementGopherTauntTimer
-   ldx #<GopherTauntAudioValues - AudioValues
+   ldx #<[GopherTauntAudioValues - AudioValues]
    jsr SetGameAudioValues
    lda #28
    sta gopherTauntTimer
@@ -1722,7 +1722,7 @@ CheckForFarmerBonkingGopher SUBROUTINE
    lda gopherVertPos                ; get Gopher vertical position
    cmp #VERT_POS_GOPHER_UNDERGROUND + 7
    bcc .disableZone01GopherSprite
-   lda #<RisingGopherSprite + H_RISING_GOPHER - 1
+   lda #<[RisingGopherSprite + H_RISING_GOPHER - 1]
    sec
    sbc gopherVertPos
    sta zone01_GopherGraphicsPtrs
@@ -1760,7 +1760,7 @@ CheckForFarmerBonkingGopher SUBROUTINE
    jmp .setZone02GopherGraphicValues
        
 .initiateGopherRunningAboveGround
-   lda #<RunningGopher_00 - 1
+   lda #<[RunningGopher_00 - 1]
    sta zone00_GopherGraphicsPtrs
    lda #>RunningGopher_00
    sta zone00_GopherGraphicsPtrs + 1
@@ -1884,7 +1884,7 @@ CarrotStolenByGopher
    sta zone00_GopherGraphicsPtrs + 1
    lda #WAIT_TIME_CARROT_STOLEN
    sta frameCount
-   ldx #<StolenCarrotAudioValues - AudioValues
+   ldx #<[StolenCarrotAudioValues - AudioValues]
    jsr SetGameAudioValues
 .advanceCurrentGameState
    jmp AdvanceCurrentGameState
@@ -1928,9 +1928,9 @@ WaitToStartNewGame
    sta frameCount
    lda #GS_DISPLAY_GAME_SELECTION
    sta gameState
-   ldx #<StartingThemeAudioValues_00 - AudioValues
+   ldx #<[StartingThemeAudioValues_00 - AudioValues]
    jsr SetGameAudioValues
-   ldx #<StartingThemeAudioValues_01 - AudioValues
+   ldx #<[StartingThemeAudioValues_01 - AudioValues]
    jsr SetGameAudioValues
    jmp InitGameRoundData
        
@@ -1953,9 +1953,9 @@ CheckToAlternatePlayers
 .checkForGameOverState
    lda carrotPattern                ; get current Carrot pattern
    bne AdvanceCurrentGameState
-   ldx #<GameOverThemeAudioValues_00 - AudioValues
+   ldx #<[GameOverThemeAudioValues_00 - AudioValues]
    jsr SetGameAudioValues
-   ldx #<GameOverThemeAudioValues_01 - AudioValues
+   ldx #<[GameOverThemeAudioValues_01 - AudioValues]
    jsr SetGameAudioValues
    lda #GS_WAIT_FOR_NEW_GAME
    sta gameState
