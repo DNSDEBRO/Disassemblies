@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS Â© 1978, ATARI, INC.                                  =
+; = THE ASSEMBLED CODE IS © 1978, ATARI, INC.                                  =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -54,9 +54,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
-   include tia_constants.h
-   include vcs.h
-   include macro.h
+   include "tia_constants.h"
+   include "vcs.h"
+   include "macro.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -325,7 +325,7 @@ FREE_BYTES SET FREE_BYTES + 1
 ;
 ; There are 27 possible lettervalues (alphabet + NULL character). This would
 ; take at most 5 bits. The Hangman words are limited to 6 letters. This equates
-; to 30 bits. This makes a compacted Hangman word use 4 bytes (i.e. 30 / 8 Â˜ 4)
+; to 30 bits. This makes a compacted Hangman word use 4 bytes (i.e. 30 / 8 ˜ 4)
 ;
    MAC COMPRESS_WORD
    
@@ -420,7 +420,7 @@ DisplayKernel
 ;--------------------------------------
    sta HMCLR                  ; 3 = @03   not needed...player graphics not used
    dex                        ; 2
-   bne .skipKernelLines       ; 2Â³
+   bne .skipKernelLines       ; 2³
    ldx #H_FONT                ; 2
    lda #0                     ; 2
    sta scoreGraphic1          ; 3
@@ -496,7 +496,7 @@ ScoreKernel
    sta scoreGraphic2          ; 3
    sta PF1                    ; 3 = @41   set right score graphic value
    dex                        ; 2
-   bmi GameKernel             ; 2Â³
+   bmi GameKernel             ; 2³
    jmp ScoreKernel            ; 3
    
 ; --------------------- PF Timings --------------------
@@ -518,7 +518,7 @@ GameKernel SUBROUTINE
    sta WSYNC
 ;--------------------------------------
    dex                        ; 2
-   bne .skipKernelLines       ; 2Â³
+   bne .skipKernelLines       ; 2³
    ldy #256 - H_KERNEL        ; 2
    lda #256 - H_KERNEL + H_KERNEL_SECTION;2
    sta tmpNextKernelSection   ; 3
@@ -545,7 +545,7 @@ GameKernel SUBROUTINE
    lda rightPF2Graphics,x     ; 4         get right PF2 graphic data
    sta PF2                    ; 3 = @52   set right PF2 graphic value
    cpy tmpNextKernelSection   ; 3
-   bcc .kernelSectionLoop     ; 2Â³        branch if not done with kernel section
+   bcc .kernelSectionLoop     ; 2³        branch if not done with kernel section
    inx                        ; 2         increment playfield graphic index
    tya                        ; 2         move scan line count to accumulator
    clc                        ; 2
@@ -553,9 +553,9 @@ GameKernel SUBROUTINE
    sta tmpNextKernelSection   ; 3         set new kernel section limit
 .overscanLoop
    iny                        ; 2         increment scan line
-   beq VerticalSync           ; 2Â³        branch if frame done
+   beq VerticalSync           ; 2³        branch if frame done
    cpy #KERNEL_END            ; 2
-   bcc .gameKernelLoop        ; 2Â³        branch if not done drawing kernel
+   bcc .gameKernelLoop        ; 2³        branch if not done drawing kernel
 ;--------------------------------------
    lda #0                     ; 2
    sta PF0                    ; 3 = @05   clear playfield graphics
@@ -596,12 +596,12 @@ ResetGame
    stx selectedLetter               ; reset selected letter (i.e. x = -1)
    stx letterSoundDuration
    lda #0
-   ldx #<frameCount - playfieldGraphics
+   ldx #<[frameCount - playfieldGraphics]
 .clearZPPlayfieldGraphics
    sta playfieldGraphics - 1,x
    dex
    bne .clearZPPlayfieldGraphics
-   ldx #<CXCLR - WSYNC
+   ldx #<[CXCLR - WSYNC]
 .clearTIALoop
    sta NUSIZ0 + 63,x
    dex
@@ -627,7 +627,7 @@ ResetGame
    sta COLUP0,x                     ; set game colors from table values
    iny                              ; increment table read index
    inx
-   cpx #<COLUBK - COLUP0 + 1
+   cpx #<[COLUBK - COLUP0 + 1]
    bcc .setColorsLoop
    lda #31
    sta AUDF0
@@ -857,7 +857,7 @@ DetermineGameColors SUBROUTINE
 .skipColorSet
    iny
    inx
-   cpx #<COLUBK - COLUP0 + 1
+   cpx #<[COLUBK - COLUP0 + 1]
    bcc .setColorsLoop
    bit gameVariation                ; check current game variation
    bvs PlayChangingLetterSounds     ; branch if player COMPOSING_WORD
