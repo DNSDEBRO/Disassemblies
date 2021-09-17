@@ -27,9 +27,9 @@
 
    processor 6502
 
-   include tia_constants.h
-   include vcs.h
-   include macro.h
+   include "tia_constants.h"
+   include "vcs.h"
+   include "macro.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -315,13 +315,13 @@ RestartGame
    bne .clearLoop
    jsr InitializeGame
 MainLoop
-   ldx #<tankColor - objectColors
+   ldx #<[tankColor - objectColors]
 .setObjectColors
    lda GameColors,x                 ; read game color table
    eor colorEOR                     ; flip color bits based on color cycling
    and hueMask                      ; mask color values for COLOR / B&W mode
    sta objectColors,x
-   cpx #<leadShipColor - objectColors
+   cpx #<[leadShipColor - objectColors]
    bcs .nextObjectColor
    sta COLUP0,x
 .nextObjectColor
@@ -475,10 +475,10 @@ DisplayKernel
    and hueMask                ; 3
    sta leadShipLaserColor     ; 3
    lda leadShipHorizPos       ; 3         get LeadShip horizontal position
-   ldx #<HMP0 - HMP0          ; 2
+   ldx #<[HMP0 - HMP0]        ; 2
    jsr CalculateObjectHorizPosition;6     horizontally position LeadShip
 ;--------------------------------------
-   ldx #<HMM1 - HMP0          ; 2
+   ldx #<[HMM1 - HMP0]        ; 2
    lda tankHorizLaserTarget   ; 3
    clc                        ; 2
    adc #4                     ; 2
@@ -518,7 +518,7 @@ DisplayKernel
    lda #XMIN                  ; 2
 .horizontallyPositionEnemyTanks
    sta tmpTankGroupHorizPos   ; 3
-   ldx #<HMP1 - HMP0          ; 2
+   ldx #<[HMP1 - HMP0]        ; 2
    jsr CalculateObjectHorizPosition;6     horizontally position Enemy Forces
 ;--------------------------------------
    sta WSYNC
@@ -780,7 +780,7 @@ BCD2Digits
    sta scoreGraphicPtrs + 2,y       ; set LSB pointer to digit
    dex
    bpl .bcd2DigitLoop
-   ldx #<tankLaserValue - leadShipLaserValue
+   ldx #<[tankLaserValue - leadShipLaserValue]
 .setAudioValuesFromObjectStates
    lda objectLaserValues,x          ; get object laser value
    and #$0F
@@ -799,7 +799,7 @@ BCD2Digits
    lda objectLaserValues,x          ; get object laser value
    and #$0F
    sta AUDV0,x                      ; set volume for object laser
-   cpx #<objectLaserValues - leadShipLaserValue
+   cpx #<[objectLaserValues - leadShipLaserValue]
    bne .setObjectLaserAudioValues   ; branch if processing Tank laser value
    tay
    bne .determineExplosionGraphicAnimation
