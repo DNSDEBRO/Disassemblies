@@ -16,7 +16,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS Â© 1982, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS © 1982, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -37,9 +37,9 @@
 
    processor 6502
 
-   include macro.h
-   include tia_constants.h
-   include vcs.h
+   include "vcs.h"
+   include "macro.h"
+   include "tia_constants.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -378,7 +378,7 @@ MainLoop
    eor colorEOR                     ; flip color bits based on color cycling
    and hueMask                      ; mask color values for COLOR / B&W mode
    sta objectColors,x
-   cpx #<roadColor - objectColors   ; branch if not tree, river, or dirt colors
+   cpx #<[roadColor - objectColors] ; branch if not tree, river, or dirt colors
    bcs .nextObjectColor
    sta COLUP0,x
 .nextObjectColor
@@ -399,7 +399,7 @@ MainLoop
    inx                              ; x = 1 (i.e. HMP1)
    jsr CalculateObjectHorizPosition ; calculate position for right group of trees
    jsr PositionObjectsHorizontally  ; position right group of trees
-   ldx #<HMM1 - HMP0
+   ldx #<[HMM1 - HMP0]
    lda riverEdgeHorizPos            ; get the river edge horizontal position
    beq .positionRiverEdge           ; branch if off the screen
    ldy showingBridge
@@ -420,7 +420,7 @@ MainLoop
    sta CXCLR                        ; clear collision registers
    lda crashTimer                   ; get the crash timer
    and #$0F
-   cmp #<backgroundColor - gameSelection + 1
+   cmp #<[backgroundColor - gameSelection + 1]
    bcc .setupKernelToDrawTrees      ; skip flashing road color for crash
    tax
    lda gameSelection - 1,x
@@ -475,7 +475,7 @@ DisplayKernel
    lda leftPF0GraphicData     ; 3
    sta PF0                    ; 3 = @57
    txa                        ; 2         move kernel index to accumulator
-   beq .doneDrawUpperBorderLoop;2Â³
+   beq .doneDrawUpperBorderLoop;2³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -500,11 +500,11 @@ DisplayKernel
 .determineBridgeOrObstacleKernel
    lda riverEdgeHorizPos      ; 3
    ora showingBridge          ; 3
-   beq .enterObstacleKernel   ; 2Â³        branch if not showing bridge
+   beq .enterObstacleKernel   ; 2³        branch if not showing bridge
    ldx #H_RIVER               ; 2
    lda #$1F                   ; 2
    cpy #H_SPRITES - 2         ; 2
-   bne .beginBridgeKernel     ; 2Â³
+   bne .beginBridgeKernel     ; 2³
    sta GRP0                   ; 3 = @69
 .beginBridgeKernel
    sta WSYNC
@@ -546,7 +546,7 @@ DisplayKernel
 
 .drawUpperBridgeLoop
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawUpperBridgeKernel;2Â³
+   bcs .skipDrawUpperBridgeKernel;2³
    lda playerCarColors,y      ; 4
    sta COLUP0                 ; 3 = @67
    lda (playerCarGraphicPtr),y; 5
@@ -571,9 +571,9 @@ DisplayKernel
    dey                        ; 2
    sta PF2                    ; 3 = @51
    dex                        ; 2
-   bpl .drawUpperBridgeLoop   ; 2Â³
+   bpl .drawUpperBridgeLoop   ; 2³
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawPlayerCarBridgeKernel_1;2Â³
+   bcs .skipDrawPlayerCarBridgeKernel_1;2³
    lda playerCarColors,y      ; 4
    sta COLUP0                 ; 3 = @66
    lda PlayerCarSizeValues,y  ; 4
@@ -601,7 +601,7 @@ DisplayKernel
    ldx #H_BRIDGE              ; 2
 .drawMiddleBridgeKernel
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawPlayerCarMiddleBridge;2Â³
+   bcs .skipDrawPlayerCarMiddleBridge;2³
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @66
    lda PlayerCarSizeValues,y  ; 4
@@ -620,7 +620,7 @@ DisplayKernel
    sta PF2                    ; 3 = @27
    dey                        ; 2
    dex                        ; 2
-   bpl .drawMiddleBridgeKernel; 2Â³
+   bpl .drawMiddleBridgeKernel; 2³
    bmi DrawLowerBridgeKernel  ; 3         unconditional branch
 
 .skipPlayerCarDrawLowerBridge_1
@@ -649,7 +649,7 @@ DisplayKernel
 DrawLowerBridgeKernel
    ldx #H_RIVER - 1           ; 2 = @38
    cpy #H_SPRITES             ; 2
-   bcs .skipPlayerCarDrawLowerBridge_1;2Â³
+   bcs .skipPlayerCarDrawLowerBridge_1;2³
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @50
    lda PlayerCarSizeValues,y  ; 4
@@ -678,7 +678,7 @@ DrawLowerBridgeKernel
    lda rightPF2GraphicData    ; 3
    sta PF2                    ; 3 = @51
    cpy #H_SPRITES             ; 2
-   bcs .skipPlayerCarDrawLowerBridge_2;2Â³ + 1   crosses page boundary
+   bcs .skipPlayerCarDrawLowerBridge_2;2³ + 1   crosses page boundary
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @63
    lda PlayerCarSizeValues,y  ; 4
@@ -706,7 +706,7 @@ DrawLowerBridgeKernel
    sta PF2                    ; 3 = @51
 .drawLowerBridgeLoop
    cpy #H_SPRITES             ; 2
-   bcs .skipPlayerCarDrawLowerBridge_3;2Â³+ 1    crosses page boundary
+   bcs .skipPlayerCarDrawLowerBridge_3;2³+ 1    crosses page boundary
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @63
    lda PlayerCarSizeValues,y  ; 4
@@ -731,7 +731,7 @@ DrawLowerBridgeKernel
    lda rightPF2GraphicData    ; 3
    dex                        ; 2
    sta PF2                    ; 3 = @50
-   bpl .drawLowerBridgeLoop   ; 2Â³
+   bpl .drawLowerBridgeLoop   ; 2³
 StatusKernel
    lda leftPF0GraphicData     ; 3
    sta PF0                    ; 3 = @58
@@ -748,7 +748,7 @@ StatusKernel
    sta PF2                    ; 3 = @13
    lda lowerLeftTreeHorizPosValues;3      get lower tree horizontal value
    asl                        ; 2         shift D7 to carry
-   bcc .positionLowerTrees    ; 2Â³        coarse sprite to pixel 72 if clear
+   bcc .positionLowerTrees    ; 2³        coarse sprite to pixel 72 if clear
    ldy #HMOVE_R3              ; 2         shift trees right 3 additional pixels
    SLEEP 2                    ; 2         sleep 4 cycles to coarse position
    SLEEP 2                    ; 2         left trees to pixel 87
@@ -811,7 +811,7 @@ StatusKernel
    sta HMCLR                  ; 3 = @49
    sta PF2                    ; 3 = @52
    dex                        ; 2
-   bne .drawLowerBorderLoop   ; 2Â³
+   bne .drawLowerBorderLoop   ; 2³
    lda backgroundColor        ; 3
    sta WSYNC
 ;--------------------------------------
@@ -866,7 +866,7 @@ StatusKernel
    stx GRP1                   ; 3 = @33
    sty GRP0                   ; 3 = @36
    dec loopCount              ; 5
-   bpl .drawElapsedTime       ; 2Â³
+   bpl .drawElapsedTime       ; 2³
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -914,7 +914,7 @@ StatusKernel
    lda gameSelectionGraphic   ; 3
    sta GRP1                   ; 3 = @41
    dey                        ; 2
-   bpl .drawActivisionLogo    ; 2Â³
+   bpl .drawActivisionLogo    ; 2³
 Overscan
    lda #OVERSCAN_TIME
    sta WSYNC                        ; wait for next scan line
@@ -1442,7 +1442,7 @@ JumpIntoConsoleSwitchCheck
 .determineNewObstacleCarColors
    lda random                       ; get random number seed
    and #3 << 5                      ; 4 obstacles (i.e. [4 * H_SPRITES] - H_SPRITES)
-   adc #<ObstacleColors - 1
+   adc #<[ObstacleColors - 1]
    sta obstacleColorLSBValues,x
 .spawnNewObstacleCar
    lda #HMOVE_0 | ID_CAR
@@ -1535,7 +1535,7 @@ KeepPlayerInRoadRange
    lda #YMIN                        ; set to minimum vertical position
 .setPlayerVerticalPosition
    sta playerVertPos
-   ldx #<rightPF2GraphicData - playfieldGraphicData
+   ldx #<[rightPF2GraphicData - playfieldGraphicData]
    lda #0
 .clearBridgeWaterGraphics
    sta playfieldGraphicData,x
@@ -1552,7 +1552,7 @@ KeepPlayerInRoadRange
    sta playfieldGraphicData,x
    lda #$FF
    inx
-   cpx #<rightPF2GraphicData - playfieldGraphicData + 1
+   cpx #<[rightPF2GraphicData - playfieldGraphicData + 1]
    bcc .setBridgeWaterGraphics
    dex                              ; x = 5
    ldy #$00
@@ -1596,7 +1596,7 @@ SetObstacleAttributes
    sta obstacleLSBValues,x          ; set obstacle graphic pointer LSB value
    lda obstacleHorizPositions,x     ; get obstacle horizontal position
    sta tmpObstacleHorizPos          ; save value for later
-   cpx #<lowerRightTreeHorizPos - obstacleHorizPositions
+   cpx #<[lowerRightTreeHorizPos - obstacleHorizPositions]
    beq .calculateObstacleHorizPos   ; branch if tree sprite
    ldy colorCycleMode               ; get color cycling mode value
    bpl .setFinishLineHorizPosition  ; branch if not color cycling
@@ -1715,7 +1715,7 @@ ModulateEngineSound
    rts
 
 InitializeGame
-   ldx #<gameSelectionPointers - playerCarGraphicPtr + 1
+   ldx #<[gameSelectionPointers - playerCarGraphicPtr + 1]
 .initGraphicPointers
    lda InitGraphicPointerValues,x
    sta playerCarGraphicPtr,x
@@ -1839,7 +1839,7 @@ ObstacleCarColors_3
 .skipDrawCheckCollision
    sta WSYNC
 ;--------------------------------------
-   bpl .skipSetCollision      ; 2Â³        branch if no player collision
+   bpl .skipSetCollision      ; 2³        branch if no player collision
    stx.w collisionKernelSection;4
 .skipDrawPlayerCar_0
    jsr Sleep8Cycles           ; 14
@@ -1858,7 +1858,7 @@ StartObstacleKernel
    cmp #YMIN                  ; 2
    sta WSYNC
 ;--------------------------------------
-   bne .colorRoad             ; 2Â³
+   bne .colorRoad             ; 2³
    lda #$1F                   ; 2
    sta GRP0                   ; 3 = @07   draw top of back tire
 .colorRoad
@@ -1882,10 +1882,10 @@ StartObstacleKernel
    dey                        ; 2
    cpy #H_SPRITES             ; 2
    lda CXPPMM                 ; 3         check player collisions
-   bcs .skipDrawCheckCollision; 2Â³
+   bcs .skipDrawCheckCollision; 2³
    sta WSYNC
 ;--------------------------------------
-   bpl .skipObstacleCollision ; 2Â³        branch if player's didn't collide
+   bpl .skipObstacleCollision ; 2³        branch if player's didn't collide
    stx.w collisionKernelSection;4         set collision kernel section
 .drawPlayerCarSection_1
    lda PlayerCarSizeValues,y  ; 4
@@ -1901,7 +1901,7 @@ StartObstacleKernel
    tax                        ; 2
    dey                        ; 2
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawPlayerCar_1   ; 2Â³
+   bcs .skipDrawPlayerCar_1   ; 2³
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @55
    lda PlayerCarSizeValues,y  ; 4
@@ -1913,14 +1913,14 @@ StartObstacleKernel
    cpy #H_SPRITES             ; 2
    lda tempFineMotionValue    ; 3
 ;--------------------------------------
-   bcs .skipPlayerCarDrawCoarseMoveObstacle;2Â³
+   bcs .skipPlayerCarDrawCoarseMoveObstacle;2³
    sta CXCLR                  ; 3 = @05
    sta HMP1                   ; 3 = @08
    lda (playerCarGraphicPtr),y; 5
    cpx #6                     ; 2
 .coarseMoveObstacle
    dex                        ; 2
-   bpl .coarseMoveObstacle    ; 2Â³
+   bpl .coarseMoveObstacle    ; 2³
    sta.w RESP1                ; 4
    sta WSYNC
 ;--------------------------------------
@@ -1932,13 +1932,13 @@ StartObstacleKernel
    sta NUSIZ0                 ; 3 = @20
 .jmpIntoThirdObstacleScanline
    lda kernelSection          ; 3
-   bmi .endGameKernel         ; 2Â³
-   bcs SkipPlayerDrawObstacleSection;2Â³ + 1
+   bmi .endGameKernel         ; 2³
+   bcs SkipPlayerDrawObstacleSection;2³ + 1
    ldx #H_SPRITES - 2         ; 2
 .obstacleKernelSectionLoop
    dey                        ; 2
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawPlayerCar_2   ; 2Â³ + 1
+   bcs .skipDrawPlayerCar_2   ; 2³ + 1
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @43
    lda PlayerCarSizeValues,y  ; 4
@@ -1961,7 +1961,7 @@ StartObstacleKernel
    sta COLUP1                 ; 3 = @21
    ldy tmpPlayerGraphicPtr    ; 3
    dex                        ; 2
-   bpl .obstacleKernelSectionLoop;2Â³
+   bpl .obstacleKernelSectionLoop;2³
    jmp .obstacleKernelLoop    ; 3
 
 .endGameKernel
@@ -1982,7 +1982,7 @@ StartObstacleKernel
    cpx #6                     ; 2
 .skipDrawCoarseMoveObstacleLoop
    dex                        ; 2
-   bpl .skipDrawCoarseMoveObstacleLoop;2Â³
+   bpl .skipDrawCoarseMoveObstacleLoop;2³
    sta.w RESP1                ; 4
    sta WSYNC
 ;--------------------------------------
@@ -2006,7 +2006,7 @@ SkipPlayerDrawObstacleSection
 .skipPlayerDrawObstacleSectionLoop
    dey                        ; 2
    cpy #H_SPRITES             ; 2
-   bcs .skipDrawPlayerCar     ; 2Â³
+   bcs .skipDrawPlayerCar     ; 2³
    lda (playerCarGraphicPtr),y; 5
    sta GRP0                   ; 3 = @45
    lda PlayerCarSizeValues,y  ; 4
@@ -2029,7 +2029,7 @@ SkipPlayerDrawObstacleSection
    sta COLUP1                 ; 3 = @23
    ldy tmpPlayerGraphicPtr    ; 3
    dex                        ; 2
-   bpl .skipPlayerDrawObstacleSectionLoop;2Â³
+   bpl .skipPlayerDrawObstacleSectionLoop;2³
    jmp .obstacleKernelLoop    ; 3
 
 .skipDrawPlayerCar
