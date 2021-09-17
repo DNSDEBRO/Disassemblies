@@ -114,7 +114,13 @@ COMPILE_REGION         = NTSC       ; change to compile for different regions
 ORIGINAL_ROM            = TRUE
 
    ENDIF
+
+   IF COMPILE_REGION = PAL60
    
+ORIGINAL_ROM            = FALSE
+
+   ENDIF
+
    IF !(ORIGINAL_ROM = TRUE || ORIGINAL_ROM = FALSE)
 
       echo ""
@@ -5540,6 +5546,13 @@ DrawSpiderCavernStairsKernel
 SetTimerForOverscanTime
    sta WSYNC
 ;--------------------------------------
+
+   IF COMPILE_REGION = PAL60
+
+      sta WSYNC                     ; force even scan line count for PAL60
+
+   ENDIF
+
    sty TIM64T                 ; 4
    jmp JumpToCurrentGameStateRoutine_BANK1;3
 
