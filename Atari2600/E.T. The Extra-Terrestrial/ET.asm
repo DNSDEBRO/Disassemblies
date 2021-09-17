@@ -59,9 +59,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -587,7 +587,7 @@ artistInitialFlag       ds 1
    jmp Start
 
 HorizPositionObjects
-   ldx #<RESBL - RESP0
+   ldx #<[RESBL - RESP0]
 .moveObjectLoop
    sta WSYNC                        ; wait for next scan line
    lda currentObjectHorizPos,x      ; get object's horizontal position
@@ -1811,7 +1811,7 @@ CheckToLandMothership
    bne .doneLandMothership
    ldx objectColorPtrs_0
    inx
-   cpx #<MotherShipColors + 6
+   cpx #<[MotherShipColors + 6]
    bcc .setMothershipColorPointer
    ldx #<MotherShipColors
 .setMothershipColorPointer
@@ -3385,7 +3385,7 @@ ScoreKernel
    lda tempNumberFonts        ; 3
    and #$F0                   ; 2
    bne .setGraphicsPointerLSB ; 2³
-   lda #<Blank * 2            ; 2
+   lda #<[Blank * 2]          ; 2
 .setGraphicsPointerLSB
    lsr                        ; 2
    sta graphicPointers        ; 3
@@ -4022,7 +4022,7 @@ StatusKernel
 ;--------------------------------------
    lda #BLACK                 ; 2
    sta COLUBK                 ; 3 = @05
-   ldx #<RESP1 - RESP0        ; 2
+   ldx #<[RESP1 - RESP0]      ; 2
    sta WSYNC
 ;--------------------------------------
    SLEEP 2                    ; 2
