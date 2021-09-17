@@ -23,7 +23,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS Â© 1983, ACTIVISION                                   =
+; = THE ASSEMBLED CODE IS © 1983, ACTIVISION                                   =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -36,9 +36,9 @@
 
    processor 6502
 
-   include macro.h
-   include tia_constants.h
-   include vcs.h
+   include "vcs.h"
+   include "macro.h"
+   include "tia_constants.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -545,7 +545,7 @@ DisplayKernel
    lda #<DegressIndicator     ; 2
    sta digitPointers + 4      ; 3
    lda remainingLives         ; 3         get remaining lives
-   beq .drawTemperature       ; 2Â³        branch if no remaining lives
+   beq .drawTemperature       ; 2³        branch if no remaining lives
    asl                        ; 2         multiply by 8 (i.e. H_FONT)
    asl                        ; 2
    asl                        ; 2
@@ -553,7 +553,7 @@ DisplayKernel
 .drawTemperature
    lda temperatureValue       ; 3         get current temperature value
    and #$F0                   ; 2         mask the lower nybble
-   beq .setPointerForOnesValue; 2Â³        branch if no tens value
+   beq .setPointerForOnesValue; 2³        branch if no tens value
    lsr                        ; 2         divide the value by 2
    sta digitPointers          ; 3         set LSB pointer to digit
 .setPointerForOnesValue
@@ -569,19 +569,19 @@ DisplayKernel
    sta digitPointers + 2      ; 3         set LSB pointer to digit
    lda digitPointers          ; 3         get temperature tens value
    cmp #<Blank                ; 2
-   bne .checkToDrawMagicFish  ; 2Â³        branch if tens value present
+   bne .checkToDrawMagicFish  ; 2³        branch if tens value present
    lda currentLevelStatus     ; 3         get curent level status values
-   bne .checkToDrawMagicFish  ; 2Â³
+   bne .checkToDrawMagicFish  ; 2³
    lda frameCount             ; 3         get current frame count
    and #8                     ; 2
-   bne .checkToDrawMagicFish  ; 2Â³
+   bne .checkToDrawMagicFish  ; 2³
    lda skyColor               ; 3
    sta COLUP0                 ; 3         blink temperature every 8 frames
    sta COLUP1                 ; 3
 .checkToDrawMagicFish
    lda currentLevel           ; 3         get the current level
    cmp #MAGIC_FISH_LEVEL      ; 2
-   bcc .drawTemperatureAndRemainingLives;2Â³
+   bcc .drawTemperatureAndRemainingLives;2³
    lda #<Fish_00              ; 2         draw Magic Fish when passed level 20
    sta digitPointers + 6      ; 3
    lda #>Fish_00              ; 2
@@ -632,7 +632,7 @@ DisplayKernel
    sta COLUBK                 ; 3 = @06
    lda baileyHorizPos         ; 3         get Bailey's horizontal position
    cmp #15                    ; 2
-   bcs .coarsePositionBailey  ; 2Â³
+   bcs .coarsePositionBailey  ; 2³
    sec                        ; 2
    sbc #15                    ; 2         subtract 14 saves 2 bytes
    ldx #HMOVE_L6              ; 2
@@ -645,7 +645,7 @@ DisplayKernel
    SLEEP 2                    ; 2
 .baileyHorizPosDiv15
    sbc #15                    ; 2
-   bcs .baileyHorizPosDiv15   ; 2Â³
+   bcs .baileyHorizPosDiv15   ; 2³
    sta RESP0                  ; 3         set Bailey's coarse position
 .startNorthernLightsKernel
    sta WSYNC
@@ -672,7 +672,7 @@ DisplayKernel
    sta REFP1                  ; 3 = @52   set REFLECT state for Polar Grizzly
    lda buildingIglooIdx       ; 3         get building Igloo index value
    cmp #MAX_IGLOO_INDEX       ; 2
-   bne ColorNorthernLights    ; 2Â³        branch if not done building Igloo
+   bne ColorNorthernLights    ; 2³        branch if not done building Igloo
    sta RESP1                  ; 3         coarse position igloo door
 ColorNorthernLights
    ldx #7                     ; 2
@@ -687,7 +687,7 @@ ColorNorthernLights
    and #2                     ; 2
    eor NorthernLightsColors,x ; 4
    cpx #0                     ; 2
-   bne .setColorForNorthernLights;2Â³
+   bne .setColorForNorthernLights;2³
    lda landColor              ; 3
 .setColorForNorthernLights
    sta COLUBK                 ; 3 = @22
@@ -701,7 +701,7 @@ ColorNorthernLights
    dex                        ; 2
    sta PF1                    ; 3 = @44
    sta HMCLR                  ; 3 = @47
-   bpl .colorNorthernLights   ; 2Â³
+   bpl .colorNorthernLights   ; 2³
    ldy baileyVertPos          ; 3         get Bailey vertical position
    ldx #11                    ; 2
    stx VDELP1                 ; 3         delay GRP1 write (i.e. D0 = 1)
@@ -715,10 +715,10 @@ ColorNorthernLights
 ;--------------------------------------
    sta HMOVE                  ; 3
    sta PF1                    ; 3 = @06   clear PF1 register for left side
-   bcs .skipBaileyDrawIglooSection;2Â³
+   bcs .skipBaileyDrawIglooSection;2³
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .skipBaileyDrawIglooSection;2Â³
+   bcs .skipBaileyDrawIglooSection;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @22
    lda (baileyGraphicPtrs),y  ; 5
@@ -732,7 +732,7 @@ ColorNorthernLights
    ldx tmpIglooKernelIdx      ; 3         restore igloo kernel index
    dex                        ; 2         decrement igloo kernel index
    sta PF1                    ; 3 = @51
-   bpl .drawIglooKernel       ; 2Â³
+   bpl .drawIglooKernel       ; 2³
    bmi .doneDrawIglooKernel   ; 3         unconditional branch
 
 .skipBaileyDrawIglooSection
@@ -751,7 +751,7 @@ ColorNorthernLights
 ;--------------------------------------
    sta HMOVE                  ; 3
    sta GRP1                   ; 3 = @06
-   bcs .setPolarGrizzlyColorAndSize;2Â³
+   bcs .setPolarGrizzlyColorAndSize;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @16
    lda (baileyGraphicPtrs),y  ; 5
@@ -765,7 +765,7 @@ ColorNorthernLights
    txa                        ; 2
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .positionPolarGrizzlyHorizontally;2Â³
+   bcs .positionPolarGrizzlyHorizontally;2³
    lda (baileyGraphicPtrs),y  ; 5
    tax                        ; 2
    lda (baileyColorPtrs),y    ; 5
@@ -781,7 +781,7 @@ ColorNorthernLights
    SLEEP 2                    ; 2
 .coarsePositionPolarGrizzly
    sbc #15                    ; 2
-   bcs .coarsePositionPolarGrizzly;2Â³
+   bcs .coarsePositionPolarGrizzly;2³
    sta RESP1                  ; 3         set Polar Grizzly coarse position
    sta CXCLR                  ; 3         clear all hardward collision values
    sta WSYNC
@@ -790,7 +790,7 @@ ColorNorthernLights
    sta tmpDiv15Remainder      ; 3         save remainder value for later
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .setPolarGrizzlyFineMotion;2Â³
+   bcs .setPolarGrizzlyFineMotion;2³
    lda (baileyGraphicPtrs),y  ; 5
    sta GRP0                   ; 3
    lda (baileyColorPtrs),y    ; 5
@@ -817,7 +817,7 @@ ColorNorthernLights
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .drawBaileyForPolarGrizzlyKernel;2Â³
+   bcs .drawBaileyForPolarGrizzlyKernel;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @13
    lda (baileyGraphicPtrs),y  ; 5
@@ -827,9 +827,9 @@ ColorNorthernLights
    sta HMCLR                  ; 3 = @38
    ldy tmpKernelIdx           ; 3
    dex                        ; 2
-   bpl .polarGrizzlyKernel    ; 2Â³
+   bpl .polarGrizzlyKernel    ; 2³
    lda CXPPMM                 ; 3         get player collision values
-   bpl .noBaileyGrizzlyCollision;2Â³       branch if players didn't collide
+   bpl .noBaileyGrizzlyCollision;2³       branch if players didn't collide
    sta baileyGrizzlyCollisionValue;3      Bailey and Grizzly collided
 .noBaileyGrizzlyCollision
    dey                        ; 2
@@ -839,7 +839,7 @@ ColorNorthernLights
    sta HMOVE                  ; 3
    lda #BLACK                 ; 2
    sta COLUBK                 ; 3 = @08
-   bcs ObstacleKernelSection  ; 2Â³
+   bcs ObstacleKernelSection  ; 2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @18
    lda (baileyGraphicPtrs),y  ; 5
@@ -853,7 +853,7 @@ ObstacleKernelSection
    sta GRP1                   ; 3 = @39
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .obstacleKernelScanline_01;2Â³
+   bcs .obstacleKernelScanline_01;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @53
    lda (baileyGraphicPtrs),y  ; 5
@@ -868,7 +868,7 @@ ObstacleKernelSection
    lsr                        ; 2         divide value by 2
    tax                        ; 2
    lda iceBlocksHorizPos,x    ; 4         get Ice Block horizontal position
-   bcc .kernelSectionTypeDetermined; 2Â³   branch if an Ice Block section
+   bcc .kernelSectionTypeDetermined; 2³   branch if an Ice Block section
    lda kernelObstacleHorizPos,x;4         get obstacle kernel horizontal position
 .kernelSectionTypeDetermined
    sta tmpHorizPositionValue  ; 3
@@ -880,7 +880,7 @@ ObstacleKernelSection
    sta REFP1                  ; 3
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .obstacleKernelScanline_02;2Â³
+   bcs .obstacleKernelScanline_02;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3
    lda (baileyGraphicPtrs),y  ; 5
@@ -892,7 +892,7 @@ ObstacleKernelSection
    lda tmpHorizPositionValue  ; 3
    cmp #15                    ; 2
    dey                        ; 2
-   bcs .coarsePositionObstacle; 2Â³
+   bcs .coarsePositionObstacle; 2³
    sec                        ; 2
    sbc #15                    ; 2         subtract 14 saves 2 bytes
    ldx #HMOVE_L6              ; 2
@@ -902,7 +902,7 @@ ObstacleKernelSection
 
 .coarsePositionObstacle
    sbc #15                    ; 2
-   bcs .coarsePositionObstacle; 2Â³
+   bcs .coarsePositionObstacle; 2³
    sta RESP1                  ; 3
 .obstacleKernelScanline_03
    sta WSYNC
@@ -910,7 +910,7 @@ ObstacleKernelSection
    sta HMOVE                  ; 3
    tax                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .setObstacleFineMotionValue;2Â³
+   bcs .setObstacleFineMotionValue;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3
    lda (baileyGraphicPtrs),y  ; 5
@@ -931,7 +931,7 @@ ObstacleKernelSection
    lda obstacleColors,x       ; 4
    sta COLUP1                 ; 3
    lda obstacleAttributes,x   ; 4         get obstacle attribute value
-   bpl .obstacleKernelScanline_04;2Â³      branch if traveling right
+   bpl .obstacleKernelScanline_04;2³      branch if traveling right
    lda #REFLECT               ; 2
    sta REFP1                  ; 3
 .obstacleKernelScanline_04
@@ -940,7 +940,7 @@ ObstacleKernelSection
    sta HMOVE                  ; 3
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
-   bcs .determineObstacleOrIceBlockKernel;2Â³
+   bcs .determineObstacleOrIceBlockKernel;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @17
    lda (baileyGraphicPtrs),y  ; 5
@@ -953,7 +953,7 @@ ObstacleKernelSection
    lsr                        ; 2         divide value by 2
    sta CXCLR                  ; 3 = @51   clear hardware collision values
    sta HMCLR                  ; 3 = @54   clear horizontal motion values
-   bcc .iceBlockKernel        ; 2Â³        branch on ice block kernel section
+   bcc .iceBlockKernel        ; 2³        branch on ice block kernel section
    ldx #H_OBSTACLE - 1        ; 2
 .drawObstacleKernel
    dey                        ; 2
@@ -968,14 +968,14 @@ ObstacleKernelSection
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .drawBaileyObstacleKernel;2Â³
+   bcs .drawBaileyObstacleKernel;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @13
    lda (baileyGraphicPtrs),y  ; 5
 .drawBaileyObstacleKernel
    sta GRP0                   ; 3 = @21
    dex                        ; 2
-   bpl .drawObstacleKernel    ; 2Â³
+   bpl .drawObstacleKernel    ; 2³
    ldx currentKernelSection   ; 3         get current kernel section value
    lda CXPPMM                 ; 3         get player collision values
    sta obstacleCollisionValues,x;4        set collision value for section
@@ -993,7 +993,7 @@ ObstacleKernelSection
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .drawBaileyIceBlockScanline_02;2Â³
+   bcs .drawBaileyIceBlockScanline_02;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @13
    lda (baileyGraphicPtrs),y  ; 5
@@ -1008,7 +1008,7 @@ ObstacleKernelSection
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .drawBaileyIceBlockScanline_03;2Â³
+   bcs .drawBaileyIceBlockScanline_03;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @13
    lda (baileyGraphicPtrs),y  ; 5
@@ -1031,7 +1031,7 @@ ObstacleKernelSection
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
-   bcs .drawBaileyIceBlockScanline_04;2Â³
+   bcs .drawBaileyIceBlockScanline_04;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @13
    lda (baileyGraphicPtrs),y  ; 5
@@ -1043,7 +1043,7 @@ ObstacleKernelSection
    sta HMM1                   ; 3 = @34
    sta HMP1                   ; 3 = @37
    dec tmpIceBlockKernelIdx   ; 5
-   bpl .drawIceBlock          ; 2Â³
+   bpl .drawIceBlock          ; 2³
    sta HMCLR                  ; 3 = @47
    dey                        ; 2
    cpy #H_BAILEY + 1          ; 2
@@ -1053,7 +1053,7 @@ ObstacleKernelSection
 ;--------------------------------------
    sta HMOVE                  ; 3
    sta ENAM1                  ; 3 = @06
-   bcs .drawBaileyIceBlockScanlineFinal;2Â³
+   bcs .drawBaileyIceBlockScanlineFinal;2³
    lda (baileyColorPtrs),y    ; 5
    sta COLUP0                 ; 3 = @16
    lda (baileyGraphicPtrs),y  ; 5
@@ -1064,7 +1064,7 @@ ObstacleKernelSection
    ora CXM1P                  ; 3         combine with missile collision value
    sta obstacleCollisionValues,x;4
    dex                        ; 2
-   bmi .doneDrawingGameKernel ; 2Â³
+   bmi .doneDrawingGameKernel ; 2³
    jmp .drawObstacleKernelSection;3
 
 .doneDrawingGameKernel
@@ -1087,10 +1087,10 @@ ObstacleKernelSection
    lda copyrightScrollRate    ; 3
    and #$1F                   ; 2
    cmp #20                    ; 2
-   bcs .setLoopCountForCopyright;2Â³
+   bcs .setLoopCountForCopyright;2³
    ldy #0                     ; 2
    cmp #12                    ; 2
-   bcc .setLoopCountForCopyright;2Â³
+   bcc .setLoopCountForCopyright;2³
    sbc #12                    ; 2
    tay                        ; 2
 .setLoopCountForCopyright
@@ -1113,7 +1113,7 @@ ObstacleKernelSection
    dex                        ; 2
    dex                        ; 2
    dex                        ; 2
-   bpl .setupCopyrightGraphicPointers;2Â³ + 1
+   bpl .setupCopyrightGraphicPointers;2³ + 1
    sta WSYNC
 ;--------------------------------------
    sta HMOVE                  ; 3
@@ -1129,7 +1129,7 @@ ObstacleKernelSection
    sta digitPointers,x        ; 4
    dex                        ; 2
    dex                        ; 2
-   bpl .setDigitPointersMSBValue;2Â³
+   bpl .setDigitPointersMSBValue;2³
    jsr SetupForSixDigitDisplay; 6
    lda #$78                   ; 2
    sta PF1                    ; 3 = @25
@@ -1165,7 +1165,7 @@ ObstacleKernelSection
    sta COLUPF                 ; 3 = @47
    dey                        ; 2
    dec tmpDrawLogoLoopCount   ; 5
-   bpl .activisionLogoLoop    ; 2Â³
+   bpl .activisionLogoLoop    ; 2³
    lda #OVERSCAN_TIME
    ldx #DUMP_PORTS | DISABLE_TIA
    sta WSYNC                        ; wait for next scanline
@@ -2004,11 +2004,11 @@ CheckJoystickVerticalMovementValues
 
    IF COMPILE_REGION = PAL50
 
-   ldx #<BaileyJumpingUpOffsetValues - BaileyJumpingOffsetValues + 14
+   ldx #<[BaileyJumpingUpOffsetValues - BaileyJumpingOffsetValues + 14]
 
    ELSE
 
-   ldx #<BaileyJumpingUpOffsetValues - BaileyJumpingOffsetValues + 16
+   ldx #<[BaileyJumpingUpOffsetValues - BaileyJumpingOffsetValues + 16]
 
    ENDIF
 
@@ -2023,11 +2023,11 @@ CheckJoystickVerticalMovementValues
 
    IF COMPILE_REGION = PAL50
 
-   ldx #<BaileyJumpingDownOffsetValues - BaileyJumpingOffsetValues + 13
+   ldx #<[BaileyJumpingDownOffsetValues - BaileyJumpingOffsetValues + 13]
 
    ELSE
 
-   ldx #<BaileyJumpingDownOffsetValues - BaileyJumpingOffsetValues + 15
+   ldx #<[BaileyJumpingDownOffsetValues - BaileyJumpingOffsetValues + 15]
 
    ENDIF
 
@@ -2310,12 +2310,12 @@ SetInitIceBlockAndObstacleValues
    jsr SetObstacleStartingHorizPos
    dex
    bpl .setInitIceBlockAndObstacleValues
-   ldx #<currentLevelStatus - baileyVertPos
+   ldx #<[currentLevelStatus - baileyVertPos]
 .setInitValues
    lda #0
    sta AUDV0
    sta AUDV1
-   cpx #<iglooStatus - baileyVertPos
+   cpx #<[iglooStatus - baileyVertPos]
    bcs .setInitValue
    lda InitValueTable,x
 .setInitValue
@@ -2911,7 +2911,7 @@ SetupForSixDigitDisplay
 ;--------------------------------------
    sta HMOVE                  ; 3
    dex                        ; 2
-   bpl .skip13ScanlinesForPAL50;2Â³
+   bpl .skip13ScanlinesForPAL50;2³
 
    ELSE
 
@@ -2987,7 +2987,7 @@ SetupForSixDigitDisplay
    sty GRP1                   ; 3 = @39
    sta GRP0                   ; 3 = @42
    dec tmpSixDigitLoopCount   ; 5
-   bpl .drawSixDigitDisplay   ; 2Â³
+   bpl .drawSixDigitDisplay   ; 2³
    lda #HMOVE_R8              ; 2
    sta HMP0                   ; 3 = @54
    sta HMP1                   ; 3 = @57
