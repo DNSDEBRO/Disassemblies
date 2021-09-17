@@ -42,9 +42,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -458,7 +458,7 @@ CheckConsoleSwitches
    bmi ClearGameRAM                 ; branch if RESET held
    dec resetDebounce                ; set high to show RESET held
 ClearGameRAM
-   ldx #<currentGameBoard - (PF1 + 64)
+   ldx #<[currentGameBoard - (PF1 + 64)]
    lda #0
 .clearGameRAM
    sta PF1 + 64,x                   ; clear RAM from PF2 to currentGameBoard
@@ -619,7 +619,7 @@ CheckVerticalJoystickValues
    ldx #MAX_MARIO_BARREL_DOWN_LADDERS; maximum barrel ladders Mario can decend
    lda currentGameBoard             ; get current game board
    beq DetermineMarioDownLadder     ; branch if barrels
-   ldy #<FirefoxDownLadderTable - DownLadderTable + MAX_FIREFOX_LADDERS
+   ldy #<[FirefoxDownLadderTable - DownLadderTable + MAX_FIREFOX_LADDERS]
    ldx #MAX_FIREFOX_LADDERS         ; maximum number of ladders Mario can use
 DetermineMarioDownLadder
    lda marioVertPos                 ; get Mario vertical position
@@ -662,7 +662,7 @@ CheckForUpMotion
    ldy #MAX_MARIO_BARREL_UP_LADDERS ; offset for the up ladder table
    lda currentGameBoard             ; get current game board
    beq DetermineMarioUpLadder       ; branch if barrels   
-   ldy #<FirefoxUpLadderTable - UpLadderTable + MAX_FIREFOX_LADDERS
+   ldy #<[FirefoxUpLadderTable - UpLadderTable + MAX_FIREFOX_LADDERS]
    ldx #MAX_FIREFOX_LADDERS         ; maximum number of ladders Mario can use
 DetermineMarioUpLadder
    lda marioVertPos                 ; get Mario vertical position
@@ -912,13 +912,13 @@ CheckMarioWithHammer
    clc
    adc marioHorizPos                ; increment by Mario's horizontal position
    sta hammerHorizPos               ; set hammer horizontal position
-   ldy #<HandleDownSwingAnimation - H_HAMMER
-   ldx #<MalletDownSwingAnimation - H_HAMMER
+   ldy #<[HandleDownSwingAnimation - H_HAMMER]
+   ldx #<[MalletDownSwingAnimation - H_HAMMER]
    lda frameCount                   ; get current frame count
    and #8
    bne .setHammerGraphicPointerValues
-   ldx #<MalletUpSwingAnimation - H_HAMMER
-   ldy #<HandleUpSwingAnimation - H_HAMMER
+   ldx #<[MalletUpSwingAnimation - H_HAMMER]
+   ldy #<[HandleUpSwingAnimation - H_HAMMER]
 .setHammerGraphicPointerValues
    sty hammerHandleGraphicPtrs
    stx hammerMalletGraphicPtrs
@@ -926,7 +926,7 @@ CheckMarioWithHammer
    bne SetCurrentSoundAudioFrequency
    dec hammerTime                   ; decrement hammer time value
    bne SetCurrentSoundAudioFrequency
-   lda #<NoHammerAnimation - H_HAMMER
+   lda #<[NoHammerAnimation - H_HAMMER]
    sta hammerHandleGraphicPtrs
    sta hammerMalletGraphicPtrs
 SetCurrentSoundAudioFrequency
@@ -1349,13 +1349,13 @@ CheckToPlayDeathSound
    lda #$FF
    sta CXCLR
    jsr SetupKernelPointers
-   ldx #<HMM1 - HMP0
+   ldx #<[HMM1 - HMP0]
    lda hammerHorizPos               ; get hammer horizontal position
    jsr PositionHammerObject         ; horizontally position hammer handle
    ldy #MSBL_SIZE2                  ; ball size 2 clocks
    ldx #MSBL_SIZE4                  ; ball size 4 clocks
    lda hammerHandleGraphicPtrs
-   cmp #<HandleDownSwingAnimation - H_HAMMER
+   cmp #<[HandleDownSwingAnimation - H_HAMMER]
    beq .setHammerHandleSwingDownValue; branch if hammer swinging down
    lda currentGameBoard             ; get current game board
    beq .setHammerHandleSwingUpValue ; branch if barrels
@@ -1380,7 +1380,7 @@ CheckToPlayDeathSound
 .horizontallyPositionHammerMallot
    clc
    adc hammerHorizPos
-   ldx #<HMBL - HMP0
+   ldx #<[HMBL - HMP0]
    jsr PositionHammerObject         ; horizontally position hammer mallot
 DisplayKernel SUBROUTINE
 .waitTime
@@ -1831,7 +1831,7 @@ SetupKernelPointers
    ldy #0
    lda gameState                    ; get current game state
    bpl .bcd2DigitLoop               ; branch if showing player score
-   ldy #<bonusTimer - playerScore - 1; set display bonus timer value
+   ldy #<[bonusTimer - playerScore - 1]; set display bonus timer value
 .bcd2DigitLoop
    lda playerScore,y                ; get number value (BCD)
    and #$F0                         ; keep upper nybbles
@@ -2149,7 +2149,7 @@ FireFoxPF2Data_02
    .byte $08 ; |....X...|
        
 InitializeGame
-   ldx #<hammerHorizPos - backgroundColor
+   ldx #<[hammerHorizPos - backgroundColor]
 .initBarrelLevel
    lda InitializationTable,x
    sta backgroundColor,x
@@ -2715,7 +2715,7 @@ FirefoxVerPos
    
 StartNewGameBoard
    lda #0
-   ldx #<hammerTime - obstacleVertPos
+   ldx #<[hammerTime - obstacleVertPos]
    ldy #<HorizontalColors
 .startNewGameBoard
    sta obstacleVertPos,x
