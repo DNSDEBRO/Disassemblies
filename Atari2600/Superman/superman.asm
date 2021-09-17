@@ -32,9 +32,9 @@
 TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this
                                     ; assembles to the exact ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
