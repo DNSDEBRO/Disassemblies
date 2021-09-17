@@ -29,9 +29,9 @@ TIA_BASE_READ_ADDRESS = $30         ; set the read address base so this runs on
                                     ; the real VCS and compiles to the exact
                                     ; ROM image
 
+   include "vcs.h"
    include "macro.h"
    include "tia_constants.h"
-   include "vcs.h"
 
 ;
 ; Make sure we are using vcs.h version 1.05 or greater.
@@ -631,10 +631,10 @@ Start
    jmp ColdStart
    
 PositionObjectsHorizontally
-   ldx #<targetControlHorizPos - objectHorizPositions
+   ldx #<[targetControlHorizPos - objectHorizPositions]
 .positionObjectsHorizontally
    lda #2                           ; adjustment value for missile or BALL
-   cpx #<tmpActiveIBMHorizPos - objectHorizPositions
+   cpx #<[tmpActiveIBMHorizPos - objectHorizPositions]
    bcs .adjustObjectHorizPosition   ; branch if object is a missile or BALL
    lda #1
    ldy activeExplosionHeight        ; get active explosion 2's complement height
@@ -1905,7 +1905,7 @@ DisplayKernel
    sta NUSIZ0                 ; 3 = @63
    lda activeABMNUSIZValue    ; 3
    sta NUSIZ1                 ; 3 = @72
-   ldx #<activeExplodingABMHorizPos - objectHorizPositions;2
+   ldx #<[activeExplodingABMHorizPos - objectHorizPositions];2
    lda #54                    ; 2
    sta TIM8T                  ; 4         set to expire after ~5 scan lines
    jsr .positionObjectsHorizontally;6
