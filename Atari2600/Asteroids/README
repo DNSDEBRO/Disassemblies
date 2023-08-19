@@ -1,0 +1,39 @@
+Asteroids
+
+Copyright 1981 Atari, Inc.
+Designer: Brad Stewart
+
+Analyzed, labeled, and commented by Dennis Debro
+
+ *** 128 BYTES OF RAM USED 0 BYTES FREE
+ Copyright ROM stats
+ -------------------------------------------
+ *** 1,202 BYTES OF ROM FREE IN BANK0
+ ***    82 BYTES OF ROM FREE IN BANK1
+ ===========================================
+ *** 1,284 TOTAL BYTES FREE
+
+ No Copyright ROM stats
+ -------------------------------------------
+ *** 1,556 BYTES OF ROM FREE IN BANK0
+ ***    91 BYTES OF ROM FREE IN BANK1
+ ===========================================
+ *** 1,647 TOTAL BYTES FREE
+
+==============================================================================
+= THIS REVERSE-ENGINEERING PROJECT IS BEING SUPPLIED TO THE PUBLIC DOMAIN    =
+= FOR EDUCATIONAL PURPOSES ONLY. THOUGH THE CODE WILL ASSEMBLE INTO THE      =
+= EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
+= AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
+=                                                                            =
+= THE ASSEMBLED CODE IS © 1981, ATARI, INC.                                  =
+=                                                                            =
+==============================================================================
+
+Structure:
+asteroids.asm           reverse-engineered file
+makefile                Makefile to build code
+tia_constants.h         header file containing constants for the TIA
+
+The reverse-engineered file uses standard VCS.H header files. This is not
+supplied. It can be found with the distribution of the DASM cross assembler.
