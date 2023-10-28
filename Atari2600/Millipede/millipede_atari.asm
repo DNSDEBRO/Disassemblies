@@ -7341,7 +7341,7 @@ MoveSpider
    cmp tmpSpiderKernelZoneMax
    bcs .setSpiderDirectionToDown
    lda random
-   and SpiderVerticalAdjustementFrequencyValues,x
+   and SpiderVerticalAdjustmentFrequencyValues,x
    bne .adjustSpiderVerticalPosition
    tya                              ; move Spider attributes to accumulator
    eor #SPIDER_VERT_DIR_MASK        ; flip Spider SPIDER_VERT_DIR value
@@ -7349,7 +7349,7 @@ MoveSpider
    and #<~SPIDER_HORIZ_MOVE_MASK    ; clear SPIDER_HORIZ_MOVE value
    sta tmpSpiderAttributes
    lda random + 1
-   and SpiderHorizontalAdjustementFrequencyValues,x
+   and SpiderHorizontalAdjustmentFrequencyValues,x
    beq .setSpiderHorizontalMovementValue
    lda #SPIDER_HORIZ_MOVE
 .setSpiderHorizontalMovementValue
@@ -7683,10 +7683,10 @@ BeetleMoveFrequencyValues
 SpiderMoveFrequencyValues
    .byte 3, 4, 5, 6, 7
 
-SpiderHorizontalAdjustementFrequencyValues
+SpiderHorizontalAdjustmentFrequencyValues
    .byte 1, 2, 4, 8, 16
 
-SpiderVerticalAdjustementFrequencyValues
+SpiderVerticalAdjustmentFrequencyValues
    .byte ~81, ~196, ~7, ~138, ~97
 
 MoveBeeRoutine SUBROUTINE
