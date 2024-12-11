@@ -24,7 +24,7 @@
 ; = EXACT GAME ROM, THE LABELS AND COMMENTS ARE THE INTERPRETATION OF MY OWN   =
 ; = AND MAY NOT REPRESENT THE ORIGINAL VISION OF THE AUTHOR.                   =
 ; =                                                                            =
-; = THE ASSEMBLED CODE IS © 2005, ATARI                                        =
+; = THE ASSEMBLED CODE IS Â© 2005, ATARI                                        =
 ; =                                                                            =
 ; ==============================================================================
 ;
@@ -670,15 +670,15 @@ UpMovingAsteroidOnRight
    lda #<CheckToDrawUpMovingAsteroid;2
    sta upAsteroidKernelVector ; 3         set up moving asteroid kernel LSB
    ldx upAsteroidCoarseValue  ; 3 = @39   get up moving asteroid coarse value
-   beq CoarseMoveExtremeRightUpAsteroid;2³
+   beq CoarseMoveExtremeRightUpAsteroid;2Â³
    cpx #5                     ; 2
-   bcc CoarseMoveUpAsteroidOnRight;2³
+   bcc CoarseMoveUpAsteroidOnRight;2Â³
 CoarseMoveExtremeRightUpAsteroid
    ldx #5                     ; 2
    lda #0                     ; 2 = @49
 .coarseMoveExtremeRightUpAsteroid
    dex                        ; 2
-   bne .coarseMoveExtremeRightUpAsteroid;2³
+   bne .coarseMoveExtremeRightUpAsteroid;2Â³
    sta RESP0                  ; 3 = @76   ** INCONSISTENT ** strobe cycle
 ;--------------------------------------
    jmp JumpIntoDownAsteroidKernel;3
@@ -687,21 +687,21 @@ CoarseMoveUpAsteroidOnRight
    lda #0                     ; 2 = @48
 .coarseMoveUpAsteroidOnRight
    dex                        ; 2
-   bne .coarseMoveUpAsteroidOnRight;2³
+   bne .coarseMoveUpAsteroidOnRight;2Â³
    sta RESP0                  ; 3 = @70
    jmp JumpToDownAsteroidKernel;3
 
 UpMovingAsteroidOnLeft
    ldx upAsteroidCoarseValue  ; 3 = @17   get up moving asteroid coarse value
    dex                        ; 2
-   bne .coarseMoveUpAsteroidCycle29;2³
+   bne .coarseMoveUpAsteroidCycle29;2Â³
    sta RESP0                  ; 3 = @24
    SLEEP 2                    ; 2
    beq .contMoveUpAsteriodOnLeft_01;3     unconditional branch
    
 .coarseMoveUpAsteroidCycle29
    dex                        ; 2
-   bne .coarseMoveUpAsteroidCycle34;2³
+   bne .coarseMoveUpAsteroidCycle34;2Â³
    sta RESP0                  ; 3 = @29
 .contMoveUpAsteriodOnLeft_01
    SLEEP 2                    ; 2
@@ -709,7 +709,7 @@ UpMovingAsteroidOnLeft
    
 .coarseMoveUpAsteroidCycle34
    dex                        ; 2
-   bne .coarseMoveUpAsteroidCycle39;2³
+   bne .coarseMoveUpAsteroidCycle39;2Â³
    sta RESP0                  ; 3 = @34
 .contMoveUpAsteriodOnLeft_02
    SLEEP 2                    ; 2
@@ -717,7 +717,7 @@ UpMovingAsteroidOnLeft
    
 .coarseMoveUpAsteroidCycle39
    dex                        ; 2
-   bne .coarseMoveUpAsteroidCycle44;2³
+   bne .coarseMoveUpAsteroidCycle44;2Â³
    sta RESP0                  ; 3 = @38
 .contMoveUpAsteriodOnLeft_03
    SLEEP 2                    ; 2
@@ -725,7 +725,7 @@ UpMovingAsteroidOnLeft
    
 .coarseMoveUpAsteroidCycle44
    dex                        ; 2
-   bne .coarseMoveUpAsteroidCycle49;2³
+   bne .coarseMoveUpAsteroidCycle49;2Â³
    sta RESP0                  ; 3 = @43
 .jmpToDoneMoveUpAsteroidOnLeft
    SLEEP 2                    ; 2
@@ -747,7 +747,7 @@ UpMovingAsteroidOnLeft
 CheckToDrawUpMovingAsteroid
    ldx #0                     ; 2 = @16
    lda (upAsteroidSizePtr,x)  ; 6         get up moving asteroid NUSIZ value
-   bne .drawUpMovingAsteroid  ; 2³
+   bne .drawUpMovingAsteroid  ; 2Â³
    inc upMovingAsteroidIndex  ; 5
    ldx upMovingAsteroidIndex  ; 3
    lda asteroidHorizPos,x     ; 4         get up asteroid horizontal position
@@ -790,7 +790,7 @@ UpMovingAsteroidKernel
    lda asteroidAttributes,x   ; 4         get up moving asteroid attribute value
    and #ASTEROID_ID_MASK      ; 2         keep ASTEROID_ID value
    sta upMovingAsteroidId     ; 3 = @41   set asteroid id
-   bne .setToDrawUpMovingAsteroid;2³      branch if not KILLER_SATELLITE
+   bne .setToDrawUpMovingAsteroid;2Â³      branch if not KILLER_SATELLITE
    lda #>KillerSatelliteSprites;2
    bne .setUpMovingAsteroidGraphicMSB;3   unconditional branch
 
@@ -800,10 +800,10 @@ UpMovingAsteroidKernel
    sta upAsteroidGraphicsPtr + 1;3
    tya                        ; 2         move scan line to accumulator
    cmp asteroidVertPos,x      ; 4         compare with asteroid scan line
-   bne .skipUpAsteroidDraw    ; 2³        branch if not time to draw asteroid
+   bne .skipUpAsteroidDraw    ; 2Â³        branch if not time to draw asteroid
    lda upAsteroidFineMotion   ; 3         get asteroid fine motion value
    ror                        ; 2         shift OBJECT_SIDE value to carry
-   bcs .upMovingAsteroidOnLeft; 2³        branch if asteroid on the left
+   bcs .upMovingAsteroidOnLeft; 2Â³        branch if asteroid on the left
    ldx #<UpMovingAsteroidOnRight;2
    stx upAsteroidKernelVector ; 3
    lda #0                     ; 2
@@ -840,22 +840,22 @@ JumpIntoDownAsteroidKernel
 DownMovingAsteroidOnRight
    iny                        ; 2 = @16   increment scan line count
    cpy #H_KERNEL - 3          ; 2
-   beq .endKernel             ; 2³ + 1
+   beq .endKernel             ; 2Â³ + 1
    lda downAsteroidFineMotion ; 3         get down moving asteroid fine motion
    sta HMCLR                  ; 3 = @26   clear all horizontal motion
    sta HMP1                   ; 3 = @29   set down moving asteroid fine motion
    lda #<CheckToDrawDownMovingAsteroid;2
    sta downAsteroidKernelVector;3         set down moving asteroid kernel LSB
    ldx downAsteroidCoarseValue; 3         get down moving asteroid coarse value
-   beq CoarseMoveExtremeRightDownAsteroid;2³
+   beq CoarseMoveExtremeRightDownAsteroid;2Â³
    cpx #5                     ; 2
-   bcc CoarseMoveDownAsteroidOnRight;2³
+   bcc CoarseMoveDownAsteroidOnRight;2Â³
 CoarseMoveExtremeRightDownAsteroid
    ldx #5                     ; 2
    lda #0                     ; 2 = @47
 .coarseMoveExtremeRightDownAsteroid
    dex                        ; 2
-   bne .coarseMoveExtremeRightDownAsteroid;2³
+   bne .coarseMoveExtremeRightDownAsteroid;2Â³
    sta RESP1                  ; 3 = @74   ** INCONSISTENT ** strobe cycle
 ;--------------------------------------
    jmp JumpIntoUpAsteroidKernel;3 = @01
@@ -864,21 +864,21 @@ CoarseMoveDownAsteroidOnRight
    lda #0                     ; 2
 .coarseMoveDownAsteroidOnRight
    dex                        ; 2
-   bne .coarseMoveDownAsteroidOnRight;2³
+   bne .coarseMoveDownAsteroidOnRight;2Â³
    sta RESP1                  ; 3 = @68
    jmp JumpToUpAsteroidKernel ; 3
 
 DownMovingAsteroidOnLeft SUBROUTINE
    ldx downAsteroidCoarseValue; 3 = @17
    dex                        ; 2
-   bne .coarseMoveDownAsteroidCycle29;2³
+   bne .coarseMoveDownAsteroidCycle29;2Â³
    sta RESP1                  ; 3 = @24
    SLEEP 2                    ; 2
    beq .contMoveDownAsteriodOnLeft_01;3   unconditional branch
 
 .coarseMoveDownAsteroidCycle29
    dex                        ; 2
-   bne .coarseMoveDownAsteroidCycle34;2³
+   bne .coarseMoveDownAsteroidCycle34;2Â³
    sta RESP1                  ; 3 = @29
 .contMoveDownAsteriodOnLeft_01
    SLEEP 2                    ; 2
@@ -886,7 +886,7 @@ DownMovingAsteroidOnLeft SUBROUTINE
 
 .coarseMoveDownAsteroidCycle34
    dex                        ; 2
-   bne .coarseMoveDownAsteroidCycle39;2³
+   bne .coarseMoveDownAsteroidCycle39;2Â³
    sta RESP1                  ; 3 = @34
 .contMoveDownAsteriodOnLeft_02
    SLEEP 2                    ; 2
@@ -894,7 +894,7 @@ DownMovingAsteroidOnLeft SUBROUTINE
 
 .coarseMoveDownAsteroidCycle39
    dex                        ; 2
-   bne .coarseMoveDownAsteroidCycle44;2³
+   bne .coarseMoveDownAsteroidCycle44;2Â³
    sta RESP1                  ; 3 = @39
 .contMoveDownAsteriodOnLeft_03
    SLEEP 2                    ; 2
@@ -902,7 +902,7 @@ DownMovingAsteroidOnLeft SUBROUTINE
 
 .coarseMoveDownAsteroidCycle44
    dex                        ; 2
-   bne .coarseMoveDownAsteroidCycle49;2³
+   bne .coarseMoveDownAsteroidCycle49;2Â³
    sta RESP1                  ; 3 = @44
 .contMoveDownAsteriodOnLeft_04
    SLEEP 2                    ; 2
@@ -918,7 +918,7 @@ DownMovingAsteroidOnLeft SUBROUTINE
    sta HMP1                   ; 3 = @58   set down moving asteroid fine motion
    iny                        ; 2         increment scan line
    cpy #H_KERNEL - 3          ; 2
-   beq .endKernelDownMovingAsteroidKernel;2³
+   beq .endKernelDownMovingAsteroidKernel;2Â³
    lda #<CheckToDrawDownMovingAsteroid;2
    sta downAsteroidKernelVector;3         set down moving asteroid kernel LSB
    lda #0                     ; 2         don't draw down moving asteroid
@@ -928,7 +928,7 @@ DownMovingAsteroidOnLeft SUBROUTINE
 CheckToDrawDownMovingAsteroid:
    ldx #0                     ; 2 = @16
    lda (downAsteroidSizePtr,x); 6         get down moving asteroid NUSIZ value
-   bne .drawDownMovingAsteroid; 2³
+   bne .drawDownMovingAsteroid; 2Â³
    inc downMovingAsteroidIndex; 5
    ldx downMovingAsteroidIndex; 3
    lda asteroidHorizPos,x     ; 4         get down asteroid horizontal position
@@ -939,7 +939,7 @@ CheckToDrawDownMovingAsteroid:
    sta downAsteroidCoarseValue; 3         set down moving asteroid coarse value
    iny                        ; 2         increment scan line
    cpy #H_KERNEL - 3          ; 2
-   beq .endKernelDownMovingAsteroidKernel;2³
+   beq .endKernelDownMovingAsteroidKernel;2Â³
    lda #<DownMovingAsteroidKernel;2
    sta downAsteroidKernelVector;3         set down moving asteroid kernel LSB
    lda #0                     ; 2         don't draw down moving asteroid
@@ -959,7 +959,7 @@ CheckToDrawDownMovingAsteroid:
    inc downAsteroidSizePtr    ; 5
    iny                        ; 2         increment scan line
    cpy #H_KERNEL - 3          ; 2
-   beq .endKernelDownMovingAsteroidKernel;2³
+   beq .endKernelDownMovingAsteroidKernel;2Â³
    ldx downMovingAsteroidSize ; 3
    SLEEP 2                    ; 2
    jmp JumpIntoUpAsteroidKernel;3
@@ -977,7 +977,7 @@ DownMovingAsteroidKernel
    lda asteroidAttributes,x   ; 4         get attribute value for up moving asteroid
    and #ASTEROID_ID_MASK      ; 2         mask to get asteroid id
    sta downMovingAsteroidId   ; 3
-   bne .setForAsteroidMSBGraphicValue;2³  branch if not a Killer Satellite
+   bne .setForAsteroidMSBGraphicValue;2Â³  branch if not a Killer Satellite
    lda #>KillerSatelliteSprites;2
    bne .setDownAsteroidMSBGraphicValue;3  unconditional branch
 
@@ -987,10 +987,10 @@ DownMovingAsteroidKernel
    sta downAsteroidGraphicsPtr + 1;3 = @51
    tya                        ; 2         move scan line to accumulator
    cmp asteroidVertPos,x      ; 4         compare with asteroid vertical pos
-   bne .skipDownAsteroidDraw  ; 2³        branch if asteroid not on current scan line
+   bne .skipDownAsteroidDraw  ; 2Â³        branch if asteroid not on current scan line
    lda downAsteroidFineMotion ; 3         get down asteroid fine motion value
    ror                        ; 2         shift D0 to carry
-   bcs .setDownAsteroidKernelVector;2³ + 1 branch if asteroid on left
+   bcs .setDownAsteroidKernelVector;2Â³ + 1 branch if asteroid on left
    ldx #<DownMovingAsteroidOnRight;2
    stx downAsteroidKernelVector;3
 .skipDownAsteroidDraw
@@ -998,7 +998,7 @@ DownMovingAsteroidKernel
    iny                        ; 2         increment scan line count
 ;--------------------------------------
    cpy #H_KERNEL - 3          ; 2 = @01
-   beq .jmpToEndKernel        ; 2³ + 1
+   beq .jmpToEndKernel        ; 2Â³ + 1
    tax                        ; 2
    jmp JumpToUpAsteroidKernel ; 3
 
@@ -1014,7 +1014,7 @@ DownMovingAsteroidKernel
 ;--------------------------------------
    iny                        ; 2 = @01   increment scan line count
    cpy #H_KERNEL - 3          ; 2
-   beq .endKernel             ; 2³ + 1
+   beq .endKernel             ; 2Â³ + 1
    tax                        ; 2
    jmp JumpToUpAsteroidKernel ; 3
 
@@ -1076,7 +1076,7 @@ ScoreKernel
    sta leftPF0Graphics        ; 3         store value for left PF0
    SLEEP 2                    ; 2
    dec digitPointers          ; 5
-   bpl .scoreKernelLoop       ; 2³
+   bpl .scoreKernelLoop       ; 2Â³
 ;--------------------------------------
    sta PF0                    ; 3 = @02
    lda leftPF1Graphics        ; 3
@@ -1092,7 +1092,7 @@ ScoreKernel
    lda #0                     ; 2
    sta PF0                    ; 3 = @38   clear playfield graphic registers
    sta PF1                    ; 3 = @41
-   bcs StartAsteroidsKernel   ; 2³
+   bcs StartAsteroidsKernel   ; 2Â³
    bcc StartPlayerKernel      ; 3         unconditional branch
 
 StartAsteroidsKernel
@@ -1157,7 +1157,7 @@ StartPlayerKernel
    sta PF2                    ; 3 = @06
    lda playerState            ; 3         get current player state
    and #GAME_OVER             ; 2
-   beq .continuePlayerKernel  ; 2³        branch if game active
+   beq .continuePlayerKernel  ; 2Â³        branch if game active
    jmp GameSelectionKernel    ; 3
 
 .continuePlayerKernel
@@ -1186,7 +1186,7 @@ StartPlayerKernel
    ror                        ; 2         shift OBJECT_SIDE to carry
    and #COARSE_VALUE >> 1     ; 2         mask to get coarse value
    tax                        ; 2         move course value to x
-   bcs .playerShipOfLeft      ; 2³        branch if ship on left
+   bcs .playerShipOfLeft      ; 2Â³        branch if ship on left
    lda playerShipColor        ; 3
    sta COLUP0                 ; 3 = @20
    lda playerShipAttributes   ; 3
@@ -1198,25 +1198,25 @@ StartPlayerKernel
    sta NUSIZ0                 ; 3 = @40
    SLEEP_4                    ; 4
    dex                        ; 2
-   bne .coarseMovePlayerCycle56;2³
+   bne .coarseMovePlayerCycle56;2Â³
    sta RESP0                  ; 3 = @51
    beq PositionUFOHorizontally; 3         unconditional branch
 
 .coarseMovePlayerCycle56
    dex                        ; 2 = @51
-   bne .coarseMovePlayerCycle61;2³
+   bne .coarseMovePlayerCycle61;2Â³
    sta RESP0                  ; 3 = @56
    beq PositionUFOHorizontally; 3         unconditional branch
 
 .coarseMovePlayerCycle61
    dex                        ; 2 = @56
-   bne .coarseMovePlayerCycle66;2³
+   bne .coarseMovePlayerCycle66;2Â³
    sta RESP0                  ; 3 = @61
    beq PositionUFOHorizontally; 3         unconditional branch
 
 .coarseMovePlayerCycle66
    dex                        ; 2 = @61
-   bne .coarseMovePlayerCycle71;2³
+   bne .coarseMovePlayerCycle71;2Â³
    sta RESP0                  ; 3 = @66
    beq PositionUFOHorizontally; 3         unconditional branch
 
@@ -1249,7 +1249,7 @@ PositionUFOHorizontally
    ror                        ; 2         shift OBJECT_SIDE value to carry
    and #COARSE_VALUE >> 1     ; 2         mask to get coarse value
    tax                        ; 2
-   bcs .ufoOnLeftSide         ; 2³
+   bcs .ufoOnLeftSide         ; 2Â³
    lda ufoColor               ; 3
    sta COLUP1                 ; 3 = @20
    lda ufoAttributes          ; 3
@@ -1261,25 +1261,25 @@ PositionUFOHorizontally
    lda #ONE_COPY              ; 2
    sta NUSIZ1                 ; 3 = @46
    dex                        ; 2
-   bne .coarseMoveUFOCycle58  ; 2³
+   bne .coarseMoveUFOCycle58  ; 2Â³
    sta RESP1                  ; 3 = @53
    beq DoPlayerKernel         ; 3         unconditional branch
 
 .coarseMoveUFOCycle58
    dex                        ; 2
-   bne .coarseMoveUFOCycle63  ; 2³
+   bne .coarseMoveUFOCycle63  ; 2Â³
    sta RESP1                  ; 3 = @58
    beq DoPlayerKernel         ; 3         unconditional branch
 
 .coarseMoveUFOCycle63
    dex                        ; 2
-   bne .coarseMoveUFOCycle68  ; 2³
+   bne .coarseMoveUFOCycle68  ; 2Â³
    sta RESP1                  ; 3 = @63
    beq DoPlayerKernel         ; 3         unconditional branch
 
 .coarseMoveUFOCycle68
    dex                        ; 2
-   bne .coarseMoveUFOCycle73  ; 2³
+   bne .coarseMoveUFOCycle73  ; 2Â³
    sta RESP1                  ; 3 = @68
    beq DoPlayerKernel         ; 3         unconditional branch
 
@@ -1293,7 +1293,7 @@ PositionUFOHorizontally
    SLEEP 2                    ; 2 = @17
 .coarseMoveUFO
    dex                        ; 2
-   bne .coarseMoveUFO         ; 2³
+   bne .coarseMoveUFO         ; 2Â³
    sta RESP1                  ; 3
    sta HMCLR                  ; 3         clear all horizontal motion
    lda ufoHorizPos            ; 3         get UFO horizontal position
@@ -1319,13 +1319,13 @@ DoPlayerKernel
 .checkToDrawPlayerShip
    lda (playerShipGraphicsPtr,x);6        read graphics data for player ship
    cmp #SPRITE_END            ; 2
-   beq .skipIncrementShipGraphPtr;2³
+   beq .skipIncrementShipGraphPtr;2Â³
    inc playerShipGraphicsPtr  ; 5         increment sprite LSB value
    bne .prepareToDrawUFO      ; 3 + 1     unconditional branch
 
 .skipIncrementShipGraphPtr
    cpy playerShipOffset       ; 3
-   bne .skipPlayerShipDraw    ; 2³ + 1
+   bne .skipPlayerShipDraw    ; 2Â³ + 1
    lda tmpPlayerGraphicLSB    ; 3
    sta playerShipGraphicsPtr  ; 3
    jmp .checkToDrawPlayerShip ; 3
@@ -1342,13 +1342,13 @@ DoPlayerKernel
 .checkToDrawUFO
    lda (ufoGraphicsPtr,x)     ; 6         get graphics data for UFO
    cmp #SPRITE_END            ; 2
-   beq .skipIncrementUFOGraphPtr;2³
+   beq .skipIncrementUFOGraphPtr;2Â³
    inc ufoGraphicsPtr         ; 5         increment sprite LSB value
    bne .prepareToDrawPlayerShip;3         unconditional branch
 
 .skipIncrementUFOGraphPtr
    cpy ufoVertPos             ; 3
-   bne .skipUFODraw           ; 2³
+   bne .skipUFODraw           ; 2Â³
    lda tmpUFOGraphicLSB       ; 3
    sta ufoGraphicsPtr         ; 3
    jmp .checkToDrawUFO        ; 3
@@ -1361,7 +1361,7 @@ DoPlayerKernel
    tax                        ; 2
    iny                        ; 2         increment scan line
    cpy #H_KERNEL              ; 2
-   bne DoPlayerKernel         ; 2³ + 1
+   bne DoPlayerKernel         ; 2Â³ + 1
 EndKernel
    sta WSYNC
 ;--------------------------------------
@@ -1873,16 +1873,16 @@ GameSelectionKernel
    sta WSYNC
 ;--------------------------------------
    dex                        ; 2
-   bne .skipGameSelectionScanlines;2³
+   bne .skipGameSelectionScanlines;2Â³
    sta WSYNC
 ;--------------------------------------
    lda gameSelection          ; 3         get current game selection
    and #NUM_PLAYERS_BIT       ; 2         see if a two player game
-   bne ShowSelectIconOnRight  ; 2³        branch if set for a two player game
+   bne ShowSelectIconOnRight  ; 2Â³        branch if set for a two player game
    lda frameCount             ; 3         get current frame count
    ror                        ; 2         shift D1 into carry -- icon
    ror                        ; 2         animation updated every 30 frames
-   bcc .showSmallSelectIcon   ; 2³
+   bcc .showSmallSelectIcon   ; 2Â³
    lda #<LeftBigSelectIcon    ; 2
    sta graphicDataPointers    ; 3
    lda #>LeftBigSelectIcon    ; 2
@@ -1900,7 +1900,7 @@ ShowSelectIconOnRight SUBROUTINE
    lda frameCount             ; 3         get current frame count
    ror                        ; 2         shift D1 into carry -- icon
    ror                        ; 2         animation updated every 30 seconds
-   bcc .showSmallSelectIcon   ; 2³
+   bcc .showSmallSelectIcon   ; 2Â³
    lda #<RightBigSelectIcon   ; 2
    sta graphicDataPointers    ; 3
    lda #>RightBigSelectIcon   ; 2
@@ -1992,7 +1992,7 @@ PositionObjectHorizontally
 ;--------------------------------------
 .divideBy15
    sbc #15                    ; 2
-   bcs .divideBy15            ; 2³
+   bcs .divideBy15            ; 2Â³
    eor #7                     ; 2
    asl                        ; 2
    asl                        ; 2
@@ -2011,7 +2011,7 @@ SetupGraphicPointerData
    lda (graphicDataPointers),y; 5
    sta graphicPointers,y      ; 5
    dey                        ; 2
-   bpl .setupGraphicsLoop     ; 2³
+   bpl .setupGraphicsLoop     ; 2Â³
    rts                        ; 6
 
    FILL_BOUNDARY 256, 0
@@ -2038,7 +2038,7 @@ DrawIt
    sty GRP1                   ; 3 = @50
    sta GRP0                   ; 3 = @53
    dec graphicPointerIndex    ; 5
-   bpl DrawIt                 ; 2³
+   bpl DrawIt                 ; 2Â³
    lda #0                     ; 2
    sta GRP0                   ; 3 = @65
    sta GRP1                   ; 3 = @68
@@ -2978,7 +2978,7 @@ CollisionDetection
 CheckToSpawnNewPlayerShip
    lda playerState                  ; get current player state
    and #KILL_FLAG
-   beq .repositionVerticalPlayerShipPosition      ;2
+   beq .repositionVerticalPlayerShipPosition
    lda ufoVertPos                   ; get UFO vertical position
    cmp #VERT_OUT_OF_RANGE
    bne CheckToPerformAsteroidCollision;branch if UFO present
